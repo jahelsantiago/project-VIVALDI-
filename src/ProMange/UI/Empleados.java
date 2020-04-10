@@ -6,20 +6,90 @@
 package ProMange.UI;
 
 import ProMange.Logic.Empleado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ProBook
  */
 public class Empleados extends javax.swing.JFrame {
-
+    
+    String Nombre = "";
+    String Turno ="";
+    String Telefono ="";
+    String Correo ="";
     ArrayList<Empleado> arr_empleado= new ArrayList<>();
+    int i;
+    
+    
     public Empleados() {
         initComponents();
         this.setLocationRelativeTo(null);
+        mouse_listen();
     }
+    
+    public void mostrar_matriz(){
+        String matris[][] = new String[arr_empleado.size()][4];
+        for(int i = 0; i<arr_empleado.size();i++){
+            matris[i][0] = arr_empleado.get(i).getNombre();
+            matris[i][1] = arr_empleado.get(i).getTurno();
+            matris[i][2] = arr_empleado.get(i).getTelefono();
+            matris[i][3] = arr_empleado.get(i).getCorreo();
+            
+        }
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            matris,
+            new String [] {
+                "Nombre", "Turno", "telefono", "correo"
+            }
+        ));
+                
+    }
+    
+    private void mouse_listen(){
+        jTable1.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+            
+            public void mouseClicked(MouseEvent e){
+                i = jTable1.getSelectedRow();
+                Nombre = (jTable1.getValueAt(i, 0)).toString();
+                jTextFieldNombre.setText(Nombre);
+                
+                Turno = (jTable1.getValueAt(i, 1)).toString();
+                jTextFieldTurno.setText(Turno);
+                
+                Telefono = (jTable1.getValueAt(i, 2)).toString();
+                jTextFieldTelefono.setText(Telefono);
+                
+                Correo = (jTable1.getValueAt(i, 3)).toString();
+                jTextFieldCorre.setText(Correo);
+                        
 
+                
+            }
+        });
+    }
+    
+    private void clean(){
+        this.jTextFieldCorre.setText("");
+        this.jTextFieldNombre.setText("");
+        this.jTextFieldTelefono.setText("");
+        this.jTextFieldTurno.setText("");
+    }
+    
+    private Empleado crear_empleado(){
+        Empleado empleado=new Empleado(
+                jTextFieldNombre.getText(),
+                jTextFieldTurno.getText(),
+                jTextFieldTelefono.getText(),
+                jTextFieldCorre.getText()
+        );
+        return empleado;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,10 +118,11 @@ public class Empleados extends javax.swing.JFrame {
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldTurno = new javax.swing.JTextField();
         jTextFieldCorre = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jTextFieldTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -129,7 +200,7 @@ public class Empleados extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 320, 510));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 320, 450));
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, 30));
 
         jTextField1.setText("Buscar...");
@@ -157,17 +228,6 @@ public class Empleados extends javax.swing.JFrame {
         });
         jPanel3.add(jTextFieldCorre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 220, 30));
 
-        jButton6.setText("jButton6");
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
-
-        jButton7.setText("Crear");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, -1, -1));
-
         jTextFieldTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTelefonoActionPerformed(evt);
@@ -177,6 +237,30 @@ public class Empleados extends javax.swing.JFrame {
 
         jLabel6.setText("Telefono");
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, 30));
+
+        jButton6.setText("Editar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
+
+        jButton7.setText("Crear");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 330, 260));
 
@@ -200,18 +284,10 @@ public class Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Empleado empleado=new Empleado(
-                jTextFieldNombre.getText(),
-                jTextFieldTurno.getText(),
-                jTextFieldTelefono.getText(),
-                jTextFieldCorre.getText()
-        );
+        Empleado empleado=crear_empleado();
         arr_empleado.add(empleado);
         mostrar_matriz();
-        this.jTextFieldCorre.setText("");
-        this.jTextFieldNombre.setText("");
-        this.jTextFieldTelefono.setText("");
-        this.jTextFieldTurno.setText("");
+        clean();
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -223,23 +299,20 @@ public class Empleados extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCorreActionPerformed
 
-    public void mostrar_matriz(){
-        String matris[][] = new String[arr_empleado.size()][4];
-        for(int i = 0; i<arr_empleado.size();i++){
-            matris[i][0] = arr_empleado.get(i).getNombre();
-            matris[i][1] = arr_empleado.get(i).getTurno();
-            matris[i][2] = arr_empleado.get(i).getTelefono();
-            matris[i][3] = arr_empleado.get(i).getCorreo();
-            
-        }
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            matris,
-            new String [] {
-                "Nombre", "Turno", "telefono", "correo"
-            }
-        ));
-                
-    }
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        
+        arr_empleado.remove(i);   
+        mostrar_matriz();
+        clean();
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        Empleado emp = crear_empleado();
+        arr_empleado.set(i, emp);
+        mostrar_matriz();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+
     /**
      * @param args the command line arguments
      */
@@ -284,6 +357,7 @@ public class Empleados extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Empleado {
     private String nombre, turno, telefono , correo;
+    private int id;
     
 
     public Empleado(String nombre, String turno, String id, String correo) {
