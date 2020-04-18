@@ -12,14 +12,16 @@ package ProMange.Logic;
 public class Producto {
     private String referencia;
     private String Nombre;
+    private String Tiempo;
     private String cantidad;
     private int cantidad_int;
 
-    public Producto(String referencia, String Nombre, String cantidad) {
+    public Producto(String referencia, String Nombre, String Tiempo, String cantidad) {
         this.referencia = referencia;
         this.Nombre = Nombre;
+        this.Tiempo = Tiempo;
         this.cantidad = cantidad;
-        this.cantidad_int= Integer.parseInt(cantidad);
+        this.cantidad_int = Integer.parseInt(cantidad);
     }
 
     public String getReferencia() {
@@ -30,13 +32,21 @@ public class Producto {
         return Nombre;
     }
 
+    public String getTiempo() {
+        return Tiempo;
+    }
+
     public String getCantidad() {
         return cantidad;
     }
-    
-    public int getCantidadInt(){
+
+    public int getCantidad_int() {
         return cantidad_int;
     }
+
+    
+
+    
 
     
     
