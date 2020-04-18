@@ -6,10 +6,12 @@
 package ProMange.UI;
 
 import ProMange.Logic.Empleado;
+import ProMange.Logic.GestorFisheros;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,11 +29,23 @@ public class Empleados extends javax.swing.JFrame {
     int i;
     
     
+    
+    
+    
     public Empleados() {
         initComponents();
         this.setLocationRelativeTo(null);
         mouse_listen();
         
+        try {
+            this.arr_empleado=GestorFisheros.leerFicheroEmpleados();
+            System.err.println("fishero leido con exito");
+        } catch (IOException ex) {
+            System.err.println("eroor al leer fishero");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("NO hay archivo");
+        }
+        mostrar_matriz();
     }
     
     
@@ -93,6 +107,16 @@ public class Empleados extends javax.swing.JFrame {
                 jTextFieldCorre.getText()
         );
         return empleado;
+    }
+    
+    private void guardar(){
+        try {
+            GestorFisheros.escribirFisheroEmpleados(arr_empleado);
+        } catch (IOException ex) {
+            System.err.println("error al escribir fishero");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("error al escribir fishero");
+        }
     }
     
     /**
@@ -236,6 +260,11 @@ public class Empleados extends javax.swing.JFrame {
         jPanel2.add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 30, 30));
 
         jTextField1.setText("Buscar...");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, 30));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -331,6 +360,8 @@ public class Empleados extends javax.swing.JFrame {
         arr_empleado.add(empleado);
         mostrar_matriz();
         clean();
+        guardar();
+        
         
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
@@ -343,16 +374,17 @@ public class Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCorreActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
         arr_empleado.remove(i);   
         mostrar_matriz();
         clean();
+        guardar();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         Empleado emp = crear_empleado();
         arr_empleado.set(i, emp);
         mostrar_matriz();
+        guardar();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProcesosActionPerformed
@@ -360,6 +392,10 @@ public class Empleados extends javax.swing.JFrame {
         this.setVisible(false);
         p.setVisible(true);
     }//GEN-LAST:event_jButtonProcesosActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     /**

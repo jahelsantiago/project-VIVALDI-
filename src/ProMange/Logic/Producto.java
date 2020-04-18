@@ -5,11 +5,13 @@
  */
 package ProMange.Logic;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ProBook
  */
-public class Producto {
+public class Producto implements Serializable{
     private String referencia;
     private String Nombre;
     private String Tiempo;

@@ -5,13 +5,14 @@
  */
 package ProMange.Logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author ProBook
  */
-public class Empleado {
+public class Empleado implements Serializable{
     private String nombre, turno, telefono , correo;
     private int id;
     

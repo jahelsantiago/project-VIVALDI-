@@ -6,11 +6,13 @@
 package ProMange.UI;
 
 import ProMange.Logic.Empleado;
+import ProMange.Logic.GestorFisheros;
 import ProMange.Logic.Producto;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ProBook
+ * @author Jahel
  */
 public class Inventario extends javax.swing.JFrame {
     
@@ -36,6 +38,15 @@ public class Inventario extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         mouse_listen();
+        try {
+            this.arr_producto=GestorFisheros.leerFicheroInventario();
+            System.err.println("fishero leido con exito");
+        } catch (IOException ex) {
+            System.err.println("eroor al leer fishero");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("NO hay archivo");
+        }
+        mostrar_matriz();
         
     }
     
@@ -75,7 +86,7 @@ public class Inventario extends javax.swing.JFrame {
                 jTextFieldTiempo.setText(Tiempo);
                 
                 Cantidad = (jTable1.getValueAt(i, 3)).toString();
-                jTextFieldCantidad.setText(Cantidad);
+                jTextFieldTiempoAlistamiento.setText(Cantidad);
                         
 
                 
@@ -84,10 +95,11 @@ public class Inventario extends javax.swing.JFrame {
     }
     
     private void clean(){
-        this.jTextFieldCantidad.setText("");
+        this.jTextFieldTiempoAlistamiento.setText("");
         this.jTextFieldReferencia.setText("");
         this.jTextFieldTiempo.setText("");
         this.jTextFieldNombre.setText("");
+        this.jTextFieldCantidad1.setText("");
     }
     
     private Producto crear_producto(){
@@ -95,9 +107,19 @@ public class Inventario extends javax.swing.JFrame {
                 jTextFieldReferencia.getText(),
                 jTextFieldNombre.getText(),
                 jTextFieldTiempo.getText(),
-                jTextFieldCantidad.getText()
+                jTextFieldTiempoAlistamiento.getText()
         );
         return producto;
+    }
+    
+        private void guardar(){
+        try {
+            GestorFisheros.escribirFisheroInventario(arr_producto);
+        } catch (IOException ex) {
+            System.err.println("error al escribir fishero");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("error al escribir fishero");
+        }
     }
     
     /**
@@ -127,19 +149,16 @@ public class Inventario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldReferencia = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldCantidad = new javax.swing.JTextField();
+        jTextFieldTiempoAlistamiento = new javax.swing.JTextField();
         jTextFieldTiempo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButtonEditar = new javax.swing.JButton();
         jButtonCrear = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
+        jTextFieldCantidad1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jButtonCrlZ = new javax.swing.JButton();
-        Date date = new Date();
-        SpinnerDateModel sm =
-        new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY
-        );
-        jSpinner1 = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -259,16 +278,16 @@ public class Inventario extends javax.swing.JFrame {
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 50, 30));
 
         jLabel5.setText("Cantidad");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 50, 30));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 50, 30));
         jPanel3.add(jTextFieldReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 220, 30));
         jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 220, 30));
 
-        jTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldTiempoAlistamiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldCantidadActionPerformed(evt);
+                jTextFieldTiempoAlistamientoActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 220, 30));
+        jPanel3.add(jTextFieldTiempoAlistamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 220, 30));
 
         jTextFieldTiempo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,8 +296,8 @@ public class Inventario extends javax.swing.JFrame {
         });
         jPanel3.add(jTextFieldTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 220, 30));
 
-        jLabel6.setText("Tiempo ");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 50, 30));
+        jLabel6.setText("Alistmiento");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 30));
 
         jButtonEditar.setText("Editar");
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -286,7 +305,7 @@ public class Inventario extends javax.swing.JFrame {
                 jButtonEditarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
+        jPanel3.add(jButtonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -294,7 +313,7 @@ public class Inventario extends javax.swing.JFrame {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        jPanel3.add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         jButtonEliminar.setText("Eliminar");
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -302,7 +321,17 @@ public class Inventario extends javax.swing.JFrame {
                 jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
+        jPanel3.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, -1, -1));
+
+        jTextFieldCantidad1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCantidad1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jTextFieldCantidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 220, 30));
+
+        jLabel7.setText("Tiempo ");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 50, 30));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 310, 260));
 
@@ -315,11 +344,6 @@ public class Inventario extends javax.swing.JFrame {
         jPanel4.add(jButtonCrlZ, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 30, 25));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 690, 40));
-
-        jSpinner1 = new javax.swing.JSpinner(sm);
-        JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner1, "HH:mm:ss");
-        jSpinner1.setEditor(de);
-        jPanel2.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 140, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, -1, 510));
 
@@ -347,28 +371,25 @@ public class Inventario extends javax.swing.JFrame {
         arr_producto.add(producto);
         mostrar_matriz();
         clean();
-        
+        guardar();
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jTextFieldTiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTiempoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldTiempoActionPerformed
 
-    private void jTextFieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldCantidadActionPerformed
-
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
         arr_producto.remove(i);   
         mostrar_matriz();
         clean();
+        guardar();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         Producto producto = crear_producto();
         arr_producto.set(i, producto);
         mostrar_matriz();
+        guardar();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProcesosActionPerformed
@@ -376,6 +397,14 @@ public class Inventario extends javax.swing.JFrame {
         this.setVisible(false);
         p.setVisible(true);
     }//GEN-LAST:event_jButtonProcesosActionPerformed
+
+    private void jTextFieldCantidad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantidad1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCantidad1ActionPerformed
+
+    private void jTextFieldTiempoAlistamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTiempoAlistamientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTiempoAlistamientoActionPerformed
 
 
     /**
@@ -435,18 +464,19 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextFieldCantidad;
+    private javax.swing.JTextField jTextFieldCantidad1;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldReferencia;
     private javax.swing.JTextField jTextFieldTiempo;
+    private javax.swing.JTextField jTextFieldTiempoAlistamiento;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,18 +5,31 @@
  */
 package ProMange.UI;
 
+import ProMange.Logic.GestorFisheros;
+import ProMange.Logic.Producto;
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *
  * @author ProBook
  */
 public class Pedidos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+    ArrayList<Producto> arr_producto= new ArrayList<>();
+    int i;
+    
     public Pedidos() {
         initComponents();
         this.setLocationRelativeTo(null);
+        try {
+            this.arr_producto=GestorFisheros.leerFicheroInventario();
+            System.err.println("fishero leido con exito");
+        } catch (IOException ex) {
+            System.err.println("eroor al leer fishero");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("NO hay archivo");
+        }
     }
 
     /**
@@ -48,7 +61,7 @@ public class Pedidos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldBuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtonBuscar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -138,7 +151,7 @@ public class Pedidos extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Referencia", "Nombre", "Tiempo", "Cantidad"
+                "Referencia", "Nombre", "Dia Alistado", "Cantidad"
             }
         ));
         jTable1.setFocusable(false);
@@ -197,8 +210,8 @@ public class Pedidos extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(102, 0, 102));
         jPanel4.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 340, 20));
 
-        jTextField1.setText("Buscar...");
-        jPanel4.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 290, 30));
+        jTextFieldBuscar.setText("Buscar...");
+        jPanel4.add(jTextFieldBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 290, 30));
 
         jLabel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 255), new java.awt.Color(153, 153, 255)), "Referencia"));
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 50));
@@ -267,7 +280,7 @@ public class Pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarActionPerformed
-
+        
     }//GEN-LAST:event_jButtonOrdenarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -334,7 +347,7 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldCantidad;
     // End of variables declaration//GEN-END:variables
 }
