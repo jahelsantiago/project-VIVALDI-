@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<basedatosEmpleados>
+    <EmpleadosJ>
+        <Nombre>Jordan Mauricio</Nombre>
+        <Apellido>Escarraga Avila</Apellido>
+        <Fecha_nacimiento>6/04/2001</Fecha_nacimiento>
+        <Password>Polombia</Password>
+        <Estado>true</Estado>
+        <Maquina>12</Maquina>
+    </EmpleadosJ>
+    <EmpleadosJ>
+        <Nombre>Jahel</Nombre>
+        <Apellido>Efdsafdsa</Apellido>
+        <Fecha_nacimiento>8/07/1998</Fecha_nacimiento>
+        <Password>Aguacate</Password>
+        <Estado>False</Estado>
+        <Maquina>98</Maquina>
+    </EmpleadosJ>
+</basedatosEmpleados>
