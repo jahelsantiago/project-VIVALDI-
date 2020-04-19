@@ -6,27 +6,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class UsuarioJ <J>{
+public class PersonaJ <J>{
     
     String nombre,apellido;
     Date fecha_nacimiento;
     long id;
-    String password;
 
-    public UsuarioJ(String nombre, String apellido, Date fecha_nacimiento, long id, String password) {
+    public PersonaJ(String nombre, String apellido, Date fecha_nacimiento, long id) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fecha_nacimiento = fecha_nacimiento;
         this.id = id;
-        this.password = password;
     }
     
-    public UsuarioJ() {
+    public PersonaJ() {
         this.nombre = null;
         this.apellido = null;
         this.fecha_nacimiento = null;
         this.id = 0;
-        this.password = null;
     }
     
 
@@ -71,18 +68,6 @@ public class UsuarioJ <J>{
     public void setId(long id) {
         this.id = id;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-   
-    
-    
+ 
     
 }

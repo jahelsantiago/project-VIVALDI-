@@ -6,7 +6,6 @@ package ProMange.Logic;
 import java.io.File;
 import java.io.IOException;
 import ED.LinkedList;
-import ProManageJ.UI.EmpleadosJ;
 import ProMange.Logic.EmpleadoJ;
 import java.util.Date;
 import javax.xml.parsers.DocumentBuilder;
@@ -18,6 +17,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import javax.swing.JOptionPane;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 
 public class EmpleadoJ_excel <J> {
@@ -53,13 +58,13 @@ public class EmpleadoJ_excel <J> {
                     objEmpleadoJ.setNombre(obtenerNodoValor("Nombre",unElemento));
                     objEmpleadoJ.setApellido(obtenerNodoValor("Apellido",unElemento));
                     objEmpleadoJ.setFecha_nacimiento((J)obtenerNodoValor("Fecha_nacimiento",unElemento));
-                    objEmpleadoJ.setPassword(obtenerNodoValor("Password",unElemento));
                     if (obtenerNodoValor("Estado",unElemento) == "false") {
                         objEmpleadoJ.setEstado(false);
                     }else{
                         objEmpleadoJ.setEstado(true);
                     }
                     objEmpleadoJ.setMaquina(Integer.parseInt(obtenerNodoValor("Maquina",unElemento)));
+                    objEmpleadoJ.setId(Long.parseLong(obtenerNodoValor("Id",unElemento)));
                     lista_empleados.push(objEmpleadoJ, i);
                 }
                         
@@ -72,5 +77,78 @@ public class EmpleadoJ_excel <J> {
             JOptionPane.showMessageDialog(null,ioE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
         }
         return lista_empleados;
+    }
+    
+    public void agregarEmpleado(EmpleadoJ nuevo){
+        try{
+            //Validar y leer nuestro XML
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(new File ("xmlsrc/basedatosEmpleados.xml"));
+            
+            //preparar el archivo para obtener datos
+            doc.getDocumentElement().normalize();
+            
+            //Obtenemos el Nodo padre "basedatosEmpleados"
+            Node nodoRaiz = doc.getDocumentElement();
+            //Agregamos una nueva etiqueta al documento
+            //Primero creamos la etiqueta
+            Element nuevoEmp = doc.createElement("EmpleadosJ");
+            
+           //Creamos sus etiquetas hijas y las llenamos
+            Element nuevoNombre = doc.createElement("Nombre");
+            nuevoNombre.setTextContent(nuevo.getNombre());
+            
+            Element nuevoApellido = doc.createElement("Apellido");
+            nuevoApellido.setTextContent(nuevo.getApellido());
+            
+            Element nuevaFecha_nacimiento = doc.createElement("Fecha_nacimiento");
+            nuevaFecha_nacimiento.setTextContent(nuevo.getFecha_nacimiento());
+            
+            //Estado
+            Element nuevoEstado = doc.createElement("Estado"); 
+             String estado = null;
+            if (nuevo.getEstado()==true) {
+                estado="true";
+            }else{
+                estado = "false";
+            }
+            nuevoEstado.setTextContent(estado);
+            
+            Element nuevaMaquina = doc.createElement("Maquina");
+            nuevaMaquina.setTextContent(String.valueOf(nuevo.getMaquina()));
+            
+            Element nuevoId = doc.createElement("Id");
+            nuevoId.setTextContent(String.valueOf(nuevo.getId()));         
+            
+            //Agragarmos las etiquetas hijas de la persona
+            nuevoEmp.appendChild(nuevoNombre);
+            nuevoEmp.appendChild(nuevoApellido);
+            nuevoEmp.appendChild(nuevaFecha_nacimiento);
+            nuevoEmp.appendChild(nuevoEstado);
+            nuevoEmp.appendChild(nuevaMaquina);
+            nuevoEmp.appendChild(nuevoId);
+            
+            //Relacionamos la persona con el nodo raiz del documento
+            nodoRaiz.appendChild(nuevoEmp);
+            
+            //transformamos esta estructura de datos a un archivo xml
+            TransformerFactory transFactory = TransformerFactory.newInstance();
+            Transformer transformer = transFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("xmlsrc/basedatosEmpleados.xml"));
+            transformer.transform(source,result);
+            
+        }catch(ParserConfigurationException parseE){
+            JOptionPane.showMessageDialog(null,parseE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }catch(SAXException saxE){
+            JOptionPane.showMessageDialog(null,saxE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }catch(IOException ioE){
+            JOptionPane.showMessageDialog(null,ioE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }catch(TransformerConfigurationException transE){
+            JOptionPane.showMessageDialog(null,transE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }catch(TransformerException transformE){
+            JOptionPane.showMessageDialog(null,transformE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

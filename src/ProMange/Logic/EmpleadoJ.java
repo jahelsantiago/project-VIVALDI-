@@ -2,9 +2,8 @@
 package ProMange.Logic;
 
 import java.util.Date;
-import org.w3c.dom.Element;
 
-public class EmpleadoJ extends UsuarioJ{
+public class EmpleadoJ extends PersonaJ{
     
     boolean estado;
     int maquina;
@@ -14,16 +13,14 @@ public class EmpleadoJ extends UsuarioJ{
         this.apellido = null;
         this.fecha_nacimiento = null;
         this.id = 0;
-        this.password = null;
         this.estado = false;
-        this.maquina =0;
-                
+        this.maquina =0;     
     }
     
     
     
-    public EmpleadoJ(String nombre, String apellido, Date fecha_nacimiento, long id, String password) {
-        super(nombre, apellido, fecha_nacimiento, id,password);
+    public EmpleadoJ(String nombre, String apellido, Date fecha_nacimiento, long id) {
+        super(nombre, apellido, fecha_nacimiento, id);
        this. estado = false;
        this.maquina = 0;
     }

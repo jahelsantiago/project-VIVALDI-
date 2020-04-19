@@ -11,10 +11,12 @@ import java.util.Date;
  *
  * @author mauri
  */
-public class Supervisor extends UsuarioJ {
+public class Supervisor extends PersonaJ {
     
-    public Supervisor(String nombre, String apellido, Date fecha_nacimiento, int id, String contraseña) {
-        super(nombre, apellido, fecha_nacimiento, id, contraseña);
+    String password;
+    public Supervisor(String nombre, String apellido, Date fecha_nacimiento, int id, String password) {
+        super(nombre, apellido, fecha_nacimiento, id);
+        this.password = password;
     }
     
 }
