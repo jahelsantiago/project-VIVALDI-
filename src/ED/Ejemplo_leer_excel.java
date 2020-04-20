@@ -2,7 +2,7 @@
 package ED;
 
 import ProMange.Logic.EmpleadoJ;
-import ProMange.Logic.EmpleadoJ_excel;
+import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
 
 
 public class Ejemplo_leer_excel {

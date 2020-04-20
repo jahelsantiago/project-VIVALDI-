@@ -1,11 +1,12 @@
 
 //Codigo de ayuda obtenido de https://balusoft.wordpress.com/2011/07/12/usar-un-archivo-xml-como-una-base-de-datos-java-parte-12/
 
-package ProMange.Logic;
+package ProMange.Logic.Xml_clases;
 
 import java.io.File;
 import java.io.IOException;
 import ED.LinkedList;
+import ProMange.Logic.EmpleadoJ;
 import ProMange.Logic.EmpleadoJ;
 import java.util.Date;
 import javax.xml.parsers.DocumentBuilder;
@@ -38,13 +39,13 @@ public class EmpleadoJ_excel <J> {
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(new File ("xmlsrc/basedatosEmpleados.xml"));
+            Document doc = docBuilder.parse(new File ("xml_archivos/basedatosEmpleados.xml"));
             
             //preparar el archivo para obtener datos
             doc.getDocumentElement().normalize();
             
             //obtiene los nodos con la etiuqeta EmpleadosJ
-            NodeList nodosEmpleados = doc.getElementsByTagName("EmpleadosJ");  // linea a cambiar
+            NodeList nodosEmpleados = doc.getElementsByTagName("EmpleadoJ");  // linea a cambiar
             
             //Por cada nodo que se obtuvo se obtendran los datos
             //y se guardaran en un objeto tipo eompleadosJ
@@ -84,7 +85,7 @@ public class EmpleadoJ_excel <J> {
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(new File ("xmlsrc/basedatosEmpleados.xml"));
+            Document doc = docBuilder.parse(new File ("xml_archivos/basedatosEmpleados.xml"));
             
             //preparar el archivo para obtener datos
             doc.getDocumentElement().normalize();
@@ -93,7 +94,7 @@ public class EmpleadoJ_excel <J> {
             Node nodoRaiz = doc.getDocumentElement();
             //Agregamos una nueva etiqueta al documento
             //Primero creamos la etiqueta
-            Element nuevoEmp = doc.createElement("EmpleadosJ");
+            Element nuevoEmp = doc.createElement("EmpleadoJ");
             
            //Creamos sus etiquetas hijas y las llenamos
             Element nuevoNombre = doc.createElement("Nombre");
@@ -136,7 +137,7 @@ public class EmpleadoJ_excel <J> {
             TransformerFactory transFactory = TransformerFactory.newInstance();
             Transformer transformer = transFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("xmlsrc/basedatosEmpleados.xml"));
+            StreamResult result = new StreamResult(new File("xml_archivos/basedatosEmpleados.xml"));
             transformer.transform(source,result);
             
         }catch(ParserConfigurationException parseE){
@@ -151,4 +152,6 @@ public class EmpleadoJ_excel <J> {
             JOptionPane.showMessageDialog(null,transformE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    
 }

@@ -9,12 +9,12 @@ public class EmpleadoJ extends PersonaJ{
     int maquina;
 
     public EmpleadoJ() {
-        this.nombre = null; 
-        this.apellido = null;
-        this.fecha_nacimiento = null;
-        this.id = 0;
-        this.estado = false;
-        this.maquina =0;     
+       this.setNombre("Ninguno");
+       this.setApellido("Ninguno");
+       this.setEstado(false);
+       this.setFecha_nacimiento("0/00/0000");
+       this.setId(0);
+       this.setMaquina(0);  
     }
     
     
