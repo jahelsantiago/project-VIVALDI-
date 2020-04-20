@@ -21,7 +21,9 @@ public class Signup extends javax.swing.JFrame {
         initComponents();
         try {
             this.usuario=GestorFisheros.leerFicheroUsuario();
-            System.err.println("fishero leido con exito");
+            Login l = new Login();
+            this.setVisible(false);
+            this.setVisible(true);
         } catch (IOException ex) {
             System.err.println("eroor al leer fishero");
         } catch (ClassNotFoundException ex) {
@@ -46,7 +48,7 @@ public class Signup extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jTextName1 = new javax.swing.JTextField();
+        jTextEmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
@@ -81,11 +83,11 @@ public class Signup extends javax.swing.JFrame {
         jLabel2.setText("Name");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
 
-        jTextName1.setBackground(new java.awt.Color(33, 33, 35));
-        jTextName1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextName1.setBorder(null);
-        jTextName1.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 260, 30));
+        jTextEmail.setBackground(new java.awt.Color(33, 33, 35));
+        jTextEmail.setForeground(new java.awt.Color(255, 255, 255));
+        jTextEmail.setBorder(null);
+        jTextEmail.setCaretColor(new java.awt.Color(255, 255, 255));
+        jPanel2.add(jTextEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 260, 30));
 
         jButton1.setBackground(new java.awt.Color(124, 85, 227));
         jButton1.setFont(new java.awt.Font("Palatino Linotype", 0, 12)); // NOI18N
@@ -93,6 +95,11 @@ public class Signup extends javax.swing.JFrame {
         jButton1.setText("Sign up");
         jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 260, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 500, 580));
@@ -111,6 +118,14 @@ public class Signup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String Name = this.jTextName.getText();
+        String email = this.jTextEmail.getText();
+        String Pasword = this.jPasswordField1.getText();
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,8 +173,8 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField jTextEmail;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextName;
-    private javax.swing.JTextField jTextName1;
     // End of variables declaration//GEN-END:variables
 }
