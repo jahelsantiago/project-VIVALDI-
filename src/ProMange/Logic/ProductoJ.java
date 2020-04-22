@@ -13,6 +13,14 @@ public class ProductoJ {
         this.cantidad_inventario = cantidad_inventario;
     }
 
+    public ProductoJ() {
+        this.referencia = "0";
+        this.nombre = "ninguno";
+        this.categoria = "ninguno";
+        this.tiempo_elaboracion = 0;
+        this.cantidad_inventario = 0;
+    }
+
     public String getReferencia() {
         return referencia;
     }

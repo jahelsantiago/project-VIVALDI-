@@ -5,34 +5,27 @@
         <group>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Images/undo1.png</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/inventario.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Signup.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/EmpleadoJ_excel.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Pedidos.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Login.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/xmlsrc/basedatosEmpleados.xml</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/UsuarioJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Images/singup_engaine.jpg</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProManageJ/UI/EmpleadosJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProManageJ/UI/LoginJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProManageJ/UI/PedidosJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/EmpleadoJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Pedido.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProManageJ/UI/ProcesosJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Maquina.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProManageJ/UI/InventarioJ.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ED/Ejemplo_leer_excel.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/main.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/xml_archivos/basedatosEmpleados.xml</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Signup.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Pedidos.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/PedidoJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Empleado.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Usuario.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Login.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Xml_clases/EmpleadoJ_excel.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Images/singup_engaine.jpg</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ED/LinkedList.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Empleados.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Producto.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Images/search1.png</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ED/Queue.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Xml_clases/archivos_gestor.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ejemplo.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/EmpleadoJ.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/ProductoJ.java</file>
-            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/GestorFisheros.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Supervisor.java</file>
             <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/UI/Procesos.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/PersonaJ.java</file>
+            <file>file:/C:/Users/mauri/Documents/NetBeansProjects/project-VIVALDI-/src/ProMange/Logic/Maquina.java</file>
         </group>
     </open-files>
 </project-private>

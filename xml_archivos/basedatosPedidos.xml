@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Pedido>
+    <Inicio/>
+    <Pedido>
+        <Id_pedido>1</Id_pedido>
+        <Fecha_inicio>01/12/2003</Fecha_inicio>
+        <Fecha_entrega>01/12/2004</Fecha_entrega>
+        <Productos_pedidos>oro,5,plata,8,arroz,9</Productos_pedidos>
+    </Pedido>
+</Pedido>

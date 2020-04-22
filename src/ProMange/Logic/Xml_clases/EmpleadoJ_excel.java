@@ -7,8 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import ED.LinkedList;
 import ProMange.Logic.EmpleadoJ;
-import ProMange.Logic.EmpleadoJ;
-import java.util.Date;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,12 +27,16 @@ import javax.xml.transform.stream.StreamResult;
 
 public class EmpleadoJ_excel <J> {
     
+    //String con las que operar con funciones ubicadas en archivos_gestor
+    static String archivo_xml_empleados = "basedatosEmpleados.xml";
+    static String etiqueta_empleados = "EmpleadoJ"; // reemplazar por la variable Etiqueta_objeto_almacenar en la funcion de crear_xlm
+    
     private static String obtenerNodoValor(String strTag, Element empleadoJ){
         Node nValor = (Node)empleadoJ.getElementsByTagName(strTag).item(0).getFirstChild();
         return nValor.getNodeValue();
     }
     
-    public LinkedList obtenerEmpleados(){
+    public LinkedList obtenerEmpleadosLinked(){
         LinkedList<EmpleadoJ> lista_empleados = new LinkedList<>();
         try{
             //Validar y leer nuestro XML
@@ -67,6 +70,53 @@ public class EmpleadoJ_excel <J> {
                     objEmpleadoJ.setMaquina(Integer.parseInt(obtenerNodoValor("Maquina",unElemento)));
                     objEmpleadoJ.setId(Long.parseLong(obtenerNodoValor("Id",unElemento)));
                     lista_empleados.push(objEmpleadoJ, i);
+                }
+                        
+            }
+        }catch(ParserConfigurationException parseE){
+            JOptionPane.showMessageDialog(null,parseE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }catch(SAXException saxE){
+            JOptionPane.showMessageDialog(null,saxE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }catch(IOException ioE){
+            JOptionPane.showMessageDialog(null,ioE.getMessage(),""+"Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return lista_empleados;
+    }
+    
+    public ArrayList<EmpleadoJ> obtenerEmpleados(){
+        ArrayList<EmpleadoJ> lista_empleados = new ArrayList<>();
+        try{
+            //Validar y leer nuestro XML
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(new File ("xml_archivos/basedatosEmpleados.xml"));
+            
+            //preparar el archivo para obtener datos
+            doc.getDocumentElement().normalize();
+            
+            //obtiene los nodos con la etiuqeta EmpleadosJ
+            NodeList nodosEmpleados = doc.getElementsByTagName("EmpleadoJ");  // linea a cambiar
+            
+            //Por cada nodo que se obtuvo se obtendran los datos
+            //y se guardaran en un objeto tipo eompleadosJ
+            
+            for (int i = 0; i < nodosEmpleados.getLength(); i++) {
+                Node empleadoJ = nodosEmpleados.item(i);
+                if (empleadoJ.getNodeType() == Node.ELEMENT_NODE) {
+                    Element unElemento = (Element) empleadoJ ;
+                    
+                    EmpleadoJ objEmpleadoJ = new EmpleadoJ();
+                    objEmpleadoJ.setNombre(obtenerNodoValor("Nombre",unElemento));
+                    objEmpleadoJ.setApellido(obtenerNodoValor("Apellido",unElemento));
+                    objEmpleadoJ.setFecha_nacimiento((J)obtenerNodoValor("Fecha_nacimiento",unElemento));
+                    if (obtenerNodoValor("Estado",unElemento) == "false") {
+                        objEmpleadoJ.setEstado(false);
+                    }else{
+                        objEmpleadoJ.setEstado(true);
+                    }
+                    objEmpleadoJ.setMaquina(Integer.parseInt(obtenerNodoValor("Maquina",unElemento)));
+                    objEmpleadoJ.setId(Long.parseLong(obtenerNodoValor("Id",unElemento)));
+                    lista_empleados.add(objEmpleadoJ);
                 }
                         
             }

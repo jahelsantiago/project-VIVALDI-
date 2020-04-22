@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Maquina>
+    <Inicio/>
+    <Maquina>
+        <Serial>0</Serial>
+        <Estado>false</Estado>
+        <Id_Operario>0</Id_Operario>
+    </Maquina>
+    <Maquina>
+        <Serial>0</Serial>
+        <Estado>false</Estado>
+        <Id_Operario>0</Id_Operario>
+    </Maquina>
+</Maquina>
