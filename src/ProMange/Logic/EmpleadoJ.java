@@ -41,7 +41,15 @@ public class EmpleadoJ extends PersonaJ{
         this.maquina = maquina;
     }
     
+    
     /////////////////////////////////////////
+
+    @Override
+    public String toString() {
+        return "EmpleadoJ{" + "estado=" + estado + ", maquina=" + maquina + '}';
+    }
+    
+   
 
 
   
