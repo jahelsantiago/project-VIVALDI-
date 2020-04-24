@@ -22,7 +22,9 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.crypto.AEADBadTagException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -37,7 +39,7 @@ public class FramePedidos extends javax.swing.JFrame {
     String  cantidad;    
     Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
     ProductoJ_excel productos_excel = new ProductoJ_excel();    
-    ArrayList<ProductoJ> arr_productos = productos_excel.obtenerProductos();
+    ArrayList<ProductoJ> arr_productos;
     int i;
     
     //tabla ordenes
@@ -47,7 +49,7 @@ public class FramePedidos extends javax.swing.JFrame {
     String fecha_inicio;
     String estado;
     OrdenJ_excel ordenes_excel = new OrdenJ_excel();
-    ArrayList<OrdenJ> arr_ordenes = ordenes_excel.obtenerOrden();
+    ArrayList<OrdenJ> arr_ordenes;
     int j;
     
     
@@ -59,11 +61,22 @@ public class FramePedidos extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
+        try {
+            arr_productos = productos_excel.obtenerProductos();
+        } catch (Exception e) {
+            System.err.println("error en productors");
+        }
+        try {
+            arr_ordenes = ordenes_excel.obtenerOrden();
+        } catch (Exception e) {
+            System.err.println("error en ordenes");
+        }
         mouse_listen();
         
         //leer carpeta y configurar
         //arr_empleados = leer empleados
         mostrar_matriz();
+        mostrar_matriz_ordenes();
     }
     
     
@@ -96,7 +109,7 @@ public class FramePedidos extends javax.swing.JFrame {
             matris[i][3] = arr_ordenes.get(i).getFecha_inicio();
             matris[i][4] = arr_ordenes.get(i).getEstado();                                                              
         }
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             matris,
             new String [] {
                 "REFERENCIA", "TIEMPO TOTAL", "CANTIDAD", "FECHA INICIP","ESTADO"
@@ -121,7 +134,7 @@ public class FramePedidos extends javax.swing.JFrame {
                 tiempo_elab = (jTable1.getValueAt(i, 3)).toString();                
                 
                 cantidad = (jTable1.getValueAt(i, 4)).toString();
-                jTextFieldCantidad.setText(cantidad);
+                
                         
             }
         });
@@ -150,6 +163,13 @@ public class FramePedidos extends javax.swing.JFrame {
     }
     
     private void crear_Orden(){
+        if(
+          jTextFieldCantidad.getText().isEmpty()              
+          ){
+            JOptionPane.showMessageDialog(null, "Porfavor llenar todos los atributos", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
+            System.out.print("eraeeraer");
+            return;
+        }
         OrdenJ orden=new OrdenJ (
                 referencia,
                 Integer.parseInt(tiempo_elab),
@@ -161,8 +181,8 @@ public class FramePedidos extends javax.swing.JFrame {
     
     
     private void eliminar_orden(){       
-        crear_xml("OrdenJ","basedatosOrdenes.xml");
-        arr_ordenes.remove(j);
+        crear_xml("OrdenJ","basedatosOrdenes.xml"); 
+        arr_ordenes.remove(i);
         for (int i = 0; i<arr_ordenes.size();i++) {
             ordenes_excel.agregarOrden(arr_ordenes.get(i));
         }
@@ -207,7 +227,6 @@ public class FramePedidos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldFechaInicio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -227,6 +246,7 @@ public class FramePedidos extends javax.swing.JFrame {
         jButtonInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/choice_25px.png"))); // NOI18N
         jButtonInventario.setText("Inventario");
         jButtonInventario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 0, 153), new java.awt.Color(153, 0, 153), new java.awt.Color(51, 0, 51), new java.awt.Color(51, 0, 51)));
+        jButtonInventario.setBorderPainted(false);
         jButtonInventario.setContentAreaFilled(false);
         jButtonInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +287,6 @@ public class FramePedidos extends javax.swing.JFrame {
         jButtonPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/cash_on_delivery_25px.png"))); // NOI18N
         jButtonPedidos.setText("Pedidos");
         jButtonPedidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 0, 153), new java.awt.Color(153, 0, 153), new java.awt.Color(51, 0, 51), new java.awt.Color(51, 0, 51)));
-        jButtonPedidos.setBorderPainted(false);
         jButtonPedidos.setContentAreaFilled(false);
         jButtonPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,6 +405,11 @@ public class FramePedidos extends javax.swing.JFrame {
 
         jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/delete_bin_25px.png"))); // NOI18N
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 130, 200));
@@ -441,7 +465,6 @@ public class FramePedidos extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel5.setText("DATOS INVENTARIO");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 230, 60));
-        jPanel2.add(jTextFieldFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, 80, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 
@@ -455,7 +478,7 @@ public class FramePedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEmpleadosActionPerformed
 
     private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
-        FramePedidos cv = new FramePedidos();
+        FrameInventario cv = new FrameInventario();
         cv.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonInventarioActionPerformed
@@ -487,7 +510,13 @@ public class FramePedidos extends javax.swing.JFrame {
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         crear_Orden();
+        mostrar_matriz_ordenes();
     }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        eliminar_orden();
+        mostrar_matriz_ordenes();
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
 
     /**
@@ -581,6 +610,5 @@ public class FramePedidos extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextFieldCantidad;
-    private javax.swing.JTextField jTextFieldFechaInicio;
     // End of variables declaration//GEN-END:variables
 }

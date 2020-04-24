@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -28,12 +29,12 @@ public class FrameEmpleados extends javax.swing.JFrame {
     String ID;
     String Nombre = "";
     String apellido ="";
-    String maquina;
+    String maquina ="";
     String  fecha_nacimiento;
     String estado;
     Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
     EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();    
-    ArrayList<EmpleadoJ> arr_empleado = empleado_excel.obtenerEmpleados();
+    ArrayList<EmpleadoJ> arr_empleado = new ArrayList<>();
     
     int i;
     
@@ -45,6 +46,11 @@ public class FrameEmpleados extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
+        try{
+            arr_empleado=empleado_excel.obtenerEmpleados();
+        }catch(Exception nullPoinerException){
+            
+        }
         mouse_listen();
         //leer carpeta y configurar
         //arr_empleados = leer empleados
@@ -105,14 +111,26 @@ public class FrameEmpleados extends javax.swing.JFrame {
         this.jTextFieldNombre.setText("");
         this.jTextFieldID.setText("");
         this.jTextFieldApellido.setText("");
-        this.jTextFieldMaquina.setText("");
+        
     }
     
     private void crear_empleado(){
+        if(
+            this.jTextFieldNombre.getText().isEmpty() 
+            || this.jTextFieldID.getText().isEmpty()
+            || this.jTextFieldApellido.getText().isEmpty()
+            || this.jTextFieldFechaNacimiento.getText().isEmpty()
+          )
+        {
+            JOptionPane.showMessageDialog(null, "Porfavor llenar todos los atributos", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
+            System.out.print("eraeeraer");
+            return;
+        }
         EmpleadoJ empleado=new EmpleadoJ(
                 jTextFieldNombre.getText(),
                 jTextFieldApellido.getText(),
                 jTextFieldFechaNacimiento.getText(),
+                //jDateChooser1.getDateFormatString(),
                 Long.parseLong(this.jTextFieldID.getText()),
                 true
         );        
@@ -197,6 +215,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -358,6 +377,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jTextFieldApellido.setBorder(javax.swing.BorderFactory.createTitledBorder("APELLIDO"));
         jPanel3.add(jTextFieldApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 290, 60));
 
+        jTextFieldFechaNacimiento.setText("00/00/0000");
         jTextFieldFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder("FECHA DE NACMIENTO"));
         jTextFieldFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,7 +419,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldMaquinaActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 290, 60));
+        jPanel3.add(jTextFieldMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 290, 60));
 
         jTextFieldID.setBorder(javax.swing.BorderFactory.createTitledBorder("ID"));
         jTextFieldID.addActionListener(new java.awt.event.ActionListener() {
@@ -444,10 +464,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
         p.setVisible(true);
     }//GEN-LAST:event_jButtonProcesosActionPerformed
 
-    private void jTextFieldFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFechaNacimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldFechaNacimientoActionPerformed
-
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         //pila.push(arr_empleado);
         editar_empleado();
@@ -463,15 +479,11 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         //pila.push(arr_empleado);
-        arr_empleado.remove(i);
+        //arr_empleado.remove(i);
         eliminar_empleado();
         mostrar_matriz();
         clean();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
-
-    private void jTextFieldMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMaquinaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMaquinaActionPerformed
 
     private void jTextFieldIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIDActionPerformed
         // TODO add your handling code here:
@@ -489,6 +501,14 @@ public class FrameEmpleados extends javax.swing.JFrame {
 //        arr_empleado = pila.pop();
 //        mostrar_matriz();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFechaNacimientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldFechaNacimientoActionPerformed
+
+    private void jTextFieldMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMaquinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldMaquinaActionPerformed
 
 
     /**

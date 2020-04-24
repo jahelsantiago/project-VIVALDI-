@@ -18,7 +18,8 @@ import java.util.ArrayList;
 public class Ejemplo2 {
     public static void main(String[] args) {
         //crear_xml("EmpleadoJ","basedatosEmpleados.xml");
-
+//        a();
+        imprimir_empleados();
        
     }
     

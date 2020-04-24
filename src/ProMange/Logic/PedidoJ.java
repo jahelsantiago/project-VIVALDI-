@@ -9,8 +9,10 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class PedidoJ <J> {
-    int id_pedido,cantidad;
-    Date fecha_inicio,fecha_entrega;
+    int id_pedido;
+    int cantidad;
+    Date fecha_inicio;
+    Date fecha_entrega;
     ArrayList productos; //revisar como crear la lista y leerla
 
     public PedidoJ(int id_pedido, Date fecha_inicio, Date fecha_entrega, ArrayList  productos, int cantidad) {
@@ -23,7 +25,11 @@ public class PedidoJ <J> {
     }
 
     public PedidoJ() {
-        
+        this.id_pedido = 0;
+        this.cantidad = 0;
+        this.setFecha_inicio("00/00/0000");
+        this.setFecha_entrega("00/00/0000");
+               
     }
 
     public int getId_pedido() {
@@ -39,7 +45,7 @@ public class PedidoJ <J> {
         return formato.format(fecha_inicio);
     }
 
-    public void setFecha_inicio (J fecha_inicio) {
+    public void setFecha_inicio (String fecha_inicio) {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date fechaDate = null;
             try {
@@ -57,7 +63,7 @@ public class PedidoJ <J> {
         return formato.format(fecha_entrega);
     }
 
-    public void setFecha_entrega (J fecha_entrega) {
+    public void setFecha_entrega (String fecha_entrega) {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date fechaDate = null;
             try {

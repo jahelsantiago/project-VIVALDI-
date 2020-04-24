@@ -8,21 +8,24 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class OrdenJ <J>{
-    String referencia_producto, estado;
-    int tiempo_elaboracion,cantidad;
+    String referencia_producto;
+    String estado;
+    int tiempo_elaboracion;
+    int cantidad;
     Date fecha_inicio;
 
     public OrdenJ(String referencia_producto, int tiempo_elaboracion, int cantidad_inventario) {
         this.referencia_producto = referencia_producto;
         this.tiempo_elaboracion = tiempo_elaboracion;
         this.cantidad = cantidad_inventario;
-
-        //this.setFecha_inicio(Date.from(Instant.MIN));
+        this.estado = "pendiente";
+        this.setFecha_inicio("0/00/0000");
+//this.setFecha_inicio(Date.from(Instant.MIN));
     }
     
     public OrdenJ(){
         this.referencia_producto = "ninguna";
-        this.estado = "incpleto";
+        this.estado = "incompleto";
         this.tiempo_elaboracion = 0;
         this.cantidad = 0;
         this.setFecha_inicio("0/00/0000");

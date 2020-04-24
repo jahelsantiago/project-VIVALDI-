@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -32,9 +33,9 @@ public class FrameInventario extends javax.swing.JFrame {
     String categoria ="";
     String tiempo_elab;
     String  cantidad;    
-    Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
+    
     ProductoJ_excel productos_excel = new ProductoJ_excel();    
-    ArrayList<ProductoJ> arr_productos = productos_excel.obtenerProductos();
+    ArrayList<ProductoJ> arr_productos;
     
     int i;
     
@@ -46,6 +47,11 @@ public class FrameInventario extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
+        try{
+            arr_productos = productos_excel.obtenerProductos();
+        }catch(Exception nullPoinerException){
+            System.out.print("nullponer");
+        }
         mouse_listen();
         //leer carpeta y configurar
         //arr_empleados = leer empleados
@@ -475,6 +481,18 @@ public class FrameInventario extends javax.swing.JFrame {
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         //pila.push(arr_productos);
+        
+        if(
+            jTextFieldNombre.getText().isEmpty() ||
+            jTextFieldCategoria.getText().isEmpty() ||
+            jTextFieldReferencia.getText().isEmpty() ||
+            jTextFieldTiempoElaboracion.getText().isEmpty()                         
+          )
+        {
+            JOptionPane.showMessageDialog(null, "Porfavor llenar todos los atributos", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
+            System.out.print("eraeeraer");
+            return;
+        }
         crear_producto();
         mostrar_matriz();
         clean();
@@ -482,7 +500,7 @@ public class FrameInventario extends javax.swing.JFrame {
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         //pila.push(arr_productos);
-        arr_productos.remove(i);
+        //arr_productos.remove(i);
         eliminar_producto();
         mostrar_matriz();
         clean();

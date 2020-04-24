@@ -5,10 +5,14 @@
  */
 package ProMange.UI;
 
-import ProMange.Logic.Supervisor;
+import ProMange.Logic.*;
+import ProMange.Logic.Xml_clases.*;
+import static ProMange.Logic.Xml_clases.archivos_gestor.crear_carpeta;
 import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
-import static ProMange.UI.FrameSignup.leerFichero;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  *
@@ -22,31 +26,64 @@ public class FrameLogin extends javax.swing.JFrame {
     
     public FrameLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
+        
+        this.setLocationRelativeTo(null);
         try {
             this.usuario=leerFichero();
             System.err.println("fishero leido con exito");
         } catch (IOException ex) {
-            System.err.println("eroor al leer fishero");
-            inicializarCuenta();
-            this.setVisible(false);
+            System.err.println("eroor al leer fishero");                                              
         } catch (ClassNotFoundException ex) {
             System.err.println("NO hay archivo");
-            inicializarCuenta();
-            this.setVisible(false);
         }
         this.setVisible(false);
     }
     
-    public void inicializarCuenta(){
-        this.setVisible(false);
+    	public static Supervisor leerFichero() throws IOException, ClassNotFoundException {
+		File file=new File("xml_archivos/DatosSupervisor");
+		FileInputStream f = new FileInputStream(file);
+                ObjectInputStream s = new ObjectInputStream(f);
+        	Supervisor usuario = (Supervisor) s.readObject();
+	        s.close();
+		return usuario;
+	}
+    
+    public void inicializarCuenta(){        
+        System.err.println("inicializado con exito");
+        crear_carpeta();
+        
         crear_xml("Maquina","basedatosMaquina.xml");
         crear_xml("EmpleadoJ","basedatosEmpleados.xml");
         crear_xml("PedidoJ","basedatosPedidos.xml");
         crear_xml("ProductoJ","basedatosProductos.xml");
         crear_xml("Orden","basedatosOrdenes.xml");
-        FrameSignup l = new FrameSignup();
-        l.setVisible(true); 
-        this.setVisible(false);
+        
+        
+        EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();        
+        EmpleadoJ nuevo_empleado = new EmpleadoJ();
+        empleado_excel.agregarEmpleado(nuevo_empleado);
+        
+        Maquina_excel maquina_excel = new Maquina_excel();
+        Maquina nueva_maquina = new Maquina();
+        maquina_excel.agregarMaquina(nueva_maquina);
+        
+        OrdenJ_excel orden_excel = new OrdenJ_excel();
+        OrdenJ nueva_orden = new OrdenJ();
+        orden_excel.agregarOrden(nueva_orden);
+        
+        ProductoJ_excel producto_excel = new ProductoJ_excel();
+        ProductoJ nuevo_producto = new ProductoJ();
+        producto_excel.agregarProducto(nuevo_producto);
+        
+//        Pedido_excel pedido_excel = new Pedido_excel();
+//        PedidoJ nuevo_pedido = new PedidoJ();
+//        pedido_excel.agregarPedido(nuevo_pedido);
+        
+//        FrameSignup l = new FrameSignup();
+//        l.setVisible(true); 
+//        this.setVisible(false);
             
     }
 
@@ -68,48 +105,46 @@ public class FrameLogin extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jTextFieldNombre = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPasswordField1.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setBorder(null);
         jPasswordField1.setCaretColor(new java.awt.Color(255, 255, 255));
+        jPasswordField1.setOpaque(false);
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 260, 30));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 260, 20));
+        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 260, 30));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 260, 20));
 
         jLabel2.setForeground(new java.awt.Color(53, 113, 117));
         jLabel2.setText("Contraseña");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
         jLabel3.setForeground(new java.awt.Color(53, 113, 117));
         jLabel3.setText("Nombre");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 260, 30));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 260, 30));
 
-        jTextFieldNombre.setBackground(new java.awt.Color(0, 0, 0));
-        jTextFieldNombre.setForeground(new java.awt.Color(255, 255, 255));
         jTextFieldNombre.setBorder(null);
-        jPanel2.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 260, 30));
+        jTextFieldNombre.setOpaque(false);
+        jPanel2.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 260, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 310, 210));
-
-        jButton1.setBackground(new java.awt.Color(153, 0, 153));
+        jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setFont(new java.awt.Font("Mongolian Baiti", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Iniciar secion");
@@ -119,18 +154,42 @@ public class FrameLogin extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 400, 250, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 110, 40));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/gmail_30px.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, -1, -1));
+        jButton2.setBackground(new java.awt.Color(102, 102, 102));
+        jButton2.setFont(new java.awt.Font("Mongolian Baiti", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Registrese");
+        jButton2.setBorderPainted(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 120, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/facebook_old_30px.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 400, 470));
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("High Tower Text", 0, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Factory Manager");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
+        jButton4.setBorderPainted(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton4.setOpaque(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 30, 30));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 130));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 610));
 
@@ -150,6 +209,16 @@ public class FrameLogin extends javax.swing.JFrame {
             e.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        FrameSignup s = new FrameSignup();
+        this.setVisible(false);
+        s.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,13 +260,14 @@ public class FrameLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

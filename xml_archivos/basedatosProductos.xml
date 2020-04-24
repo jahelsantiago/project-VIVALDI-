@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><ProductoJ><Inicio/></ProductoJ>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ProductoJ><Inicio/><Producto><Referencia>0</Referencia><Nombre>ninguno</Nombre><Categoria>ninguno</Categoria><Tiempo_de_elaboracion>0</Tiempo_de_elaboracion><Cantidad_inventario>0</Cantidad_inventario></Producto><Producto><Referencia>g</Referencia><Nombre>g</Nombre><Categoria>g</Categoria><Tiempo_de_elaboracion>6</Tiempo_de_elaboracion><Cantidad_inventario>7</Cantidad_inventario></Producto></ProductoJ>

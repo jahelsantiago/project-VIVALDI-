@@ -1,4 +1,3 @@
-
 //Codigo de ayuda obtenido de https://balusoft.wordpress.com/2011/07/12/usar-un-archivo-xml-como-una-base-de-datos-java-parte-12/
 
 package ProMange.Logic.Xml_clases;
