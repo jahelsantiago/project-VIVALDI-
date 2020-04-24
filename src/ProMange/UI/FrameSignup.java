@@ -25,6 +25,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,8 +40,8 @@ public class FrameSignup extends javax.swing.JFrame {
         
     }
     
-        public void inicializarCuenta(){ 
-            this.setLocationRelativeTo(null);
+    public void inicializarCuenta(){ 
+        this.setLocationRelativeTo(null);
         System.err.println("inicializado con exito");
         crear_carpeta();
         
@@ -215,6 +216,8 @@ public class FrameSignup extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(FrameSignup.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Las contraseñas no concuerdan", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_jButtonSingUpActionPerformed
 
