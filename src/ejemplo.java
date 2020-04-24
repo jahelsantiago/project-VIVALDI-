@@ -8,9 +8,13 @@ import static ProMange.Logic.Xml_clases.archivos_gestor.eliminar_carpeta;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
 
 
 public class ejemplo {
+    
+    static String archivo_xml_maquinas = "basedatosMaquina.xml";
+    static String etiqueta_empleados = "Maquina"; // reemplazar por la variable Etiqueta_objeto_almacenar en la funcion de crear_xlm
 
     public static void main(String[] args) {
        crear_carpeta();
@@ -24,9 +28,12 @@ public class ejemplo {
        a1.agregarEmpleado(b);
        a1.agregarEmpleado(c);
        a1.agregarEmpleado(d);
-       arreglo_empleados =  a1.obtenerEmpleados_arr();  
+       arreglo_empleados =  a1.obtenerEmpleados();  
        System.out.println(arreglo_empleados.get(2).toString());
        //eliminar_carpeta("basedatosEmpleados.xml");
+
+       //crear_carpeta();
+       crear_xml("Pedido","basedatosPedidos.xml");
     }
     
 }

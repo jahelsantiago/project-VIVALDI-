@@ -20,6 +20,7 @@ import org.w3c.dom.Text;
 
 
 public class archivos_gestor {
+    
     public static void crear_carpeta(){
         String sCarpAct = System.getProperty("user.dir");
         File directorio = new File(sCarpAct+"//xml_archivos");
@@ -34,7 +35,6 @@ public class archivos_gestor {
     public static void eliminar_carpeta(String archivo_borrar){
         String sCarpAct = System.getProperty("user.dir");
         File archivo1 = new File(sCarpAct+"//xml_archivos"+"//"+archivo_borrar);
-       
         if (archivo1.delete())
             JOptionPane.showMessageDialog(null,"La carpera "+archivo_borrar +" se a borrado exitosamente",""+"Exito", JOptionPane.INFORMATION_MESSAGE);
         else
@@ -95,7 +95,7 @@ public class archivos_gestor {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, result);
             
-            JOptionPane.showMessageDialog(null,"La carpera "+nombre_archivo +" se a creado exitosamente",""+"Exito", JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(null,"La carpera "+nombre_archivo +" se a creado exitosamente",""+"Exito", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (ParserConfigurationException | TransformerException ex) {
             JOptionPane.showMessageDialog(null,"La carpera "+nombre_archivo +" No se a creado",""+"Error", JOptionPane.WARNING_MESSAGE);

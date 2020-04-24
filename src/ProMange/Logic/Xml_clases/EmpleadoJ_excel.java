@@ -7,9 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import ED.LinkedList;
 import ProMange.Logic.EmpleadoJ;
-import ProMange.Logic.EmpleadoJ;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,12 +27,16 @@ import javax.xml.transform.stream.StreamResult;
 
 public class EmpleadoJ_excel <J> {
     
+    //String con las que operar con funciones ubicadas en archivos_gestor
+    static String archivo_xml_empleados = "basedatosEmpleados.xml";
+    static String etiqueta_empleados = "EmpleadoJ"; // reemplazar por la variable Etiqueta_objeto_almacenar en la funcion de crear_xlm
+    
     private static String obtenerNodoValor(String strTag, Element empleadoJ){
         Node nValor = (Node)empleadoJ.getElementsByTagName(strTag).item(0).getFirstChild();
         return nValor.getNodeValue();
     }
     
-    public LinkedList obtenerEmpleados(){
+    public LinkedList obtenerEmpleadosLinked(){
         LinkedList<EmpleadoJ> lista_empleados = new LinkedList<>();
         try{
             //Validar y leer nuestro XML
@@ -81,7 +83,7 @@ public class EmpleadoJ_excel <J> {
         return lista_empleados;
     }
     
-    public ArrayList obtenerEmpleados_arr(){
+    public ArrayList<EmpleadoJ> obtenerEmpleados(){
         ArrayList<EmpleadoJ> lista_empleados = new ArrayList<>();
         try{
             //Validar y leer nuestro XML
@@ -127,7 +129,6 @@ public class EmpleadoJ_excel <J> {
         }
         return lista_empleados;
     }
-    
     
     public void agregarEmpleado(EmpleadoJ nuevo){
         try{

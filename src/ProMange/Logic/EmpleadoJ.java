@@ -19,10 +19,12 @@ public class EmpleadoJ extends PersonaJ{
     
     
     
-    public EmpleadoJ(String nombre, String apellido, Date fecha_nacimiento, long id) {
-        super(nombre, apellido, fecha_nacimiento, id);
-       this. estado = false;
-       this.maquina = 0;
+    public EmpleadoJ(String nombre, String apellido, String fecha_nacimiento, long id, boolean estado) {
+        this.setNombre(nombre);
+       this.setApellido(apellido);
+       this.setEstado(estado);
+       this.setFecha_nacimiento(fecha_nacimiento);
+       this.setId(id);
     }
 
     public boolean getEstado() {

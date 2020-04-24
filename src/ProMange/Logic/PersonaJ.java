@@ -1,12 +1,14 @@
 
 package ProMange.Logic;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 
-public class PersonaJ <J>{
+public class PersonaJ <J> implements Serializable{
     
     String nombre,apellido;
     Date fecha_nacimiento;
@@ -56,7 +58,7 @@ public class PersonaJ <J>{
             } 
             catch (ParseException ex) 
             {
-                System.out.println(ex);
+                JOptionPane.showMessageDialog(null,"La fecha de nacimiento no se ha ingresado exitosamente",""+"Error", JOptionPane.WARNING_MESSAGE);
             }
             this.fecha_nacimiento = fechaDate;
     }
