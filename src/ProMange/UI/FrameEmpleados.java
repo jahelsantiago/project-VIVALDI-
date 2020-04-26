@@ -39,7 +39,12 @@ public class FrameEmpleados extends javax.swing.JFrame {
     int i;
     
     
-    
+    //test de tiempo
+    long time_start,time_end;
+//    time_start = System.currentTimeMillis();
+//    //funcion va aca
+//    time_end = System.currentTimeMillis();
+//    System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
     
     
     public FrameEmpleados() {

@@ -87,6 +87,7 @@
                 </BevelBorder>
               </Border>
             </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -145,6 +146,16 @@
               <Image iconType="3" name="/ProMange/Images/factory_25px.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Procesos"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder>
+                  <Color PropertyName="highlightOuter" blue="cc" green="0" red="cc" type="rgb"/>
+                  <Color PropertyName="highlightInner" blue="cc" green="0" red="cc" type="rgb"/>
+                  <Color PropertyName="shadowOuter" blue="66" green="0" red="66" type="rgb"/>
+                  <Color PropertyName="shadowInner" blue="66" green="0" red="66" type="rgb"/>
+                </BevelBorder>
+              </Border>
+            </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
           <Events>

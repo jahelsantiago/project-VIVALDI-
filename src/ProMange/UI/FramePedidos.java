@@ -53,7 +53,7 @@ public class FramePedidos extends javax.swing.JFrame {
     int j;
     
     
-    
+    long time_start,time_end;
     
     
     
@@ -539,13 +539,19 @@ public class FramePedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        time_start = System.currentTimeMillis();
         crear_Orden();
         mostrar_matriz_ordenes();
+        time_end = System.currentTimeMillis();
+        System.out.println("the task edit orden has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        time_start = System.currentTimeMillis();
         eliminar_orden();
         mostrar_matriz_ordenes();
+        time_end = System.currentTimeMillis();
+        System.out.println("the task eliminar orden has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jTextFieldBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscaActionPerformed

@@ -95,6 +95,7 @@ public class FrameProcesos extends javax.swing.JFrame {
         jButtonInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/choice_25px.png"))); // NOI18N
         jButtonInventario.setText("Inventario");
         jButtonInventario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 0, 153), new java.awt.Color(153, 0, 153), new java.awt.Color(51, 0, 51), new java.awt.Color(51, 0, 51)));
+        jButtonInventario.setBorderPainted(false);
         jButtonInventario.setContentAreaFilled(false);
         jButtonInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +123,7 @@ public class FrameProcesos extends javax.swing.JFrame {
         jButtonProcesos.setForeground(new java.awt.Color(255, 255, 255));
         jButtonProcesos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/factory_25px.png"))); // NOI18N
         jButtonProcesos.setText("Procesos");
+        jButtonProcesos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 0, 204), new java.awt.Color(204, 0, 204), new java.awt.Color(102, 0, 102), new java.awt.Color(102, 0, 102)));
         jButtonProcesos.setContentAreaFilled(false);
         jButtonProcesos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,7 +288,7 @@ public class FrameProcesos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEmpleadosActionPerformed
 
     private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
-        FrameProcesos cv = new FrameProcesos();
+        FrameInventario cv = new FrameInventario();
         cv.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonInventarioActionPerformed

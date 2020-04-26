@@ -39,6 +39,12 @@ public class FrameInventario extends javax.swing.JFrame {
     
     int i;
     
+        //test de tiempo
+    long time_start,time_end;
+//    time_start = System.currentTimeMillis();
+//    //funcion va aca
+//    time_end = System.currentTimeMillis();
+//    System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
     
     
     
@@ -474,14 +480,20 @@ public class FrameInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCantidadActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        //pila.push(arr_productos);
+        time_start = System.currentTimeMillis();
         editar_producto();
         mostrar_matriz();
+        time_end = System.currentTimeMillis();
+        System.out.println("the task edit has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         //pila.push(arr_productos);
-        
+        //    time_start = System.currentTimeMillis();
+//    //funcion va aca
+//    time_end = System.currentTimeMillis();
+//    System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
+        time_start = System.currentTimeMillis();
         if(
             jTextFieldNombre.getText().isEmpty() ||
             jTextFieldCategoria.getText().isEmpty() ||
@@ -496,14 +508,21 @@ public class FrameInventario extends javax.swing.JFrame {
         crear_producto();
         mostrar_matriz();
         clean();
+        time_end = System.currentTimeMillis();
+        System.out.println("the task create has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         //pila.push(arr_productos);
         //arr_productos.remove(i);
+        time_start = System.currentTimeMillis();
+
         eliminar_producto();
         mostrar_matriz();
         clean();
+        
+        time_end = System.currentTimeMillis();
+        System.out.println("the task edit has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jTextFieldTiempoElaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTiempoElaboracionActionPerformed
