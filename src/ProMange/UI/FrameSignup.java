@@ -36,7 +36,7 @@ public class FrameSignup extends javax.swing.JFrame {
         
     public FrameSignup() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         
     }
     
@@ -53,30 +53,31 @@ public class FrameSignup extends javax.swing.JFrame {
         
         
         EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();        
-        EmpleadoJ nuevo_empleado = new EmpleadoJ();
-        empleado_excel.agregarEmpleado(nuevo_empleado);
-        
         Maquina_excel maquina_excel = new Maquina_excel();
-        Maquina nueva_maquina = new Maquina();
-        maquina_excel.agregarMaquina(nueva_maquina);
-        
         OrdenJ_excel orden_excel = new OrdenJ_excel();
-        OrdenJ nueva_orden = new OrdenJ();
-        orden_excel.agregarOrden(nueva_orden);
-        
         ProductoJ_excel producto_excel = new ProductoJ_excel();
-        ProductoJ nuevo_producto = new ProductoJ();
-        producto_excel.agregarProducto(nuevo_producto);
+        FrameLogin j = new FrameLogin();
+        
+//        EmpleadoJ nuevo_empleado = new EmpleadoJ();
+//        empleado_excel.agregarEmpleado(nuevo_empleado);
+        
+//        Maquina nueva_maquina = new Maquina();
+//        maquina_excel.agregarMaquina(nueva_maquina);
+//        
+//        OrdenJ nueva_orden = new OrdenJ();
+//        orden_excel.agregarOrden(nueva_orden);
+//        
+//        ProductoJ nuevo_producto = new ProductoJ();
+//        producto_excel.agregarProducto(nuevo_producto);
+//        
+        j.setVisible(true);
+        this.setVisible(false);
+                
         
 //        Pedido_excel pedido_excel = new Pedido_excel();
 //        PedidoJ nuevo_pedido = new PedidoJ();
 //        pedido_excel.agregarPedido(nuevo_pedido);
-        
-            
-        
-        
-        
-        
+
 //        FrameSignup l = new FrameSignup();
 //        l.setVisible(true); 
 //        this.setVisible(false);
@@ -119,6 +120,7 @@ public class FrameSignup extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -128,7 +130,6 @@ public class FrameSignup extends javax.swing.JFrame {
         jLabel1.setText("Confirme Contraseña");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
-        jTextName.setForeground(new java.awt.Color(255, 255, 255));
         jTextName.setBorder(null);
         jTextName.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel2.add(jTextName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 260, 30));
@@ -190,6 +191,11 @@ public class FrameSignup extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 30, 30));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 80));
@@ -206,7 +212,7 @@ public class FrameSignup extends javax.swing.JFrame {
         String pasword2 = this.jPasswordField2.getText();
         
         
-        if(pasword == pasword2){
+        if(pasword.equals(pasword2)){
             try {
                 Supervisor sup = new Supervisor(user, correo, pasword);
                 escribirFishero(sup);
@@ -224,6 +230,10 @@ public class FrameSignup extends javax.swing.JFrame {
     private void jTextNameEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNameEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNameEmailActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

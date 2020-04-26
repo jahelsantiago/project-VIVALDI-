@@ -203,7 +203,7 @@ public class FrameLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.nombre = jTextFieldNombre.getSelectedText();
         this.contraseña = jPasswordField1.getText();
-        if(usuario.getPassword()==contraseña){
+        if(usuario.getPassword().equals(contraseña)){
             FrameEmpleados e= new FrameEmpleados();            
             this.setVisible(false);
             e.setVisible(true);

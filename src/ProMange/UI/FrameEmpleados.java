@@ -49,7 +49,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         try{
             arr_empleado=empleado_excel.obtenerEmpleados();
         }catch(Exception nullPoinerException){
-            
+            arr_empleado = new ArrayList<>();
         }
         mouse_listen();
         //leer carpeta y configurar
@@ -126,6 +126,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
             System.out.print("eraeeraer");
             return;
         }
+
         EmpleadoJ empleado=new EmpleadoJ(
                 jTextFieldNombre.getText(),
                 jTextFieldApellido.getText(),

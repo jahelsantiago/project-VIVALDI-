@@ -65,11 +65,13 @@ public class FramePedidos extends javax.swing.JFrame {
             arr_productos = productos_excel.obtenerProductos();
         } catch (Exception e) {
             System.err.println("error en productors");
+            arr_productos = new ArrayList<>();
         }
         try {
             arr_ordenes = ordenes_excel.obtenerOrden();
         } catch (Exception e) {
             System.err.println("error en ordenes");
+            arr_ordenes = new ArrayList<>();
         }
         mouse_listen();
         
@@ -188,8 +190,20 @@ public class FramePedidos extends javax.swing.JFrame {
         }
                                 
     }
+    
+    private boolean condicion_igualdad(String comp, String busc){
+       return comp.substring(0, busc.length()).equalsIgnoreCase(busc);
+    }
 
-
+    public void buscar_inventario(String busc){
+        ArrayList<String> arr_pord_com = new ArrayList<>();
+        for (int k = 0; k < 10; k++) {
+            if(condicion_igualdad(arr_productos.get(i).getNombre(), busc)){
+                arr_pord_com.add(arr_productos.get(i).getNombre());
+            }
+        }
+        
+    }
     
 
     
@@ -227,6 +241,8 @@ public class FramePedidos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jTextFieldBusca = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -359,7 +375,7 @@ public class FramePedidos extends javax.swing.JFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 400, 560));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 400, 490));
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -464,7 +480,21 @@ public class FramePedidos extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel5.setText("DATOS INVENTARIO");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 230, 60));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 230, 60));
+
+        jTextFieldBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextFieldBusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 250, 40));
+
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 50, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 
@@ -517,6 +547,15 @@ public class FramePedidos extends javax.swing.JFrame {
         eliminar_orden();
         mostrar_matriz_ordenes();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jTextFieldBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldBuscaActionPerformed
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+                                        
+       
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
 
 
     /**
@@ -588,6 +627,7 @@ public class FramePedidos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonEmpleados;
@@ -609,6 +649,7 @@ public class FramePedidos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextFieldBusca;
     private javax.swing.JTextField jTextFieldCantidad;
     // End of variables declaration//GEN-END:variables
 }
