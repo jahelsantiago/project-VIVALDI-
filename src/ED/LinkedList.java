@@ -1,7 +1,7 @@
 
 package ED;
 
-public class LinkedList <J>{
+public class LinkedList <J>{ //mejorarytr
     int size;
     Node head;
     

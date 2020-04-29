@@ -83,8 +83,8 @@ public class EmpleadoJ_excel <J> {
         return lista_empleados;
     }
     
-    public ArrayList<EmpleadoJ> obtenerEmpleados(){
-        ArrayList<EmpleadoJ> lista_empleados = new ArrayList<>();
+    public ED.ArrayList<EmpleadoJ> obtenerEmpleados(){
+        ED.ArrayList<EmpleadoJ> lista_empleados = new ED.ArrayList<>();
         try{
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

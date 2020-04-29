@@ -1,5 +1,5 @@
 
-import ProMange.Logic.EmpleadoJ;
+import ProMange.Logic.EmpleadoJ; //hola
 import ProMange.Logic.ProductoJ;
 import ProMange.Logic.Supervisor;
 import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
@@ -55,7 +55,7 @@ public class Ejemplo2 implements Serializable{
          if(false){
              time_start = System.currentTimeMillis();
             ProductoJ_excel productos_excel = new ProductoJ_excel();    
-            ArrayList<ProductoJ> arr_productos = productos_excel.obtenerProductos();
+             ED.ArrayList<ProductoJ> arr_productos = productos_excel.obtenerProductos();
             empleado_serial empa= new empleado_serial(arr_productos);
              time_end = System.currentTimeMillis();
             System.out.println("the task edit has taken "+ ( time_end - time_start ) +" milliseconds");
@@ -80,10 +80,11 @@ public class Ejemplo2 implements Serializable{
          //escribir xml
          if(false){
             time_start = System.currentTimeMillis();
+             ProductoJ_excel productos_excel = new ProductoJ_excel(); 
+             ED.ArrayList<ProductoJ> arr_productos = productos_excel.obtenerProductos();
             crear_xml("ProductoJ","basedatosProductos.xml");
-            arr_productos.remove(i);
             for (int j = 0; j<arr_productos.size();j++) {
-                productos_excel.agregarProducto(arr_productos.get(i));
+                productos_excel.agregarProducto((ProductoJ)arr_productos.get(i));
             }        
             time_end = System.currentTimeMillis();
             System.out.println("the task edit has taken "+ ( time_end - time_start ) +" milliseconds");
@@ -96,7 +97,7 @@ public class Ejemplo2 implements Serializable{
        public static void imprimir_empleados(){
         EmpleadoJ_excel a = new EmpleadoJ_excel();
 
-        ArrayList b  = a.obtenerEmpleados();
+        ED.ArrayList b  = a.obtenerEmpleados();
         EmpleadoJ mostrar = new EmpleadoJ();
         
         for (int i = 0; i < b.size(); i++) {

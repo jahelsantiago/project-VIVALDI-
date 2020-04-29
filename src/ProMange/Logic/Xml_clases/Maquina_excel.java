@@ -33,8 +33,8 @@ public class Maquina_excel {
         return nValor.getNodeValue();
     }
      
-     public ArrayList<Maquina> obtenerMaquinas(){
-        ArrayList<Maquina> lista_maquinas = new ArrayList<>();
+     public ED.ArrayList<Maquina> obtenerMaquinas(){
+        ED.ArrayList<Maquina> lista_maquinas = new ED.ArrayList<>();
         try{
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -64,7 +64,7 @@ public class Maquina_excel {
                         objMaquina.setEstado(true);
                     }
                     objMaquina.setOperario(Long.parseLong(obtenerNodoValor("Id_Operario",unElemento)));
-                    lista_maquinas.add(objMaquina);
+                    lista_maquinas.add(lista_maquinas.size(),objMaquina);
                 }
                         
             }

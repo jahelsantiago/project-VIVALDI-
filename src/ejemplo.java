@@ -19,7 +19,7 @@ public class ejemplo {
     public static void main(String[] args) {
        crear_carpeta();
        crear_xml("EmpleadoJ","basedatosEmpleados.xml");
-       ArrayList arreglo_empleados = new ArrayList();             
+       ED.ArrayList arreglo_empleados = new ED.ArrayList();             
        EmpleadoJ_excel a1 = new EmpleadoJ_excel();
        
        EmpleadoJ b = new EmpleadoJ();

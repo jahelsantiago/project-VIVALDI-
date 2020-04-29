@@ -56,33 +56,7 @@ public class archivos_gestor {
             
             // Creo los elementos
             Element Inicio = documento.createElement("Inicio");
-            //Por si queremos inicializar el archivo con algun tipo de objeto
-            /*
-            Element coche = documento.createElement("coche");
-
-            // Matricula
-            Element matricula = documento.createElement("matricula");
-            Text textMatricula = documento.createTextNode("1111AAA");
-            matricula.appendChild(textMatricula);
-            coche.appendChild(matricula);
-
-            // Marca
-            Element marca = documento.createElement("marca");
-            Text textMarca = documento.createTextNode("AUDI");
-            marca.appendChild(textMarca);
-            coche.appendChild(marca);
-
-            // Precio
-            Element precio = documento.createElement("precio");
-            Text textPrecio = documento.createTextNode("30000");
-            precio.appendChild(textPrecio);
-            coche.appendChild(precio);
-
-            // Añado al elemento coches el elemento coche
-            coches.appendChild(coche);
             
-            */
-            // Añado al root el elemento coches
             documento.getDocumentElement().appendChild(Inicio);
             
 

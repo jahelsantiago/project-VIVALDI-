@@ -33,8 +33,8 @@ public class OrdenJ_excel {
         return nValor.getNodeValue();
     }
     
-    public ArrayList<OrdenJ> obtenerOrden(){
-        ArrayList<OrdenJ> lista_Orden = new ArrayList<>();
+    public ED.ArrayList<OrdenJ> obtenerOrden(){
+        ED.ArrayList<OrdenJ> lista_Orden = new ED.ArrayList<>();
         try{
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

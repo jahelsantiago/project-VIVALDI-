@@ -36,8 +36,8 @@ public class ProductoJ_excel implements Serializable{
         return nValor.getNodeValue();
     }
     
-    public ArrayList<ProductoJ> obtenerProductos(){
-        ArrayList<ProductoJ> lista_producto = new ArrayList<>();
+    public ED.ArrayList<ProductoJ> obtenerProductos(){
+        ED.ArrayList<ProductoJ> lista_producto = new ED.ArrayList<>();
         try{
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

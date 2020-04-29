@@ -54,38 +54,38 @@ public class Pedido_excel {
         return ejemploLista;
      }
     
-    public static ArrayList ListaProductos (String cadenaProductos){
+    public static ED.ArrayList ListaProductos (String cadenaProductos){
         
         //Guardamos todas las cadenas separadas por comas  (produc,canti,produc,canti,......)
          String[] ListaProductos = null;
          ListaProductos = cadenaProductos.split(",");   
         
          //Lista donde se guardaran una lista de prodcutos con una lista de cantidades
-        ArrayList <ArrayList<String>> ejemploLista = new ArrayList<ArrayList<String>>();
-        ArrayList<String> productos = new ArrayList<String>();
-        ArrayList<String> cantidad = new ArrayList<String>();
+        ED.ArrayList <ED.ArrayList<String>> ejemploLista = new ED.ArrayList<ED.ArrayList<String>>();
+        ED.ArrayList<String> productos = new ED.ArrayList<String>();
+        ED.ArrayList<String> cantidad = new ED.ArrayList<String>();
         int j=0;
         
         for (int i = 0; i < (ListaProductos.length/2); i++) {
             String producto =ListaProductos[j];
             String cant =ListaProductos[j+1];
-            productos.add(producto);
-            cantidad.add(cant);
+            productos.add(i,producto);
+            cantidad.add(i,cant);
             j = j+2;
         }       
 
-        ejemploLista.add(productos);
-        ejemploLista.add(cantidad);
+        ejemploLista.add(0,productos);
+        ejemploLista.add(1,cantidad);
         
         return ejemploLista;
      }
      
-    public static String ListaProductos_excel (ArrayList productos_guardar){
+    public static String ListaProductos_excel (ED.ArrayList productos_guardar){
         
         //Guardamos todas las cadenas separadas por comas  (produc,canti,produc,canti,......) 
    
-        ArrayList productos = (ArrayList) productos_guardar.get(0);
-        ArrayList cantidad = (ArrayList) productos_guardar.get(1);
+        ED.ArrayList productos = (ED.ArrayList) productos_guardar.get(0);
+        ED.ArrayList cantidad = (ED.ArrayList) productos_guardar.get(1);
         
         String retorno = "";
         
@@ -103,8 +103,8 @@ public class Pedido_excel {
         return nValor.getNodeValue();
     }
       
-    public static ArrayList<PedidoJ> obtenerPedidos(){
-        ArrayList<PedidoJ> lista_pedidos = new ArrayList<>();
+    public static ED.ArrayList<PedidoJ> obtenerPedidos(){
+        ED.ArrayList<PedidoJ> lista_pedidos = new ED.ArrayList<>();
         try{
             //Validar y leer nuestro XML
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -129,10 +129,10 @@ public class Pedido_excel {
                     objPedido.setId_pedido(Integer.parseInt(obtenerNodoValor("Id_pedido",unElemento)));
                     objPedido.setFecha_inicio(obtenerNodoValor("Fecha_inicio",unElemento));
                     objPedido.setFecha_entrega(obtenerNodoValor("Fecha_entrega",unElemento));
-                    ArrayList productos_pedidos = ListaProductos(obtenerNodoValor("Productos_pedidos",unElemento));
+                    ED.ArrayList productos_pedidos = ListaProductos(obtenerNodoValor("Productos_pedidos",unElemento));
                     objPedido.setProductos(productos_pedidos);
                     
-                    lista_pedidos.add(objPedido);
+                    lista_pedidos.add(lista_pedidos.size(),objPedido);
                 }
                         
             }

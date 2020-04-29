@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class ArrayList<J> implements LinearList,Iterable<J>,Serializable {
     
     //atributos
-    protected J[] arr_objetos;
+    public J[] arr_objetos;
     protected int size;
     protected int len;
     
@@ -48,8 +48,9 @@ public class ArrayList<J> implements LinearList,Iterable<J>,Serializable {
          checkIndex(index);
          return arr_objetos[index];
     }
-
-    public int indexOf(J elemento_a_encontrar) {
+    
+    @Override
+    public int indexOf(Object elemento_a_encontrar) {
          for (int i = 0; i < size; i++) {
              if (arr_objetos[i].equals(elemento_a_encontrar)) {
                  return i;
@@ -115,13 +116,9 @@ public class ArrayList<J> implements LinearList,Iterable<J>,Serializable {
 
     @Override
     public Iterator<J> iterator() {
-       return new MyArrayListIterator<J>(this);
+       return new ArrayListIterator<J>(this);
     }
 
-    @Override
-    public int indexOf(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
   
     
 }

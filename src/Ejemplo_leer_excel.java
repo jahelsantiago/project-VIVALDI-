@@ -19,7 +19,7 @@ public class Ejemplo_leer_excel {
     public static void imprimir_empleados(){
         EmpleadoJ_excel a = new EmpleadoJ_excel();
 
-        ArrayList b  = a.obtenerEmpleados();
+        ED.ArrayList b  = a.obtenerEmpleados();
         EmpleadoJ mostrar = new EmpleadoJ();
         
         for (int i = 0; i < b.size(); i++) {
@@ -37,7 +37,7 @@ public class Ejemplo_leer_excel {
     }
     public static void imprimir_maquinas(){
         Maquina_excel b = new Maquina_excel();
-       ArrayList c = b.obtenerMaquinas();
+       ED.ArrayList c = b.obtenerMaquinas();
        Maquina mostrar = new Maquina();
         for (int i = 0; i < c.size(); i++) {
             mostrar = (Maquina) c.get(i);
@@ -51,7 +51,7 @@ public class Ejemplo_leer_excel {
        
        ProductoJ_excel b = new ProductoJ_excel();
        b.agregarProducto(a);
-       ArrayList c = new ArrayList();
+       ED.ArrayList c = new ED.ArrayList();
        c = b.obtenerProductos();
        ProductoJ d = new ProductoJ();
        
@@ -80,7 +80,7 @@ public class Ejemplo_leer_excel {
             String producto =ListaProductos[j];
             String cant =ListaProductos[j+1];
             productos.push(producto, i);
-            cantidad.push(cant, i);
+            cantidad.push(cant,i);
             j = j+2;
         }       
 
@@ -90,38 +90,38 @@ public class Ejemplo_leer_excel {
         return ejemploLista;
      }
     
-    public static ArrayList ListaProductos (String cadenaProductos){
+    public static ED.ArrayList ListaProductos (String cadenaProductos){
         
         //Guardamos todas las cadenas separadas por comas  (produc,canti,produc,canti,......)
          String[] ListaProductos = null;
          ListaProductos = cadenaProductos.split(",");   
         
          //Lista donde se guardaran una lista de prodcutos con una lista de cantidades
-        ArrayList <ArrayList<String>> ejemploLista = new ArrayList<ArrayList<String>>();
-        ArrayList<String> productos = new ArrayList<String>();
-        ArrayList<String> cantidad = new ArrayList<String>();
+        ED.ArrayList <ED.ArrayList<String>> ejemploLista = new ED.ArrayList<ED.ArrayList<String>>();
+        ED.ArrayList<String> productos = new ED.ArrayList<String>();
+        ED.ArrayList<String> cantidad = new ED.ArrayList<String>();
         int j=0;
         
         for (int i = 0; i < (ListaProductos.length/2); i++) {
             String producto =ListaProductos[j];
             String cant =ListaProductos[j+1];
-            productos.add(producto);
-            cantidad.add(cant);
+            productos.add(i,producto);
+            cantidad.add(i,cant);
             j = j+2;
         }       
 
-        ejemploLista.add(productos);
-        ejemploLista.add(cantidad);
+        ejemploLista.add(0,productos);
+        ejemploLista.add(1,cantidad);
         
         return ejemploLista;
      }
      
-    public static String ListaProductos_excel (ArrayList productos_guardar){
+    public static String ListaProductos_excel (ED.ArrayList productos_guardar){
         
         //Guardamos todas las cadenas separadas por comas  (produc,canti,produc,canti,......) 
    
-        ArrayList productos = (ArrayList) productos_guardar.get(0);
-        ArrayList cantidad = (ArrayList) productos_guardar.get(1);
+        ED.ArrayList productos = (ED.ArrayList) productos_guardar.get(0);
+        ED.ArrayList cantidad = (ED.ArrayList) productos_guardar.get(1);
         
         String retorno = "";
         
@@ -135,9 +135,9 @@ public class Ejemplo_leer_excel {
     public static void main(String[] args) {
     
         String pp = "oro,5,plata,8,arroz,9";
-        ArrayList general =   ListaProductos(pp);
-       ArrayList productos = (ArrayList) general.get(0);
-       ArrayList cantidad = (ArrayList) general.get(1);
+        ED.ArrayList general =   ListaProductos(pp);
+        ED. ArrayList productos = (ED.ArrayList) general.get(0);
+        ED.ArrayList cantidad = (ED.ArrayList) general.get(1);
 
         PedidoJ nuevo = new PedidoJ();
         nuevo.setProductos(general);
@@ -147,7 +147,7 @@ public class Ejemplo_leer_excel {
         
         Pedido_excel o = new Pedido_excel();
         o.agregarPedido(nuevo);
-        ArrayList ped =   o.obtenerPedidos();
+        ED.ArrayList ped =   o.obtenerPedidos();
         PedidoJ mostrar = new PedidoJ();
         mostrar = (PedidoJ) ped.get(0);
         System.out.println(mostrar.getFecha_inicio());

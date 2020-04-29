@@ -14,17 +14,17 @@ import java.util.ArrayList;
  * @author ProBook
  */
 public class empleado_serial implements Serializable{
-    private ArrayList<ProductoJ> arr;
+    private ED.ArrayList<ProductoJ> arr;
 
-    public empleado_serial(ArrayList<ProductoJ> arr) {
+    public empleado_serial(ED.ArrayList<ProductoJ> arr) {
         this.arr = arr;
     }
 
-    public void setArr(ArrayList<ProductoJ> arr) {
+    public void setArr(ED.ArrayList<ProductoJ> arr) {
         this.arr = arr;
     }
 
-    public ArrayList<ProductoJ> getArr() {
+    public ED.ArrayList<ProductoJ> getArr() {
         return arr;
     }
     

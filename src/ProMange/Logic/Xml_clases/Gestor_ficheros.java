@@ -28,7 +28,7 @@ public class Gestor_ficheros implements Serializable{
         s.close();
     }
     
-    public static ArrayList<ProductoJ> leerFicheroProducto() throws IOException, ClassNotFoundException {
+    public static ED.ArrayList<ProductoJ> leerFicheroProducto() throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/empleados");
         FileInputStream f = new FileInputStream(file);
         ObjectInputStream s = new ObjectInputStream(f);

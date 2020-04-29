@@ -14,9 +14,9 @@ public class PedidoJ <J> implements Serializable{
     int cantidad;
     Date fecha_inicio;
     Date fecha_entrega;
-    ArrayList productos; //revisar como crear la lista y leerla
+    ED.ArrayList productos; //revisar como crear la lista y leerla
 
-    public PedidoJ(int id_pedido, Date fecha_inicio, Date fecha_entrega, ArrayList  productos, int cantidad) {
+    public PedidoJ(int id_pedido, Date fecha_inicio, Date fecha_entrega, ED.ArrayList  productos, int cantidad) {
         this.id_pedido = id_pedido;
         this.fecha_inicio = fecha_inicio;
         this.fecha_entrega = fecha_entrega;
@@ -77,11 +77,11 @@ public class PedidoJ <J> implements Serializable{
             this.fecha_entrega = fechaDate;
     }
 
-    public ArrayList  getProductos() {
+    public ED.ArrayList  getProductos() {
         return productos;
     }
 
-    public void setProductos(ArrayList  productos) {
+    public void setProductos(ED.ArrayList  productos) {
         this.productos = productos;
     }
 
