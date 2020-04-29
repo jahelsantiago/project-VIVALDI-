@@ -92,7 +92,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
     
     
     private void mostrar_matriz(){
-//      arr_empleado = empleado_excel.obtenerEmpleados();
         String matris[][] = new String[arr_empleado.size()][5];
         for(int i = 0; i<arr_empleado.size();i++){
             matris[i][0] = Long.toString(((EmpleadoJ)arr_empleado.get(i)).getId());
@@ -156,7 +155,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
           )
         {
             JOptionPane.showMessageDialog(null, "Porfavor llenar todos los atributos", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
-            System.out.print("eraeeraer");
             return;
         }
 
@@ -184,6 +182,61 @@ public class FrameEmpleados extends javax.swing.JFrame {
     
     private void eliminar_empleado(){               
         arr_empleado.remove(i);                    
+    }
+    
+   private boolean esNumero(String a){
+       try {
+            Long.parseLong(a);
+            return true;
+	} catch (NumberFormatException exNum){
+             JOptionPane.showMessageDialog(null, "Porfavor ingresar solo numeros en el campo", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
+             return false;
+        }
+   }
+
+    private ArrayList buscar_empleados(){
+        ArrayList retorno = new ArrayList();
+        if(esNumero(jTextFieldID.getText())){
+            int h=0;
+            for (int j = 0; j < arr_empleado.size(); j++) {
+                EmpleadoJ mostrar = (EmpleadoJ) arr_empleado.get(j);
+                if (jTextFieldID.getText().length() <= Long.toString(mostrar.getId()).length()) {
+                    String Id_emp_ac = Long.toString(mostrar.getId()).substring(0, jTextFieldID.getText().length());
+                    if (jTextFieldID.getText().equals(Id_emp_ac)) {
+                        retorno.add(h,mostrar);
+                        h++;
+                    }
+                }
+            }
+            return retorno;
+        }else{
+            JOptionPane.showMessageDialog(null, "Porfavor ingresar solo numeros en el campo", "Error en la busqueda", JOptionPane.DEFAULT_OPTION);
+             return retorno;
+        }
+        
+ 
+    }
+    
+    private void matriz_resultado_busqueda(ArrayList resultado){
+        if (resultado.size() != 0) {
+            String matris[][] = new String[resultado.size()][5];
+        for(int i = 0; i<resultado.size();i++){
+            matris[i][0] = Long.toString(((EmpleadoJ)resultado.get(i)).getId());
+            matris[i][1] = ((EmpleadoJ)resultado.get(i)).getNombre();
+            matris[i][2] = ((EmpleadoJ)resultado.get(i)).getApellido();
+            matris[i][3] = Integer.toString(((EmpleadoJ)resultado.get(i)).getMaquina());
+            matris[i][4] = ((EmpleadoJ)resultado.get(i)).getFecha_nacimiento();                                                              
+        }
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            matris,
+            new String [] {
+                "ID", "Nombre", "Apellido", "Maquina","Fecha de nacimiento"
+            }
+        ));
+        }else{
+            JOptionPane.showMessageDialog(null, "Ningun empleados posee el Id ingresado", "No encontrado", JOptionPane.DEFAULT_OPTION);
+        }
+                
     }
 
 
@@ -235,6 +288,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jTextFieldMaquina = new javax.swing.JTextField();
         jTextFieldID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jButtonEliminar1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -437,6 +491,15 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jLabel3.setText("DATOS");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 90, 60));
 
+        jButtonEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
+        jButtonEliminar1.setText("Buscar empleados por ID");
+        jButtonEliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, -1, -1));
+
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, 610));
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
@@ -445,7 +508,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -455,7 +518,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/undo_20px.png"))); // NOI18N
         jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -466,7 +529,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_save_30px_2.png"))); // NOI18N
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -476,7 +539,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_microsoft_excel_30px.png"))); // NOI18N
         jButton4.setContentAreaFilled(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -486,7 +549,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_delete_bin_30px.png"))); // NOI18N
         jButton5.setContentAreaFilled(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -595,6 +658,11 @@ public class FrameEmpleados extends javax.swing.JFrame {
         mostrar_matriz();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
+        ArrayList resultado = buscar_empleados();
+        matriz_resultado_busqueda(resultado);
+    }//GEN-LAST:event_jButtonEliminar1ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -643,6 +711,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonEliminar1;
     private javax.swing.JButton jButtonEmpleados;
     private javax.swing.JButton jButtonInventario;
     private javax.swing.JButton jButtonInventario1;
