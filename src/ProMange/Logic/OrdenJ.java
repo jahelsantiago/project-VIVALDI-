@@ -1,13 +1,14 @@
 
 package ProMange.Logic;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-public class OrdenJ <J>{
+public class OrdenJ <J> implements Serializable{
     String referencia_producto;
     String estado;
     int tiempo_elaboracion;

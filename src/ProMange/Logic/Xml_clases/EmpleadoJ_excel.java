@@ -6,7 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import ED.LinkedList;
 import ProMange.Logic.EmpleadoJ;
-import java.util.ArrayList;
+//import java.util.ArrayList;
+import ED.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -115,7 +116,7 @@ public class EmpleadoJ_excel <J> {
                     }
                     objEmpleadoJ.setMaquina(Integer.parseInt(obtenerNodoValor("Maquina",unElemento)));
                     objEmpleadoJ.setId(Long.parseLong(obtenerNodoValor("Id",unElemento)));
-                    lista_empleados.add(objEmpleadoJ);
+                    lista_empleados.add(lista_empleados.size(),objEmpleadoJ);
                 }
                         
             }

@@ -20,7 +20,12 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
+import ED.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 import javax.crypto.AEADBadTagException;
 import javax.swing.ImageIcon;
@@ -37,9 +42,9 @@ public class FramePedidos extends javax.swing.JFrame {
     String categoria ="";
     String tiempo_elab;
     String  cantidad;    
-    Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
+    //Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
     ProductoJ_excel productos_excel = new ProductoJ_excel();    
-    ArrayList<ProductoJ> arr_productos;
+    ArrayList<ProductoJ> arr_productos = new ArrayList<>();
     int i;
     
     //tabla ordenes
@@ -49,7 +54,7 @@ public class FramePedidos extends javax.swing.JFrame {
     String fecha_inicio;
     String estado;
     OrdenJ_excel ordenes_excel = new OrdenJ_excel();
-    ArrayList<OrdenJ> arr_ordenes;
+    ArrayList<OrdenJ> arr_ordenes = new ArrayList<>();
     int j;
     
     
@@ -62,15 +67,15 @@ public class FramePedidos extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
         try {
-            arr_productos = productos_excel.obtenerProductos();
+            arr_productos = leerFichero();
         } catch (Exception e) {
-            System.err.println("error en productors");
+            System.err.println("error en frame pedidos al optener productos");
             arr_productos = new ArrayList<>();
         }
         try {
-            arr_ordenes = ordenes_excel.obtenerOrden();
+            arr_ordenes = leerFicherOrdenes();
         } catch (Exception e) {
-            System.err.println("error en ordenes");
+            System.err.println("eerror en frame pedidos al optener ordenes");
             arr_ordenes = new ArrayList<>();
         }
         mouse_listen();
@@ -83,15 +88,15 @@ public class FramePedidos extends javax.swing.JFrame {
     
     
     
-    public void mostrar_matriz(){
+    private void mostrar_matriz(){
 //      arr_productos = productos_excel.obtenerEmpleados();
         String matris[][] = new String[arr_productos.size()][5];
         for(int i = 0; i<arr_productos.size();i++){
-            matris[i][0] = arr_productos.get(i).getReferencia();
-            matris[i][1] = arr_productos.get(i).getNombre();
-            matris[i][2] = arr_productos.get(i).getCategoria();
-            matris[i][3] = Integer.toString(arr_productos.get(i).getTiempo_elaboracion());
-            matris[i][4] = Integer.toString(arr_productos.get(i).getCantidad_inventario());                                                              
+            matris[i][0] = ((ProductoJ)arr_productos.get(i)).getReferencia();
+            matris[i][1] = ((ProductoJ)arr_productos.get(i)).getNombre();
+            matris[i][2] = ((ProductoJ)arr_productos.get(i)).getCategoria();
+            matris[i][3] = Integer.toString(((ProductoJ)arr_productos.get(i)).getTiempo_elaboracion());
+            matris[i][4] = Integer.toString(((ProductoJ)arr_productos.get(i)).getCantidad_inventario());                                                              
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matris,
@@ -101,15 +106,15 @@ public class FramePedidos extends javax.swing.JFrame {
         ));
                 
     }
-    public void mostrar_matriz_ordenes(){
+    private void mostrar_matriz_ordenes(){
 //      arr_productos = productos_excel.obtenerEmpleados();
         String matris[][] = new String[arr_ordenes.size()][5];
         for(int i = 0; i<arr_ordenes.size();i++){
-            matris[i][0] = arr_ordenes.get(i).getReferencia_producto();
-            matris[i][1] = Integer.toString(arr_ordenes.get(i).getTiempo_elaboracion());
-            matris[i][2] = Integer.toString(arr_ordenes.get(i).getCantidad());
-            matris[i][3] = arr_ordenes.get(i).getFecha_inicio();
-            matris[i][4] = arr_ordenes.get(i).getEstado();                                                              
+            matris[i][0] = ((OrdenJ)arr_ordenes.get(i)).getReferencia_producto();
+            matris[i][1] = Integer.toString(((OrdenJ)arr_ordenes.get(i)).getTiempo_elaboracion());
+            matris[i][2] = Integer.toString(((OrdenJ)arr_ordenes.get(i)).getCantidad());
+            matris[i][3] = ((OrdenJ)arr_ordenes.get(i)).getFecha_inicio();
+            matris[i][4] = ((OrdenJ)arr_ordenes.get(i)).getEstado();                                                              
         }
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             matris,
@@ -177,35 +182,56 @@ public class FramePedidos extends javax.swing.JFrame {
                 Integer.parseInt(tiempo_elab),
                 Integer.parseInt(jTextFieldCantidad.getText())
         );        
-        ordenes_excel.agregarOrden(orden);        
-        arr_ordenes.add(orden);                                
+               
+        arr_ordenes.add(arr_ordenes.size(),orden);        
     }
     
     
     private void eliminar_orden(){       
-        crear_xml("OrdenJ","basedatosOrdenes.xml"); 
-        arr_ordenes.remove(i);
-        for (int i = 0; i<arr_ordenes.size();i++) {
-            ordenes_excel.agregarOrden(arr_ordenes.get(i));
-        }
-                                
+        arr_ordenes.remove(i);                                
     }
     
     private boolean condicion_igualdad(String comp, String busc){
        return comp.substring(0, busc.length()).equalsIgnoreCase(busc);
     }
-
-    public void buscar_inventario(String busc){
-        ArrayList<String> arr_pord_com = new ArrayList<>();
-        for (int k = 0; k < 10; k++) {
-            if(condicion_igualdad(arr_productos.get(i).getNombre(), busc)){
-                arr_pord_com.add(arr_productos.get(i).getNombre());
-            }
-        }
-        
-    }
     
 
+
+
+    
+//    public void buscar_inventario(String busc){
+//        ArrayList<String> arr_pord_com = new ArrayList<>();
+//        for (int k = 0; k < 10; k++) {
+//            if(condicion_igualdad(arr_productos.get(i).getNombre(), busc)){
+//                arr_pord_com.add(arr_productos.get(i).getNombre());
+//            }
+//        }        
+//    }
+    
+    private static ArrayList<ProductoJ> leerFichero() throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/productos");
+        FileInputStream f = new FileInputStream(file);
+        ObjectInputStream s = new ObjectInputStream(f);
+        ArrayList<ProductoJ> usuario = (ArrayList<ProductoJ>) s.readObject();
+        s.close();
+        return usuario;
+    }
+    
+    private static void escribirFisheroOrdenes(ArrayList<OrdenJ> usuario) throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/ordenes");
+        FileOutputStream f =new FileOutputStream(file);
+        ObjectOutputStream s = new ObjectOutputStream(f);
+        s.writeObject(usuario);
+        s.close();
+    }
+    private static ArrayList<OrdenJ> leerFicherOrdenes() throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/ordenes");
+        FileInputStream f = new FileInputStream(file);
+        ObjectInputStream s = new ObjectInputStream(f);
+        ArrayList<OrdenJ> usuario = (ArrayList<OrdenJ>) s.readObject();
+        s.close();
+        return usuario;
+    }    
     
     
     /**
@@ -229,9 +255,6 @@ public class FramePedidos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTextFieldCantidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -243,6 +266,12 @@ public class FramePedidos extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldBusca = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -377,30 +406,6 @@ public class FramePedidos extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 400, 490));
 
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 20, 20));
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/undo_20px.png"))); // NOI18N
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 30, 20));
-
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
-
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextFieldCantidad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
@@ -496,6 +501,63 @@ public class FramePedidos extends javax.swing.JFrame {
         });
         jPanel2.add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 50, 40));
 
+        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 0, 30, 40));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/undo_20px.png"))); // NOI18N
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 0, 30, 40));
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_save_30px_2.png"))); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 40));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_microsoft_excel_30px.png"))); // NOI18N
+        jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_delete_bin_30px.png"))); // NOI18N
+        jButton5.setContentAreaFilled(false);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 0, 30, 40));
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 
         pack();
@@ -529,15 +591,6 @@ public class FramePedidos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonInventario1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        arr_productos = pila.pop();
-//        mostrar_matriz();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         time_start = System.currentTimeMillis();
         crear_Orden();
@@ -562,6 +615,39 @@ public class FramePedidos extends javax.swing.JFrame {
                                         
        
     }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //        arr_productos = pila.pop();
+        //        mostrar_matriz();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //guardar arreglo
+        try {
+            escribirFisheroOrdenes(arr_ordenes);
+            JOptionPane.showMessageDialog(null, "Datos guardados con exito", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            System.out.println("error al guardad arreglo");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("error al guardad arreglo");            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //guardad el xml
+        this.arr_ordenes = ordenes_excel.obtenerOrden();
+        mostrar_matriz_ordenes();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.arr_ordenes = new ArrayList<>();        
+        mostrar_matriz();
+        mostrar_matriz_ordenes();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     /**
@@ -633,6 +719,9 @@ public class FramePedidos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEliminar;

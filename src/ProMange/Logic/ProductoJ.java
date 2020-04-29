@@ -1,7 +1,9 @@
 
 package ProMange.Logic;
 
-public class ProductoJ {
+import java.io.Serializable;
+
+public class ProductoJ implements Serializable{
     String referencia,nombre,categoria;
     int tiempo_elaboracion,cantidad_inventario;
 

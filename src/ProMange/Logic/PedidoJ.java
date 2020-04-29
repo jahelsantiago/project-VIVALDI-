@@ -2,13 +2,14 @@
 package ProMange.Logic;
 
 import ED.LinkedList;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-public class PedidoJ <J> {
+public class PedidoJ <J> implements Serializable{
     int id_pedido;
     int cantidad;
     Date fecha_inicio;

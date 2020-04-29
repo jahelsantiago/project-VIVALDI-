@@ -1,9 +1,10 @@
 
 package ProMange.Logic;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class EmpleadoJ extends PersonaJ{
+public class EmpleadoJ extends PersonaJ implements Serializable{
     
     boolean estado;
     int maquina;

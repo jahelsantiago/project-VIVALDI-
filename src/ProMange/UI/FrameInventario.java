@@ -5,10 +5,12 @@
  */
 package ProMange.UI;
 
+import ED.ArrayList;
 import ED.Pila;
 import ProMange.Logic.*;
 import ProMange.Logic.ProductoJ;
 import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
+import ProMange.Logic.Xml_clases.Gestor_ficheros;
 import ProMange.Logic.Xml_clases.ProductoJ_excel;
 import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
 //import ProMange.Logic.GestorFisheros;
@@ -18,9 +20,16 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+//import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -35,46 +44,59 @@ public class FrameInventario extends javax.swing.JFrame {
     String  cantidad;    
     
     ProductoJ_excel productos_excel = new ProductoJ_excel();    
-    ArrayList<ProductoJ> arr_productos;
+    ArrayList<ProductoJ> arr_productos = new ArrayList<>();
     
     int i;
-    
-        //test de tiempo
     long time_start,time_end;
-//    time_start = System.currentTimeMillis();
-//    //funcion va aca
-//    time_end = System.currentTimeMillis();
-//    System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
     
     
     
     
-    public FrameInventario() {
+    public FrameInventario(){
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
-        try{
-            arr_productos = productos_excel.obtenerProductos();
-        }catch(Exception nullPoinerException){
-            System.out.print("nullponer");
+        
+        try {
+            arr_productos = leerFichero();
+            //leido con exito
+        } catch (ClassNotFoundException ex) {            
+            System.out.println("error al leer");
+        } catch (IOException ex) {            
+            System.out.println("error al leer2");
         }
-        mouse_listen();
-        //leer carpeta y configurar
-        //arr_empleados = leer empleados
+        
+        mouse_listen();               
         mostrar_matriz();
     }
     
+    private static ArrayList<ProductoJ> leerFichero() throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/productos");
+        FileInputStream f = new FileInputStream(file);
+        ObjectInputStream s = new ObjectInputStream(f);
+        ArrayList<ProductoJ> usuario = (ArrayList<ProductoJ>) s.readObject();
+        s.close();
+        return usuario;
+    }
+    
+    private static void escribirFishero(ArrayList<ProductoJ> usuario) throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/productos");
+        FileOutputStream f =new FileOutputStream(file);
+        ObjectOutputStream s = new ObjectOutputStream(f);
+        s.writeObject(usuario);
+        s.close();
+    }
     
     
-    public void mostrar_matriz(){
+    private void mostrar_matriz(){
 //      arr_productos = productos_excel.obtenerEmpleados();
         String matris[][] = new String[arr_productos.size()][5];
         for(int i = 0; i<arr_productos.size();i++){
-            matris[i][0] = arr_productos.get(i).getReferencia();
-            matris[i][1] = arr_productos.get(i).getNombre();
-            matris[i][2] = arr_productos.get(i).getCategoria();
-            matris[i][3] = Integer.toString(arr_productos.get(i).getTiempo_elaboracion());
-            matris[i][4] = Integer.toString(arr_productos.get(i).getCantidad_inventario());                                                              
+            matris[i][0] = ((ProductoJ)arr_productos.get(i)).getReferencia();
+            matris[i][1] = ((ProductoJ)arr_productos.get(i)).getNombre();
+            matris[i][2] = ((ProductoJ)arr_productos.get(i)).getCategoria();
+            matris[i][3] = Integer.toString(((ProductoJ)arr_productos.get(i)).getTiempo_elaboracion());
+            matris[i][4] = Integer.toString(((ProductoJ)arr_productos.get(i)).getCantidad_inventario());                                                              
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matris,
@@ -128,9 +150,8 @@ public class FrameInventario extends javax.swing.JFrame {
                 jTextFieldCategoria.getText(),
                 Integer.parseInt(this.jTextFieldTiempoElaboracion.getText()),
                 Integer.parseInt(jTextFieldCantidad.getText())                
-        );        
-        productos_excel.agregarProducto(producto);
-        arr_productos.add(producto);                                
+        );                
+        arr_productos.add(arr_productos.size(),producto);                                
     }
     
     private void editar_producto(){
@@ -140,26 +161,16 @@ public class FrameInventario extends javax.swing.JFrame {
                 jTextFieldCategoria.getText(),
                 Integer.parseInt(this.jTextFieldTiempoElaboracion.getText()),
                 Integer.parseInt(jTextFieldCantidad.getText())                
-        );          
-        crear_xml("ProductoJ","basedatosProductos.xml");
-        arr_productos.set(i, producto);
-        for (int i = 0; i<arr_productos.size();i++) {
-            productos_excel.agregarProducto(arr_productos.get(i));
-        }
-                                
+        );                
+        arr_productos.set(i, producto);                                
     }
     
-    private void eliminar_producto(){       
-        crear_xml("ProductoJ","basedatosProductos.xml");
-        arr_productos.remove(i);
-        for (int i = 0; i<arr_productos.size();i++) {
-            productos_excel.agregarProducto(arr_productos.get(i));
-        }
-                                
+    private void eliminar_producto(){               
+        arr_productos.remove(i);                                
     }
 
 
-    
+
 
     
     
@@ -187,6 +198,8 @@ public class FrameInventario extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldCategoria = new javax.swing.JTextField();
@@ -342,21 +355,45 @@ public class FrameInventario extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 20, 20));
+        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 0, 30, 40));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/undo_20px.png"))); // NOI18N
         jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 30, 20));
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 0, 30, 40));
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_save_30px_2.png"))); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setOpaque(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 40));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_microsoft_excel_30px.png"))); // NOI18N
+        jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
 
@@ -546,6 +583,25 @@ public class FrameInventario extends javax.swing.JFrame {
 //        mostrar_matriz();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //guardad el xml
+        this.arr_productos = productos_excel.obtenerProductos();
+        mostrar_matriz();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //guardar arreglo
+        try {
+            escribirFishero(arr_productos);
+            JOptionPane.showMessageDialog(null, "Datos guardados con exito", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            System.out.println("error al guardad arreglo");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("error al guardad arreglo");            
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -592,6 +648,8 @@ public class FrameInventario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;

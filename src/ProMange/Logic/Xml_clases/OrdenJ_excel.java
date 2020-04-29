@@ -5,7 +5,7 @@ import ProMange.Logic.Maquina;
 import ProMange.Logic.OrdenJ;
 import ProMange.Logic.PedidoJ;
 import ProMange.Logic.ProductoJ;
-import java.util.ArrayList;
+import ED.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -62,7 +62,7 @@ public class OrdenJ_excel {
                     objOrden.setTiempo_elaboracion(Integer.parseInt(obtenerNodoValor("Tiempo_de_elaboracion",unElemento)));                    
                     objOrden.setCantidad(Integer.parseInt(obtenerNodoValor("Cantidad",unElemento)));                    
                     
-                    lista_Orden.add(objOrden);
+                    lista_Orden.add(lista_Orden.size(),objOrden);
                 }
                         
             }

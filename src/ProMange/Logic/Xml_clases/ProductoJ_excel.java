@@ -1,11 +1,14 @@
 
 package ProMange.Logic.Xml_clases;
+import ED.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import ProMange.Logic.Maquina;
 import ProMange.Logic.PedidoJ;
 import ProMange.Logic.ProductoJ;
-import java.util.ArrayList;
+import java.io.Serializable;
+//import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +25,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class ProductoJ_excel {
+public class ProductoJ_excel implements Serializable{
     
     //String con las que operar con funciones ubicadas en archivos_gestor
     static String archivo_xml_productos = "basedatosProductos.xml";
@@ -62,7 +65,7 @@ public class ProductoJ_excel {
                     objProducto.setTiempo_elaboracion(Integer.parseInt(obtenerNodoValor("Tiempo_de_elaboracion",unElemento)));
                     objProducto.setCantidad_inventario(Integer.parseInt(obtenerNodoValor("Cantidad_inventario",unElemento)));
                     
-                    lista_producto.add(objProducto);
+                    lista_producto.add(lista_producto.size(),objProducto);
                 }
                         
             }

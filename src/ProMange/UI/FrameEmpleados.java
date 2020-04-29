@@ -5,8 +5,10 @@
  */
 package ProMange.UI;
 
+import ED.ArrayList;
 import ED.Pila;
 import ProMange.Logic.EmpleadoJ;
+import ProMange.Logic.ProductoJ;
 import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
 import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
 //import ProMange.Logic.GestorFisheros;
@@ -16,9 +18,17 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+//import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -52,7 +62,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
         try{
-            arr_empleado=empleado_excel.obtenerEmpleados();
+            arr_empleado=leerFichero();
         }catch(Exception nullPoinerException){
             arr_empleado = new ArrayList<>();
         }
@@ -62,17 +72,34 @@ public class FrameEmpleados extends javax.swing.JFrame {
         mostrar_matriz();
     }
     
+    private static ArrayList<EmpleadoJ> leerFichero() throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/empleados");
+        FileInputStream f = new FileInputStream(file);
+        ObjectInputStream s = new ObjectInputStream(f);
+        ArrayList<EmpleadoJ> usuario = (ArrayList<EmpleadoJ>) s.readObject();
+        s.close();
+        return usuario;
+    }
+    
+    private static void escribirFishero(ArrayList<EmpleadoJ> usuario) throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/empleados");
+        FileOutputStream f =new FileOutputStream(file);
+        ObjectOutputStream s = new ObjectOutputStream(f);
+        s.writeObject(usuario);
+        s.close();
+    }
     
     
-    public void mostrar_matriz(){
+    
+    private void mostrar_matriz(){
 //      arr_empleado = empleado_excel.obtenerEmpleados();
         String matris[][] = new String[arr_empleado.size()][5];
         for(int i = 0; i<arr_empleado.size();i++){
-            matris[i][0] = Long.toString(arr_empleado.get(i).getId());
-            matris[i][1] = arr_empleado.get(i).getNombre();
-            matris[i][2] = arr_empleado.get(i).getApellido();
-            matris[i][3] = Integer.toString(arr_empleado.get(i).getMaquina());
-            matris[i][4] = arr_empleado.get(i).getFecha_nacimiento();                                                              
+            matris[i][0] = Long.toString(((EmpleadoJ)arr_empleado.get(i)).getId());
+            matris[i][1] = ((EmpleadoJ)arr_empleado.get(i)).getNombre();
+            matris[i][2] = ((EmpleadoJ)arr_empleado.get(i)).getApellido();
+            matris[i][3] = Integer.toString(((EmpleadoJ)arr_empleado.get(i)).getMaquina());
+            matris[i][4] = ((EmpleadoJ)arr_empleado.get(i)).getFecha_nacimiento();                                                              
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matris,
@@ -116,6 +143,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         this.jTextFieldNombre.setText("");
         this.jTextFieldID.setText("");
         this.jTextFieldApellido.setText("");
+        this.jTextFieldMaquina.setText("");
         
     }
     
@@ -139,9 +167,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 //jDateChooser1.getDateFormatString(),
                 Long.parseLong(this.jTextFieldID.getText()),
                 true
-        );        
-        empleado_excel.agregarEmpleado(empleado);
-        arr_empleado.add(empleado);                                
+        );                
+        arr_empleado.add(arr_empleado.size(),empleado);                                
     }
     
     private void editar_empleado(){
@@ -151,24 +178,16 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldFechaNacimiento.getText(),
                 Long.parseLong(this.jTextFieldID.getText()),
                 true
-        );        
-        crear_xml("EmpleadoJ","basedatosEmpleados.xml");
-        arr_empleado.set(i, empleado);
-        for (int i = 0; i<arr_empleado.size();i++) {
-            empleado_excel.agregarEmpleado(arr_empleado.get(i));
-        }
-                                
+        );                
+        arr_empleado.set(i, empleado);                                
     }
     
-    private void eliminar_empleado(){       
-        crear_xml("EmpleadoJ","basedatosEmpleados.xml");
-        arr_empleado.remove(i);
-        for (int i = 0; i<arr_empleado.size();i++) {
-            empleado_excel.agregarEmpleado(arr_empleado.get(i));
-        }
-                                
+    private void eliminar_empleado(){               
+        arr_empleado.remove(i);                    
     }
 
+
+    
 
     
 
@@ -206,9 +225,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldApellido = new javax.swing.JTextField();
@@ -219,6 +235,12 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jTextFieldMaquina = new javax.swing.JTextField();
         jTextFieldID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -350,30 +372,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 630, 600));
 
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 20, 20));
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/undo_20px.png"))); // NOI18N
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 30, 20));
-
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -441,6 +439,63 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, 610));
 
+        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/close_window_25px.png"))); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 0, 30, 40));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/undo_20px.png"))); // NOI18N
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 0, 30, 40));
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_save_30px_2.png"))); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 40));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_microsoft_excel_30px.png"))); // NOI18N
+        jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_delete_bin_30px.png"))); // NOI18N
+        jButton5.setContentAreaFilled(false);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 0, 30, 40));
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 
         pack();
@@ -499,15 +554,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonInventario1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        arr_empleado = pila.pop();
-//        mostrar_matriz();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTextFieldFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFechaNacimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFechaNacimientoActionPerformed
@@ -515,6 +561,39 @@ public class FrameEmpleados extends javax.swing.JFrame {
     private void jTextFieldMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMaquinaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMaquinaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //        arr_productos = pila.pop();
+        //        mostrar_matriz();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //guardar arreglo        
+        try {
+            escribirFishero(arr_empleado);
+            JOptionPane.showMessageDialog(null, "Datos guardados con exito", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {           
+            System.out.print("error al guarda");
+        } catch (ClassNotFoundException ex) {            
+            System.out.print("error al guardad");
+        
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //leemos el xml
+        this.arr_empleado = empleado_excel.obtenerEmpleados();
+        mostrar_matriz();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.arr_empleado = new ArrayList<>();
+        mostrar_matriz();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     /**
@@ -558,6 +637,9 @@ public class FrameEmpleados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
