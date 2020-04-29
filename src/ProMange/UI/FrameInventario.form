@@ -668,6 +668,23 @@
                 </Constraint>
               </Constraints>
             </Component>
+            <Component class="javax.swing.JButton" name="jButtonEliminar1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/ProMange/Images/search1.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Buscar productos por referencia"/>
+                <Property name="actionCommand" type="java.lang.String" value="Buscar productos por referencia"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEliminar1ActionPerformed"/>
+              </Events>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="40" y="530" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

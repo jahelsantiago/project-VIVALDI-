@@ -8,14 +8,11 @@ package ProMange.UI;
 import ED.ArrayList;
 import ED.Pila;
 import ProMange.Logic.EmpleadoJ;
-import ProMange.Logic.ProductoJ;
+
 import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
-import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
+
 //import ProMange.Logic.GestorFisheros;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -44,7 +41,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
     String estado;
     Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
     EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();    
-    ArrayList<EmpleadoJ> arr_empleado = new ArrayList<>();
+    ED.ArrayList<EmpleadoJ> arr_empleado = new ArrayList<>();
     
     int i;
     
@@ -64,7 +61,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         try{
             arr_empleado=leerFichero();
         }catch(Exception nullPoinerException){
-            arr_empleado = new ArrayList<>();
+            arr_empleado = new ED.ArrayList<>();
         }
         mouse_listen();
         //leer carpeta y configurar
@@ -72,16 +69,16 @@ public class FrameEmpleados extends javax.swing.JFrame {
         mostrar_matriz();
     }
     
-    private static ArrayList<EmpleadoJ> leerFichero() throws IOException, ClassNotFoundException {
+    private static ED.ArrayList<EmpleadoJ> leerFichero() throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/empleados");
         FileInputStream f = new FileInputStream(file);
         ObjectInputStream s = new ObjectInputStream(f);
-        ArrayList<EmpleadoJ> usuario = (ArrayList<EmpleadoJ>) s.readObject();
+        ED.ArrayList<EmpleadoJ> usuario = (ED.ArrayList<EmpleadoJ>) s.readObject();
         s.close();
         return usuario;
     }
     
-    private static void escribirFishero(ArrayList<EmpleadoJ> usuario) throws IOException, ClassNotFoundException {
+    private static void escribirFishero(ED.ArrayList<EmpleadoJ> usuario) throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/empleados");
         FileOutputStream f =new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
@@ -194,8 +191,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
         }
    }
 
-    private ArrayList buscar_empleados(){
-        ArrayList retorno = new ArrayList();
+    private ED.ArrayList buscar_empleados(){
+        ED.ArrayList retorno = new ED.ArrayList();
         if(esNumero(jTextFieldID.getText())){
             int h=0;
             for (int j = 0; j < arr_empleado.size(); j++) {
@@ -210,14 +207,14 @@ public class FrameEmpleados extends javax.swing.JFrame {
             }
             return retorno;
         }else{
-            JOptionPane.showMessageDialog(null, "Porfavor ingresar solo numeros en el campo", "Error en la busqueda", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(null, "Porfavor ingresar solo numeros en el campo", "Error en la busqueda", JOptionPane.WARNING_MESSAGE);
              return retorno;
         }
         
  
     }
     
-    private void matriz_resultado_busqueda(ArrayList resultado){
+    private void matriz_resultado_busqueda(ED.ArrayList resultado){
         if (resultado.size() != 0) {
             String matris[][] = new String[resultado.size()][5];
         for(int i = 0; i<resultado.size();i++){
@@ -654,12 +651,12 @@ public class FrameEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        this.arr_empleado = new ArrayList<>();
+        this.arr_empleado = new ED.ArrayList<>();
         mostrar_matriz();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
-        ArrayList resultado = buscar_empleados();
+        ED.ArrayList resultado = buscar_empleados();
         matriz_resultado_busqueda(resultado);
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
 

@@ -6,18 +6,9 @@
 package ProMange.UI;
 
 import ED.ArrayList;
-import ED.Pila;
-import ProMange.Logic.*;
 import ProMange.Logic.ProductoJ;
-import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
-import ProMange.Logic.Xml_clases.Gestor_ficheros;
 import ProMange.Logic.Xml_clases.ProductoJ_excel;
-import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
 //import ProMange.Logic.GestorFisheros;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -27,9 +18,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 //import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -44,7 +32,7 @@ public class FrameInventario extends javax.swing.JFrame {
     String  cantidad;    
     
     ProductoJ_excel productos_excel = new ProductoJ_excel();    
-    ArrayList<ProductoJ> arr_productos = new ArrayList<>();
+    ED.ArrayList<ProductoJ> arr_productos = new ED.ArrayList<>();
     
     int i;
     long time_start,time_end;
@@ -169,9 +157,44 @@ public class FrameInventario extends javax.swing.JFrame {
         arr_productos.remove(i);                                
     }
 
+     private ED.ArrayList buscar_productos(){
+        ED.ArrayList retorno = new ED.ArrayList();
+        int h = 0;    
+            for (int j = 0; j < arr_productos.size(); j++) {
+                ProductoJ mostrar = (ProductoJ) arr_productos.get(j);
+                if (jTextFieldReferencia.getText().length() <= mostrar.getReferencia().length()) {
+                    String produc = mostrar.getReferencia().substring(0, jTextFieldReferencia.getText().length());
+                    if (jTextFieldReferencia.getText().toLowerCase().equals(produc.toLowerCase())) {
+                        retorno.add(h,mostrar);
+                        h++;
+                    }
+                }
+            }
+        return retorno;
+     }
+     
+ 
 
-
-
+     private void mostrar_matriz_resultado(ED.ArrayList resultado){
+        if (resultado.size() != 0) {
+        String matris[][] = new String[resultado.size()][5];
+        for(int i = 0; i<resultado.size();i++){
+            matris[i][0] = ((ProductoJ)resultado.get(i)).getReferencia();
+            matris[i][1] = ((ProductoJ)resultado.get(i)).getNombre();
+            matris[i][2] = ((ProductoJ)resultado.get(i)).getCategoria();
+            matris[i][3] = Integer.toString(((ProductoJ)resultado.get(i)).getTiempo_elaboracion());
+            matris[i][4] = Integer.toString(((ProductoJ)resultado.get(i)).getCantidad_inventario());                                                              
+        }
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            matris,
+            new String [] {
+                "REFERENCIA", "NOMBRE", "CATEGORIA", "TIEMPO ELABORACION","CANTIDAD"
+            }
+        ));
+         }else{
+              JOptionPane.showMessageDialog(null, "No se encontro la referencia en el catalogo de productos", "No encontrado", JOptionPane.INFORMATION_MESSAGE);
+         }        
+    }
     
     
     /**
@@ -215,6 +238,7 @@ public class FrameInventario extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jButtonEliminar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -480,6 +504,16 @@ public class FrameInventario extends javax.swing.JFrame {
         jLabel8.setText("TEIMPO DE ELABORACION");
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, -1));
 
+        jButtonEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
+        jButtonEliminar1.setText("Buscar productos por referencia");
+        jButtonEliminar1.setActionCommand("Buscar productos por referencia");
+        jButtonEliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 530, -1, -1));
+
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, 610));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
@@ -601,6 +635,11 @@ public class FrameInventario extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
+        ED.ArrayList resultado = buscar_productos();
+        mostrar_matriz_resultado(resultado);
+    }//GEN-LAST:event_jButtonEliminar1ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -652,6 +691,7 @@ public class FrameInventario extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonEliminar1;
     private javax.swing.JButton jButtonEmpleados;
     private javax.swing.JButton jButtonInventario;
     private javax.swing.JButton jButtonInventario1;
