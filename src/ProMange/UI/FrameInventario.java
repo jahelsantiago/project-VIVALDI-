@@ -58,16 +58,16 @@ public class FrameInventario extends javax.swing.JFrame {
         mostrar_matriz();
     }
     
-    private static ArrayList<ProductoJ> leerFichero() throws IOException, ClassNotFoundException {
+    private static ED.ArrayList<ProductoJ> leerFichero() throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/productos");
         FileInputStream f = new FileInputStream(file);
         ObjectInputStream s = new ObjectInputStream(f);
-        ArrayList<ProductoJ> usuario = (ArrayList<ProductoJ>) s.readObject();
+        ED.ArrayList<ProductoJ> usuario = (ED.ArrayList<ProductoJ>) s.readObject();
         s.close();
         return usuario;
     }
     
-    private static void escribirFishero(ArrayList<ProductoJ> usuario) throws IOException, ClassNotFoundException {
+    private static void escribirFishero(ED.ArrayList<ProductoJ> usuario) throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/productos");
         FileOutputStream f =new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
