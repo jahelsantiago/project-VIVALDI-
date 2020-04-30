@@ -246,9 +246,9 @@ public class FramePedidos extends javax.swing.JFrame {
         int h = 0;    
             for (int j = 0; j < arr_ordenes.size(); j++) {
                 OrdenJ mostrar = (OrdenJ) arr_ordenes.get(j);
-                if (jTextFieldBusca.getText().length() <= mostrar.getReferencia_producto().length()) {
-                    String produc = mostrar.getReferencia_producto().substring(0, jTextFieldBusca.getText().length());
-                    if (jTextFieldBusca.getText().toLowerCase().equals(produc.toLowerCase())) {
+                if (jTextFieldBusca1.getText().length() <= mostrar.getReferencia_producto().length()) {
+                    String produc = mostrar.getReferencia_producto().substring(0, jTextFieldBusca1.getText().length());
+                    if (jTextFieldBusca1.getText().toLowerCase().equals(produc.toLowerCase())) {
                         retorno.add(h,mostrar);
                         h++;
                     }
@@ -337,7 +337,11 @@ public class FramePedidos extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jButtonCrear1 = new javax.swing.JButton();
+        jTextFieldBusca1 = new javax.swing.JTextField();
+        jButtonCrear2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -547,7 +551,7 @@ public class FramePedidos extends javax.swing.JFrame {
         jTable2.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 390, 560));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 390, 490));
 
         jLabel5.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel5.setText("DATOS INVENTARIO");
@@ -603,7 +607,7 @@ public class FramePedidos extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 40, 40));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_delete_bin_30px.png"))); // NOI18N
         jButton5.setContentAreaFilled(false);
@@ -615,16 +619,50 @@ public class FramePedidos extends javax.swing.JFrame {
         });
         jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 0, 30, 40));
 
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_upload_link_document_32px.png"))); // NOI18N
+        jButton8.setContentAreaFilled(false);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_upload_file_32px_1.png"))); // NOI18N
+        jButton6.setContentAreaFilled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 40, 40));
+
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
 
+        jButtonCrear1.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCrear1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
-        jButtonCrear1.setText("Buscar por referencia");
         jButtonCrear1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrear1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonCrear1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 170, -1));
+        jPanel2.add(jButtonCrear1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 40, 40));
+
+        jTextFieldBusca1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBusca1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextFieldBusca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 120, 260, 40));
+
+        jButtonCrear2.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonCrear2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
+        jButtonCrear2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrear2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonCrear2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 120, 40, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 
@@ -685,7 +723,7 @@ public class FramePedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //guardad el xml
+        //leer el xml
         this.arr_ordenes = ordenes_excel.obtenerOrden();
         mostrar_matriz_ordenes();
         this.arr_productos = productos_excel.obtenerProductos();
@@ -716,10 +754,37 @@ public class FramePedidos extends javax.swing.JFrame {
 
     private void jButtonCrear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrear1ActionPerformed
          ED.ArrayList a = buscar_productos();
-         ED.ArrayList b = buscar_ordenes();
          mostrar_matriz_resultado(a);
-         mostrar_matriz_ordenes_resultado(b);
+
     }//GEN-LAST:event_jButtonCrear1ActionPerformed
+
+    private void jTextFieldBusca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBusca1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldBusca1ActionPerformed
+
+    private void jButtonCrear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrear2ActionPerformed
+         ED.ArrayList b = buscar_ordenes();
+         mostrar_matriz_ordenes_resultado(b);
+    }//GEN-LAST:event_jButtonCrear2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+
+        try {
+            this.arr_ordenes = leerFicherOrdenes();           
+        } catch (IOException ex) {
+        } catch (ClassNotFoundException ex) {
+        }
+
+        mostrar_matriz();
+
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        for (int j = 0; j < arr_ordenes.size(); j++) {
+            ordenes_excel.agregarOrden((OrdenJ)arr_ordenes.get(i));
+        }
+        //JOptionPane.showMessageDialog(null, "Datos traidos correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     /**
@@ -794,8 +859,11 @@ public class FramePedidos extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonCrear1;
+    private javax.swing.JButton jButtonCrear2;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonEmpleados;
     private javax.swing.JButton jButtonInventario;
@@ -817,6 +885,7 @@ public class FramePedidos extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextFieldBusca;
+    private javax.swing.JTextField jTextFieldBusca1;
     private javax.swing.JTextField jTextFieldCantidad;
     // End of variables declaration//GEN-END:variables
 }

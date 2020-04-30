@@ -192,6 +192,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
    }
 
     private ED.ArrayList buscar_empleados(){
+        
+        
         ED.ArrayList retorno = new ED.ArrayList();
         if(esNumero(jTextFieldID.getText())){
             int h=0;
@@ -286,12 +288,15 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jTextFieldID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtonEliminar1 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -427,10 +432,10 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextFieldNombre.setBorder(javax.swing.BorderFactory.createTitledBorder("NOMBRE"));
-        jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 60));
+        jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 290, 60));
 
         jTextFieldApellido.setBorder(javax.swing.BorderFactory.createTitledBorder("APELLIDO"));
-        jPanel3.add(jTextFieldApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 290, 60));
+        jPanel3.add(jTextFieldApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 290, 60));
 
         jTextFieldFechaNacimiento.setText("00/00/0000");
         jTextFieldFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder("FECHA DE NACMIENTO"));
@@ -439,7 +444,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldFechaNacimientoActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 290, 60));
+        jPanel3.add(jTextFieldFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 290, 60));
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/create_25px.png"))); // NOI18N
         jButtonEditar.setText("Editar");
@@ -474,7 +479,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldMaquinaActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 290, 60));
+        jPanel3.add(jTextFieldMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 290, 60));
 
         jTextFieldID.setBorder(javax.swing.BorderFactory.createTitledBorder("ID"));
         jTextFieldID.addActionListener(new java.awt.event.ActionListener() {
@@ -482,20 +487,30 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldIDActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldID, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 290, 60));
+        jPanel3.add(jTextFieldID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 60));
 
         jLabel3.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel3.setText("DATOS");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 90, 60));
 
+        jButtonEliminar1.setBackground(new java.awt.Color(255, 255, 255));
         jButtonEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
-        jButtonEliminar1.setText("Buscar empleados por ID");
         jButtonEliminar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminar1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, -1, -1));
+        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 40, 50));
+
+        jButton7.setBackground(new java.awt.Color(255, 255, 255));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_stream_32px.png"))); // NOI18N
+        jButton7.setContentAreaFilled(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 30, 30));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, 610));
 
@@ -542,7 +557,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 40, 40));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_delete_bin_30px.png"))); // NOI18N
         jButton5.setContentAreaFilled(false);
@@ -553,6 +568,24 @@ public class FrameEmpleados extends javax.swing.JFrame {
             }
         });
         jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 0, 30, 40));
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_upload_file_32px_1.png"))); // NOI18N
+        jButton6.setContentAreaFilled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 40, 40));
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_upload_link_document_32px.png"))); // NOI18N
+        jButton8.setContentAreaFilled(false);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 40, 40));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 990, 40));
 
@@ -639,9 +672,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
         } catch (IOException ex) {           
             System.out.print("error al guarda");
         } catch (ClassNotFoundException ex) {            
-            System.out.print("error al guardad");
-        
-    }
+            System.out.print("error al guardad");        
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -656,9 +688,38 @@ public class FrameEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
+        if(jTextFieldID.getText().equals("")){            
+            mostrar_matriz();
+            return;
+        }
         ED.ArrayList resultado = buscar_empleados();
         matriz_resultado_busqueda(resultado);
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        for (int j = 0; j < arr_empleado.size(); j++) {
+            empleado_excel.agregarEmpleado((EmpleadoJ)arr_empleado.get(i));
+        }
+        //JOptionPane.showMessageDialog(null, "Datos traidos correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        mostrar_matriz();
+        clean();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        
+        try {
+            this.arr_empleado = leerFichero();
+            JOptionPane.showMessageDialog(null, "Datos guardados con exito en xml", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {            
+        } catch (ClassNotFoundException ex) {            
+        }
+        
+        mostrar_matriz();
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
 
 
     /**
@@ -705,6 +766,9 @@ public class FrameEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;

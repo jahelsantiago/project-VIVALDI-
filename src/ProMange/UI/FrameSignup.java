@@ -25,6 +25,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +38,7 @@ public class FrameSignup extends javax.swing.JFrame {
     public FrameSignup() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         
     }
     
@@ -51,12 +53,15 @@ public class FrameSignup extends javax.swing.JFrame {
         crear_xml("ProductoJ","basedatosProductos.xml");
         crear_xml("Orden","basedatosOrdenes.xml");
         
-        
-        EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();        
-        Maquina_excel maquina_excel = new Maquina_excel();
-        OrdenJ_excel orden_excel = new OrdenJ_excel();
-        ProductoJ_excel producto_excel = new ProductoJ_excel();
         FrameLogin j = new FrameLogin();
+        j.setVisible(true);
+        this.setVisible(false);
+        
+//        EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();        
+//        Maquina_excel maquina_excel = new Maquina_excel();
+//        OrdenJ_excel orden_excel = new OrdenJ_excel();
+//        ProductoJ_excel producto_excel = new ProductoJ_excel();
+        
         
 //        EmpleadoJ nuevo_empleado = new EmpleadoJ();
 //        empleado_excel.agregarEmpleado(nuevo_empleado);
@@ -70,8 +75,7 @@ public class FrameSignup extends javax.swing.JFrame {
 //        ProductoJ nuevo_producto = new ProductoJ();
 //        producto_excel.agregarProducto(nuevo_producto);
 //        
-        j.setVisible(true);
-        this.setVisible(false);
+        
                 
         
 //        Pedido_excel pedido_excel = new Pedido_excel();
@@ -211,16 +215,18 @@ public class FrameSignup extends javax.swing.JFrame {
         String pasword = this.jPasswordField1.getText();
         String pasword2 = this.jPasswordField2.getText();
         
+        crear_carpeta();
         
         if(pasword.equals(pasword2)){
             try {
                 Supervisor sup = new Supervisor(user, correo, pasword);
                 escribirFishero(sup);
                 inicializarCuenta();
-            } catch (IOException ex) {
-                Logger.getLogger(FrameSignup.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FrameSignup.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Creado con exito", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
+            } catch (IOException ex) { 
+                JOptionPane.showMessageDialog(null, "bug creacion sign up", "Error de tipeo", JOptionPane.DEFAULT_OPTION);                
+            } catch (ClassNotFoundException ex) {                
+                JOptionPane.showMessageDialog(null, "bug creacion sign up", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
             }
         }else{
             JOptionPane.showMessageDialog(null, "Las contraseñas no concuerdan", "Error de tipeo", JOptionPane.DEFAULT_OPTION);

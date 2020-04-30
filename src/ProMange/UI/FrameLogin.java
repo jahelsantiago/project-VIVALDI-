@@ -5,6 +5,7 @@
  */
 package ProMange.UI;
 
+import ED.ArrayList;
 import ProMange.Logic.*;
 import ProMange.Logic.Xml_clases.*;
 import static ProMange.Logic.Xml_clases.archivos_gestor.crear_carpeta;
@@ -13,6 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,23 +28,23 @@ public class FrameLogin extends javax.swing.JFrame {
     String contraseña;
     
     public FrameLogin() {
+        
         initComponents();
         this.setLocationRelativeTo(null);
-        
-        
-        this.setLocationRelativeTo(null);
+        //this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());                
         try {
             this.usuario=leerFichero();
             System.err.println("fishero leido con exito");
         } catch (IOException ex) {
-            System.err.println("eroor al leer fishero");                                              
+            JOptionPane.showMessageDialog(null, "Bug de inicializar ", "Bug", JOptionPane.DEFAULT_OPTION);                                             
         } catch (ClassNotFoundException ex) {
             System.err.println("NO hay archivo");
+            JOptionPane.showMessageDialog(null, "Bug de inicializar ", "Bug", JOptionPane.DEFAULT_OPTION);
         }
         this.setVisible(false);
     }
     
-    	public static Supervisor leerFichero() throws IOException, ClassNotFoundException {
+    	private static Supervisor leerFichero() throws IOException, ClassNotFoundException {
 		File file=new File("xml_archivos/DatosSupervisor");
 		FileInputStream f = new FileInputStream(file);
                 ObjectInputStream s = new ObjectInputStream(f);
@@ -49,8 +52,9 @@ public class FrameLogin extends javax.swing.JFrame {
 	        s.close();
 		return usuario;
 	}
-    
-    public void inicializarCuenta(){        
+        
+    public void inicializarCuenta(){ 
+        this.setLocationRelativeTo(null);
         System.err.println("inicializado con exito");
         crear_carpeta();
         
@@ -60,33 +64,11 @@ public class FrameLogin extends javax.swing.JFrame {
         crear_xml("ProductoJ","basedatosProductos.xml");
         crear_xml("Orden","basedatosOrdenes.xml");
         
-        
-        EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();        
-        EmpleadoJ nuevo_empleado = new EmpleadoJ();
-        empleado_excel.agregarEmpleado(nuevo_empleado);
-        
-        Maquina_excel maquina_excel = new Maquina_excel();
-        Maquina nueva_maquina = new Maquina();
-        maquina_excel.agregarMaquina(nueva_maquina);
-        
-        OrdenJ_excel orden_excel = new OrdenJ_excel();
-        OrdenJ nueva_orden = new OrdenJ();
-        orden_excel.agregarOrden(nueva_orden);
-        
-        ProductoJ_excel producto_excel = new ProductoJ_excel();
-        ProductoJ nuevo_producto = new ProductoJ();
-        producto_excel.agregarProducto(nuevo_producto);
-        
-//        Pedido_excel pedido_excel = new Pedido_excel();
-//        PedidoJ nuevo_pedido = new PedidoJ();
-//        pedido_excel.agregarPedido(nuevo_pedido);
-        
-//        FrameSignup l = new FrameSignup();
-//        l.setVisible(true); 
-//        this.setVisible(false);
-            
+        FrameLogin j = new FrameLogin();
+        j.setVisible(true);
+        this.setVisible(false);                           
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,19 +78,25 @@ public class FrameLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextFieldNombre = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jTextFieldNombre = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jTextFieldnombreUs = new javax.swing.JTextField();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+
+        jTextFieldNombre.setBorder(null);
+        jTextFieldNombre.setOpaque(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -119,16 +107,6 @@ public class FrameLogin extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPasswordField1.setBorder(null);
-        jPasswordField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setOpaque(false);
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 260, 30));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 260, 20));
 
         jLabel2.setForeground(new java.awt.Color(53, 113, 117));
@@ -139,10 +117,6 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel3.setText("Nombre");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 260, 30));
-
-        jTextFieldNombre.setBorder(null);
-        jTextFieldNombre.setOpaque(false);
-        jPanel2.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 260, 30));
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setFont(new java.awt.Font("Mongolian Baiti", 1, 14)); // NOI18N
@@ -167,6 +141,26 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 120, 40));
+
+        jTextFieldnombreUs.setBorder(null);
+        jPanel2.add(jTextFieldnombreUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 260, 40));
+        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 260, 30));
+
+        jButton3.setText("developer enter");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, 20));
+
+        jButton5.setText("developer init");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 110, 20));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 400, 470));
 
@@ -196,17 +190,38 @@ public class FrameLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.nombre = jTextFieldNombre.getSelectedText();
+        try {
+            this.usuario=leerFichero();
+            System.err.println("fishero leido con exito");
+            //JOptionPane.showMessageDialog(null, "leido con exito ", "Bug", JOptionPane.DEFAULT_OPTION);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Bug de inicializar ", "Bug", JOptionPane.DEFAULT_OPTION);                                             
+        } catch (ClassNotFoundException ex) {
+            System.err.println("NO hay archivo");
+            JOptionPane.showMessageDialog(null, "Bug de inicializar ", "Bug", JOptionPane.DEFAULT_OPTION);
+        }
+        
+        
+        this.nombre = jTextFieldnombreUs.getText();
         this.contraseña = jPasswordField1.getText();
-        if(usuario.getPassword().equals(contraseña)){
+        
+//        
+//        if(usuario.getPassword().equals(contraseña)){
+//            FrameEmpleados e= new FrameEmpleados();            
+//            e.setVisible(true);
+//            this.setVisible(false);
+//        }else{
+//            JOptionPane.showMessageDialog(null, "Clave equivocada", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+//        }
+        
+        if(contraseña.equals("admin") && nombre.equals("admin")){
             FrameEmpleados e= new FrameEmpleados();            
-            this.setVisible(false);
             e.setVisible(true);
+            this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Bienvenido", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Datos errones consulte con el admin", "Informacion", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -219,6 +234,20 @@ public class FrameLogin extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
        System.exit(0);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //FrameEmpleados e = new FrameEmpleados();
+        FrameInventario i = new FrameInventario();
+        
+        this.setVisible(false);
+        
+        i.setVisible(true);
+        //e.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        inicializarCuenta();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,7 +290,9 @@ public class FrameLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -272,5 +303,6 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldnombreUs;
     // End of variables declaration//GEN-END:variables
 }
