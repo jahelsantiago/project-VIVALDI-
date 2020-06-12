@@ -1,11 +1,23 @@
 
 package ProMange.Logic;
 
+import ED.ArrayList;
+import ED.MyArrayList;
+
 public class Maquina {
     int serial;
     boolean estado;
     long operario;
+    ArrayList<OrdenJ> ordenes;
 
+    public ArrayList<OrdenJ> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(ArrayList<OrdenJ> ordenes) {
+        this.ordenes = ordenes;
+    }
+        
     public Maquina(int serial, boolean estado, long operario) {
         this.serial = serial;
         this.estado = estado;

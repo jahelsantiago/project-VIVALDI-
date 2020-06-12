@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import ED.ArrayList;
+import ED.Pila;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -40,6 +41,9 @@ public class FramePedidos extends javax.swing.JFrame {
     int i;
     
     //tabla ordenes
+
+    
+    String referencia_producto;
     String referencia_orden;
     String tiempo_total;
     String cantidad_total;
@@ -49,7 +53,8 @@ public class FramePedidos extends javax.swing.JFrame {
     ED.ArrayList<OrdenJ> arr_ordenes = new ED.ArrayList<>();
     int j;
     
-    
+    //utilitarios 
+    Pila<String[]> stack = new Pila<>();
     long time_start,time_end;
     
     
@@ -58,6 +63,7 @@ public class FramePedidos extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("../Images/medium_40px.png")).getImage());
         this.setLocationRelativeTo(null);
+        
         try {
             arr_productos = leerFichero();
         } catch (Exception e) {
@@ -72,8 +78,6 @@ public class FramePedidos extends javax.swing.JFrame {
         }
         mouse_listen();
         
-        //leer carpeta y configurar
-        //arr_empleados = leer empleados
         mostrar_matriz();
         mostrar_matriz_ordenes();
     }
@@ -100,18 +104,19 @@ public class FramePedidos extends javax.swing.JFrame {
     }
     private void mostrar_matriz_ordenes(){
 //      arr_productos = productos_excel.obtenerEmpleados();
-        String matris[][] = new String[arr_ordenes.size()][5];
+        String matris[][] = new String[arr_ordenes.size()][6];
         for(int i = 0; i<arr_ordenes.size();i++){
-            matris[i][0] = ((OrdenJ)arr_ordenes.get(i)).getReferencia_producto();
-            matris[i][1] = Integer.toString(((OrdenJ)arr_ordenes.get(i)).getTiempo_elaboracion());
-            matris[i][2] = Integer.toString(((OrdenJ)arr_ordenes.get(i)).getCantidad());
-            matris[i][3] = ((OrdenJ)arr_ordenes.get(i)).getFecha_inicio();
-            matris[i][4] = ((OrdenJ)arr_ordenes.get(i)).getEstado();                                                              
+            matris[i][0] = ((OrdenJ)arr_ordenes.get(i)).getReferencia_orden();
+            matris[i][1] = ((OrdenJ)arr_ordenes.get(i)).getReferencia_producto();
+            matris[i][2] = Integer.toString(((OrdenJ)arr_ordenes.get(i)).getTiempo_elaboracion());
+            matris[i][3] = Integer.toString(((OrdenJ)arr_ordenes.get(i)).getCantidad());
+            matris[i][4] = ((OrdenJ)arr_ordenes.get(i)).getFecha_inicio();
+            matris[i][5] = ((OrdenJ)arr_ordenes.get(i)).getEstado();                                                              
         }
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             matris,
             new String [] {
-                "REFERENCIA", "TIEMPO TOTAL", "CANTIDAD", "FECHA INICIP","ESTADO"
+                "REFERENCIA ORDEN","REFERENCIA PRODUCTO", "TIEMPO TOTAL", "CANTIDAD", "FECHA INICIO","ESTADO"
             }
         ));
                 
@@ -139,26 +144,29 @@ public class FramePedidos extends javax.swing.JFrame {
         });
     }
      private void mouse_listen_ordenes(){
-        jTable1.addMouseListener(new MouseAdapter() {
+        jTable2.addMouseListener(new MouseAdapter() {
             DefaultTableModel model = new DefaultTableModel();
             
             public void mouseClicked(MouseEvent e){
                 j = jTable2.getSelectedRow();
+                                                
+                referencia_orden = (jTable1.getValueAt(j, 0)).toString();                
                 
-                referencia_orden = (jTable1.getValueAt(i, 0)).toString();                
+                referencia_producto = (jTable1.getValueAt(j, 1)).toString();                
                 
-                tiempo_total = (jTable1.getValueAt(i, 1)).toString();
+                tiempo_total = (jTable1.getValueAt(j, 2)).toString();
                 
-                cantidad_total = (jTable1.getValueAt(i, 2)).toString();
+                cantidad_total = (jTable1.getValueAt(j, 3)).toString();
                 
-                fecha_inicio = (jTable1.getValueAt(i, 3)).toString();                                                        
+                fecha_inicio = (jTable1.getValueAt(j, 4)).toString();                                                        
                 
-                estado = (jTable1.getValueAt(i, 4)).toString();                                                        
+                estado = (jTable1.getValueAt(j, 5)).toString();                                                        
             }
         });
     }
     private void clean(){
         this.jTextFieldCantidad.setText("");
+        this.jTextFieldFechaEntrega.setText("");
     }
     
     private void crear_Orden(){
@@ -171,11 +179,13 @@ public class FramePedidos extends javax.swing.JFrame {
         }
         OrdenJ orden=new OrdenJ (
                 referencia,
-                Integer.parseInt(tiempo_elab),
-                Integer.parseInt(jTextFieldCantidad.getText())
+                Integer.parseInt(tiempo_elab)*Integer.parseInt(jTextFieldCantidad.getText()),
+                Integer.parseInt(jTextFieldCantidad.getText()),
+                Integer.toString(arr_ordenes.size()),
+                this.jTextFieldFechaEntrega.getText()
         );        
                
-        arr_ordenes.add(arr_ordenes.size(),orden);        
+        arr_ordenes.add(arr_ordenes.size(),orden);           
     }
     
     
@@ -281,18 +291,19 @@ public class FramePedidos extends javax.swing.JFrame {
     private void mostrar_matriz_ordenes_resultado(ED.ArrayList resultado){
          if (resultado.size() != 0) {
 //      arr_productos = productos_excel.obtenerEmpleados();
-        String matris[][] = new String[resultado.size()][5];
+        String matris[][] = new String[resultado.size()][6];
         for(int i = 0; i<resultado.size();i++){
-            matris[i][0] = ((OrdenJ)resultado.get(i)).getReferencia_producto();
-            matris[i][1] = Integer.toString(((OrdenJ)resultado.get(i)).getTiempo_elaboracion());
-            matris[i][2] = Integer.toString(((OrdenJ)resultado.get(i)).getCantidad());
-            matris[i][3] = ((OrdenJ)resultado.get(i)).getFecha_inicio();
-            matris[i][4] = ((OrdenJ)resultado.get(i)).getEstado();                                                              
+            matris[i][0] = ((OrdenJ)resultado.get(i)).getReferencia_orden();
+            matris[i][1] = ((OrdenJ)resultado.get(i)).getReferencia_producto();
+            matris[i][2] = Integer.toString(((OrdenJ)resultado.get(i)).getTiempo_elaboracion());
+            matris[i][3] = Integer.toString(((OrdenJ)resultado.get(i)).getCantidad());
+            matris[i][4] = ((OrdenJ)resultado.get(i)).getFecha_inicio();
+            matris[i][5] = ((OrdenJ)resultado.get(i)).getEstado();                                                              
         }
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             matris,
             new String [] {
-                "REFERENCIA", "TIEMPO TOTAL", "CANTIDAD", "FECHA INICIP","ESTADO"
+                "ID ORDEN","REFERENCIA", "TIEMPO TOTAL", "CANTIDAD", "FECHA INICIP","ESTADO"
             }
         ));
          }else{
@@ -326,6 +337,8 @@ public class FramePedidos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButtonEliminar = new javax.swing.JButton();
         jButtonCrear = new javax.swing.JButton();
+        jTextFieldFechaEntrega = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -492,7 +505,7 @@ public class FramePedidos extends javax.swing.JFrame {
                 jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanel5.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        jPanel5.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         jButtonCrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/create_order_25px.png"))); // NOI18N
         jButtonCrear.setText("Crear");
@@ -501,9 +514,16 @@ public class FramePedidos extends javax.swing.JFrame {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        jPanel5.add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 100, -1));
+        jPanel5.add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, -1));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 130, 200));
+        jTextFieldFechaEntrega.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
+        jPanel5.add(jTextFieldFechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 130, 30));
+
+        jLabel6.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel6.setText("FECHA DE ENTREGA");
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 130, 240));
 
         jLabel3.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel3.setText("DATOS ORDENES");
@@ -513,34 +533,35 @@ public class FramePedidos extends javax.swing.JFrame {
         jTable2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Referencia", "Tiempo elaboracon", "Cantidad Ordenada", "Fecha Inicio", "Estado"
+                "ID Orden", "Referencia Producto", "Tiempo elaboracon", "Cantidad Ordenada", "Fecha Inicio", "Estado"
             }
         ));
         jTable2.setFocusable(false);
@@ -740,6 +761,7 @@ public class FramePedidos extends javax.swing.JFrame {
         time_start = System.currentTimeMillis();
         crear_Orden();
         mostrar_matriz_ordenes();
+        clean();
         time_end = System.currentTimeMillis();
         System.out.println("the task edit orden has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonCrearActionPerformed
@@ -875,6 +897,7 @@ public class FramePedidos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -887,5 +910,6 @@ public class FramePedidos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldBusca;
     private javax.swing.JTextField jTextFieldBusca1;
     private javax.swing.JTextField jTextFieldCantidad;
+    private javax.swing.JTextField jTextFieldFechaEntrega;
     // End of variables declaration//GEN-END:variables
 }

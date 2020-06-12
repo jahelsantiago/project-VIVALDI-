@@ -437,7 +437,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jTextFieldApellido.setBorder(javax.swing.BorderFactory.createTitledBorder("APELLIDO"));
         jPanel3.add(jTextFieldApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 290, 60));
 
-        jTextFieldFechaNacimiento.setText("00/00/0000");
         jTextFieldFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder("FECHA DE NACMIENTO"));
         jTextFieldFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -680,6 +679,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         //leemos el xml
         this.arr_empleado = empleado_excel.obtenerEmpleados();
         mostrar_matriz();
+        JOptionPane.showMessageDialog(null, "Datos de xml leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -700,7 +700,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         for (int j = 0; j < arr_empleado.size(); j++) {
             empleado_excel.agregarEmpleado((EmpleadoJ)arr_empleado.get(i));
         }
-        //JOptionPane.showMessageDialog(null, "Datos traidos correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Datos guardados en xml correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -712,7 +712,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
         
         try {
             this.arr_empleado = leerFichero();
-            JOptionPane.showMessageDialog(null, "Datos guardados con exito en xml", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Datos guardados con exito en xml", "Informacion", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {            
         } catch (ClassNotFoundException ex) {            
         }

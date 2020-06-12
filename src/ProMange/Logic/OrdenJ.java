@@ -9,20 +9,32 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class OrdenJ <J> implements Serializable{
-    String referencia_producto;
-    String estado;
-    int tiempo_elaboracion;
-    int cantidad;
-    Date fecha_inicio;
+    public String referencia_producto;
+    public  String referencia_orden;
+    public  String estado;
+    public  int tiempo_elaboracion;
+    public  int cantidad;
+    public Date fecha_inicio;
 
     public OrdenJ(String referencia_producto, int tiempo_elaboracion, int cantidad_inventario) {
+        this.referencia_orden = "-1";
         this.referencia_producto = referencia_producto;
         this.tiempo_elaboracion = tiempo_elaboracion;
         this.cantidad = cantidad_inventario;
         this.estado = "pendiente";
         this.setFecha_inicio("0/00/0000");
-//this.setFecha_inicio(Date.from(Instant.MIN));
     }
+    
+    public OrdenJ(String referencia_producto, int tiempo_elaboracion, int cantidad_inventario, String referencia_orden, String fecha_entrega) {
+        this.referencia_orden = referencia_orden;
+        this.referencia_producto = referencia_producto;
+        this.tiempo_elaboracion = tiempo_elaboracion;
+        this.cantidad = cantidad_inventario;
+        this.estado = "pendiente";
+        this.setFecha_inicio(fecha_entrega);
+    }
+    
+    
     
     public OrdenJ(){
         this.referencia_producto = "ninguna";
@@ -31,6 +43,15 @@ public class OrdenJ <J> implements Serializable{
         this.cantidad = 0;
         this.setFecha_inicio("0/00/0000");
     }
+
+    public String getReferencia_orden() {
+        return this.referencia_orden;
+    }
+
+    public void setReferencia_orden(String referencia_orden) {
+        this.referencia_orden = referencia_orden;
+    }
+    
 
     public String getEstado() {
         return estado;

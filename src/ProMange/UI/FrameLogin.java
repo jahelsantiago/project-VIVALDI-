@@ -144,9 +144,12 @@ public class FrameLogin extends javax.swing.JFrame {
 
         jTextFieldnombreUs.setBorder(null);
         jPanel2.add(jTextFieldnombreUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 260, 40));
+
+        jPasswordField1.setBorder(null);
         jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 260, 30));
 
         jButton3.setText("developer enter");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -155,6 +158,7 @@ public class FrameLogin extends javax.swing.JFrame {
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, 20));
 
         jButton5.setText("developer init");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);

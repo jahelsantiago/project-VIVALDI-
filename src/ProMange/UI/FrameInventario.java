@@ -50,8 +50,10 @@ public class FrameInventario extends javax.swing.JFrame {
             //leido con exito
         } catch (ClassNotFoundException ex) {            
             System.out.println("error al leer");
+            arr_productos = new ED.ArrayList<>();
         } catch (IOException ex) {            
             System.out.println("error al leer2");
+            arr_productos = new ED.ArrayList<>();
         }
         
         mouse_listen();               
@@ -661,6 +663,7 @@ public class FrameInventario extends javax.swing.JFrame {
         //guardad el xml
         this.arr_productos = productos_excel.obtenerProductos();
         mostrar_matriz();
+        JOptionPane.showMessageDialog(null, "Datos de xml leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
