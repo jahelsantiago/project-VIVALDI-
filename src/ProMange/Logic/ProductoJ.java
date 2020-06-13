@@ -3,7 +3,7 @@ package ProMange.Logic;
 
 import java.io.Serializable;
 
-public class ProductoJ implements Serializable{
+public class ProductoJ implements Serializable, Comparable<ProductoJ> {
     String referencia,nombre,categoria;
     int tiempo_elaboracion,cantidad_inventario;
     boolean estado;
@@ -72,6 +72,30 @@ public class ProductoJ implements Serializable{
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+    
+    // implementando arbol AVL
+    
+    @Override
+    public int compareTo (ProductoJ b){ 
+
+        if(Integer.valueOf(this.referencia) > Integer.valueOf(b.referencia)){
+            return 1;
+        } else if (Integer.valueOf(this.referencia) < Integer.valueOf(b.referencia)){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+    
+    public boolean contains(String ser,ED.ArbolAVL<ProductoJ> b){
+        ProductoJ a = new ProductoJ();
+        a.setReferencia(ser);
+        if (b.contains(a)) {
+            return true;
+        }else{
+            return false;
+        } 
     }
     
 }

@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-public class OrdenJ <J> implements Serializable{
+public class OrdenJ <J> implements Serializable, Comparable<OrdenJ >  {
     public String referencia_producto;
     public  String referencia_orden;
     public  String estado;
@@ -112,4 +112,30 @@ public class OrdenJ <J> implements Serializable{
     public void setTiempo_elaboracion(int tiempo_elaboracion) {
         this.tiempo_elaboracion = tiempo_elaboracion;
     }    
+    
+    
+    
+    @Override
+    public int compareTo (OrdenJ a){ 
+
+        if(Integer.valueOf(this.referencia_orden) > Integer.valueOf(a.getReferencia_orden())){
+            return 1;
+        } else if (Integer.valueOf(this.referencia_orden) < Integer.valueOf(a.getReferencia_orden())){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+    
+    public boolean contains(String referencia, ED.ArbolAVL b){
+        OrdenJ a = new OrdenJ();
+        a.setReferencia_orden(referencia);
+        if (b.contains(a)) {
+            return true;
+        }else{
+            return false;
+        } 
+    }
+    
+    
 }

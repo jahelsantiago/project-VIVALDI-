@@ -6,7 +6,17 @@ import ProMange.Logic.Xml_clases.ProductoJ_excel;
 
 
 public class prueba_productos {
-
+    
+    public static boolean contains(int ser,ED.ArbolAVL<Maquina> b){
+        Maquina a = new Maquina();
+        a.setSerial(ser);
+        if (b.contains(a)) {
+            return true;
+        }else{
+            return false;
+        } 
+    }
+    
     public static void main(String[] args) {
         ED.ArbolAVL a = new ED.ArbolAVL<Maquina>();
         Maquina b = new Maquina();
@@ -33,6 +43,7 @@ public class prueba_productos {
         System.out.println(m1.getSerial());
         System.out.println(m2.getSerial());
         System.out.println(m3.getSerial());
+        System.out.println(contains(1,a));
     }
     
 }

@@ -71,6 +71,8 @@ public class Maquina implements Comparable<Maquina> {
     }
     
     
+    // implementando arbol AVL
+    
     @Override
     public int compareTo (Maquina b){ 
 
@@ -81,6 +83,16 @@ public class Maquina implements Comparable<Maquina> {
         }else{
             return 0;
         }
+    }
+    
+    public boolean contains(int ser,ED.ArbolAVL<Maquina> b){
+        Maquina a = new Maquina();
+        a.setSerial(ser);
+        if (b.contains(a)) {
+            return true;
+        }else{
+            return false;
+        } 
     }
     
 }
