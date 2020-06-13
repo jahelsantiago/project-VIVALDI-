@@ -34,7 +34,7 @@ public class FrameProcesos extends javax.swing.JFrame {
     String estado;
     OrdenJ_excel ordenes_excel = new OrdenJ_excel();
     ED.ArrayList<OrdenJ> arr_ordenes = new ED.ArrayList<>();
-    int j;
+    int j ,row ,column;
     
     //tabla maquinas
     MatrizDinamica mat_maquinas;
@@ -68,6 +68,7 @@ public class FrameProcesos extends javax.swing.JFrame {
         
         
        mouse_listen_ordenes();
+       mouse_listen_maquinas();
        mostrar_matriz_maquinas();
        mostrar_matriz_ordenes();
     }
@@ -134,6 +135,19 @@ public class FrameProcesos extends javax.swing.JFrame {
         });
          
     }
+     private void mouse_listen_maquinas(){         
+        jTable1.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+            
+            public void mouseClicked(MouseEvent e){
+                row = jTable1.getSelectedRow();
+                column = jTable1.getSelectedColumn();
+//                System.out.println(row);
+//                System.out.println(column);
+            }
+        });
+         
+    }
     private void clean(){
         this.jTextFieldNoMaquina.setText("");        
     }
@@ -150,8 +164,17 @@ public class FrameProcesos extends javax.swing.JFrame {
         MatrizDinamica usuario = (MatrizDinamica) s.readObject();
         s.close();
         return usuario;
+        
+    }        
+    private static ED.ArrayList<OrdenJ> leerFicherOrdenes() throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/ordenes");
+        FileInputStream f = new FileInputStream(file);
+        ObjectInputStream s = new ObjectInputStream(f);
+        ED.ArrayList<OrdenJ> usuario = (ED.ArrayList<OrdenJ>) s.readObject();
+        s.close();
+        return usuario;
     }    
-    private static void escribirFisheroMaquinas(ED.ArrayList<OrdenJ> usuario) throws IOException, ClassNotFoundException {
+    private static void escribirFisheroMaquinas(MatrizDinamica usuario) throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/MAT_maquinas");
         FileOutputStream f =new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
@@ -165,15 +188,6 @@ public class FrameProcesos extends javax.swing.JFrame {
         s.writeObject(usuario);
         s.close();
     }
-    private static ED.ArrayList<OrdenJ> leerFicherOrdenes() throws IOException, ClassNotFoundException {
-        File file=new File("xml_archivos/ordenes");
-        FileInputStream f = new FileInputStream(file);
-        ObjectInputStream s = new ObjectInputStream(f);
-        ED.ArrayList<OrdenJ> usuario = (ED.ArrayList<OrdenJ>) s.readObject();
-        s.close();
-        return usuario;
-    }    
-    
      
      private ED.ArrayList buscar_ordenes(){
         ED.ArrayList retorno = new ED.ArrayList();
@@ -230,8 +244,6 @@ public class FrameProcesos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldBusca = new javax.swing.JTextField();
-        jButtonCrear1 = new javax.swing.JButton();
         jButtonAutoAsignar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -280,6 +292,7 @@ public class FrameProcesos extends javax.swing.JFrame {
         jButtonProcesos.setForeground(new java.awt.Color(255, 255, 255));
         jButtonProcesos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/factory_25px.png"))); // NOI18N
         jButtonProcesos.setText("Procesos");
+        jButtonProcesos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 0, 204), new java.awt.Color(153, 0, 153), new java.awt.Color(102, 0, 102), new java.awt.Color(102, 0, 102)));
         jButtonProcesos.setContentAreaFilled(false);
         jButtonProcesos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,6 +306,7 @@ public class FrameProcesos extends javax.swing.JFrame {
         jButtonPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/cash_on_delivery_25px.png"))); // NOI18N
         jButtonPedidos.setText("Pedidos");
         jButtonPedidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 0, 153), new java.awt.Color(153, 0, 153), new java.awt.Color(51, 0, 51), new java.awt.Color(51, 0, 51)));
+        jButtonPedidos.setBorderPainted(false);
         jButtonPedidos.setContentAreaFilled(false);
         jButtonPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -528,7 +542,7 @@ public class FrameProcesos extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Referencia", "Nombre", "Categoria", "Tiempo Elaboracion", "Cantidad"
+                "M1", "M2", "M3", "M3", "M4"
             }
         ));
         jTable1.setFocusable(false);
@@ -542,13 +556,8 @@ public class FrameProcesos extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, 400, 490));
 
         jLabel5.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
-        jLabel5.setText("DATOS INVENTARIO");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, 230, 60));
-        jPanel2.add(jTextFieldBusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 110, 260, 40));
-
-        jButtonCrear1.setBackground(new java.awt.Color(255, 255, 255));
-        jButtonCrear1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
-        jPanel2.add(jButtonCrear1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 110, 40, 40));
+        jLabel5.setText("MAQUINAS");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 50, 120, 60));
 
         jButtonAutoAsignar.setText("AutoAsignar");
         jButtonAutoAsignar.addActionListener(new java.awt.event.ActionListener() {
@@ -576,7 +585,7 @@ public class FrameProcesos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonInventarioActionPerformed
 
     private void jButtonPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPedidosActionPerformed
-        FrameProcesos c=new FrameProcesos();
+        FramePedidos c = new FramePedidos();
         c.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonPedidosActionPerformed
@@ -604,12 +613,21 @@ public class FrameProcesos extends javax.swing.JFrame {
         //guardar arreglo
         try {
             escribirFisheroOrdenes(arr_ordenes);
+            escribirFisheroMaquinas(this.mat_maquinas);
             JOptionPane.showMessageDialog(null, "Datos guardados con exito", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             System.out.println("error al guardad arreglo");
         } catch (ClassNotFoundException ex) {
             System.out.println("error al guardad arreglo");            
         }
+//        try {
+//            escribirFisheroMaquinas(mat_maquinas);
+//            JOptionPane.showMessageDialog(null, "Datos guardados con exito", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
+//        } catch (IOException ex) {
+//            System.out.println("error al guardad arreglo");
+//        } catch (ClassNotFoundException ex) {
+//            System.out.println("error al guardad arreglo");            
+//        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -621,13 +639,19 @@ public class FrameProcesos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        System.out.println(this.referencia_orden);
+        if(this.estado.equalsIgnoreCase("Produccion")){
+            JOptionPane.showMessageDialog(null, "La orden ya se encuentra asignada", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
         this.mat_maquinas.columnAppend(Integer.parseInt(this.jTextFieldNoMaquina.getText()),(String)this.referencia_orden, Integer.parseInt(this.tiempo_total));
+        ((OrdenJ)this.arr_ordenes.get(j)).setEstado("Produccion");
         mostrar_matriz_maquinas();
+        mostrar_matriz_ordenes();
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-
+          this.mat_maquinas.eliminar(row, column);
+          mostrar_matriz_maquinas();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jTextFieldBusca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBusca1ActionPerformed
@@ -652,7 +676,9 @@ public class FrameProcesos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNoMaquinaActionPerformed
 
     private void jButtonAutoAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutoAsignarActionPerformed
-          this. mat_maquinas = new MatrizDinamica(this.arr_ordenes.size(), maquinas, arr_ordenes);          
+          //this. mat_maquinas = new MatrizDinamica(this.arr_ordenes.size(), maquinas, arr_ordenes);
+          this.mat_maquinas.autoAsignar(arr_ordenes);
+          mostrar_matriz_ordenes();
           mostrar_matriz_maquinas();
     }//GEN-LAST:event_jButtonAutoAsignarActionPerformed
 
@@ -704,7 +730,6 @@ public class FrameProcesos extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonAutoAsignar;
     private javax.swing.JButton jButtonCrear;
-    private javax.swing.JButton jButtonCrear1;
     private javax.swing.JButton jButtonCrear2;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonEmpleados;
@@ -726,7 +751,6 @@ public class FrameProcesos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextFieldBusca;
     private javax.swing.JTextField jTextFieldBusca1;
     private javax.swing.JTextField jTextFieldNoMaquina;
     // End of variables declaration//GEN-END:variables

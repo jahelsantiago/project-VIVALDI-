@@ -12,6 +12,7 @@ public class ArrayList<J> implements LinearList,Iterable<J>,Serializable {
     public J[] arr_objetos;
     protected int size;
     protected int len;
+    public int cont = 0;
     
     //Constructores
     public ArrayList(int capacidad_inicial){
@@ -97,6 +98,7 @@ public class ArrayList<J> implements LinearList,Iterable<J>,Serializable {
         }
         arr_objetos[index] = (J) objeto_agregar;
         size++;
+        cont++;
     }
 
     @Override
