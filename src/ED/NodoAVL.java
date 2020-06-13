@@ -20,5 +20,19 @@ public class NodoAVL <J> {
         this.left = izq;
         this.right = der;
     }
+
+    public J getData() {
+        return data;
+    }
+
+    public NodoAVL<J> getLeft() {
+        return left;
+    }
+
+    public NodoAVL<J> getRight() {
+        return right;
+    }
+    
+
     
 }

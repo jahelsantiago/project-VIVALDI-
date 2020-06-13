@@ -6,13 +6,15 @@ import java.io.Serializable;
 public class ProductoJ implements Serializable{
     String referencia,nombre,categoria;
     int tiempo_elaboracion,cantidad_inventario;
+    boolean estado;
 
-    public ProductoJ(String referencia, String nombre, String categoria, int tiempo_elaboracion, int cantidad_inventario) {
+    public ProductoJ(String referencia, String nombre, String categoria, int tiempo_elaboracion, int cantidad_inventario, boolean estado) {
         this.referencia = referencia;
         this.nombre = nombre;
         this.categoria = categoria;
         this.tiempo_elaboracion = tiempo_elaboracion;
         this.cantidad_inventario = cantidad_inventario;
+        this.estado = estado;
     }
 
     public ProductoJ() {
@@ -21,6 +23,7 @@ public class ProductoJ implements Serializable{
         this.categoria = "ninguno";
         this.tiempo_elaboracion = 0;
         this.cantidad_inventario = 0;
+        this.estado = estado;
     }
 
     public String getReferencia() {
@@ -62,6 +65,13 @@ public class ProductoJ implements Serializable{
     public void setCantidad_inventario(int cantidad_inventario) {
         this.cantidad_inventario = cantidad_inventario;
     }
-    
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
     
 }

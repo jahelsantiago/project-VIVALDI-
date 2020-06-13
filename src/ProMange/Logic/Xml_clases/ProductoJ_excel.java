@@ -65,6 +65,16 @@ public class ProductoJ_excel implements Serializable{
                     objProducto.setTiempo_elaboracion(Integer.parseInt(obtenerNodoValor("Tiempo_de_elaboracion",unElemento)));
                     objProducto.setCantidad_inventario(Integer.parseInt(obtenerNodoValor("Cantidad_inventario",unElemento)));
                     
+                    boolean ing = false;
+                    
+                    if (obtenerNodoValor("Estado",unElemento).compareTo("false") == 0) {
+                        ing = false;
+                    }else if(obtenerNodoValor("Estado",unElemento).compareTo("true") == 0){
+                        ing = true;
+                    }
+                    
+                    objProducto.setEstado(ing);
+                    
                     lista_producto.add(lista_producto.size(),objProducto);
                 }
                         
@@ -112,12 +122,16 @@ public class ProductoJ_excel implements Serializable{
             Element nuevoCantidadInventario = doc.createElement("Cantidad_inventario");
             nuevoCantidadInventario.setTextContent(String.valueOf(nuevo.getCantidad_inventario())); 
             
+            Element nuevoEstado = doc.createElement("Estado");
+            nuevoEstado.setTextContent(String.valueOf(nuevo.getEstado()));
+            
             //Agragarmos las etiquetas hijas de la persona
             nuevoProducto.appendChild(nuevaReferencia);
             nuevoProducto.appendChild(nuevoNombre);
             nuevoProducto.appendChild(nuevoCategoria);
             nuevoProducto.appendChild(nuevoTiempoElaboracion);
             nuevoProducto.appendChild(nuevoCantidadInventario);
+            nuevoProducto.appendChild(nuevoEstado);
             
             //Relacionamos la persona con el nodo raiz del documento
             nodoRaiz.appendChild(nuevoProducto);

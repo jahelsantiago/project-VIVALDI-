@@ -8,7 +8,7 @@ public class ArbolAVL <J extends Comparable<? super J>> {
     NodoAVL raiz;
 
     // Constructor
-    ArbolAVL(){
+    public ArbolAVL(){
         raiz = null;
     }
     
@@ -250,86 +250,10 @@ public class ArbolAVL <J extends Comparable<? super J>> {
         return balancear (nd); // retornamos el nodo eliminado
     }
     
-    
-    
-    //opcional
-     public void checkBalance( )
-    {
-        checkBalance( raiz );
+    //get raiz
+
+    public NodoAVL getRaiz() {
+        return raiz;
     }
     
-    private int checkBalance( NodoAVL<J> t )
-    {
-        if( t == null )
-            return -1;
-        
-        if( t != null )
-        {
-            int hl = checkBalance( t.left );
-            int hr = checkBalance( t.right );
-            if( Math.abs( altura( t.left ) - altura( t.right ) ) > 1 ||
-                    altura( t.left ) != hl || altura( t.right ) != hr )
-                System.out.println( "OOPS!!" );
-        }
-        
-        return altura( t );
-    }
-    
-    
-    
-    
-         // Test program
-    public static void main( String [ ] args )
-    {
-        ArbolAVL<Integer> t = new ArbolAVL<>( );
-        final int SMALL = 40;
-        final int NUMS = 1000000;  // must be even
-        final int GAP  =   37;
-
-        System.out.println( "Checking... (no more output means success)" );
-
-        for( int i = GAP; i != 0; i = ( i + GAP ) % NUMS )
-        {
-        //    System.out.println( "INSERT: " + i );
-            t.insert( i );
-            if( NUMS < SMALL )
-                t.checkBalance( );
-        }
-        
-        System.out.println(t.raiz.data);
-        
-         for( int i = GAP; i != 0; i = ( i + GAP ) % NUMS )
-        {
-        //    System.out.println( "INSERT: " + i );
-            t.insert( i );
-            if( NUMS < SMALL )
-                t.checkBalance( );
-        }
-        
-        
-        for( int i = 1; i < NUMS; i+= 2 )
-        {
-         //   System.out.println( "REMOVE: " + i );
-            t.remove( i );
-            if( NUMS < SMALL )
-                t.checkBalance( );
-        }
-        if( NUMS < SMALL )
-            t.printTree_in( );
-        
-        System.out.println(t.findMax());
-        System.out.println(t.findMin());
-        if( t.findMin( ) != 2 || t.findMax( ) != NUMS - 2 )
-            System.out.println( "FindMin or FindMax error!" );
-
-        for( int i = 2; i < NUMS; i+=2 )
-             if( !t.contains( i ) )
-                 System.out.println( "Find error1!" );
-
-        for( int i = 1; i < NUMS; i+=2 )
-        {
-            if( t.contains( i ) )
-                System.out.println( "Find error2!" );
-        }
-    }
 }

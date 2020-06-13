@@ -4,7 +4,7 @@ package ProMange.Logic;
 import ED.ArrayList;
 import ED.MyArrayList;
 
-public class Maquina {
+public class Maquina implements Comparable<Maquina> {
     int serial;
     boolean estado;
     long operario;
@@ -28,6 +28,22 @@ public class Maquina {
         this.serial = 0;
         this.estado = false;
         this.operario = 0;
+    }
+    
+    public Maquina(ED.ArbolAVL<Maquina> Maquinas){
+        if (Maquinas.isEmpty()){
+            Maquina nueva = new Maquina();
+            nueva.setEstado(true);
+            nueva.setSerial(1);
+            Maquinas.insert(nueva);
+        }else{
+            Maquina sm = Maquinas.findMax();
+            int mayor = sm.getSerial();
+            Maquina nueva = new Maquina();
+            nueva.setEstado(true);
+            nueva.setSerial(1+ mayor);
+            Maquinas.insert(nueva);
+        }
     }
 
     public int getSerial() {
@@ -54,5 +70,17 @@ public class Maquina {
         this.operario = operario;
     }
     
+    
+    @Override
+    public int compareTo (Maquina b){ 
+
+        if(this.serial > b.serial){
+            return 1;
+        } else if (this.serial < b.serial){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
     
 }
