@@ -807,9 +807,9 @@ public class FrameEmpleados extends javax.swing.JFrame {
             escribirFishero(arr_empleado);
             JOptionPane.showMessageDialog(null, "Datos guardados con exito", "Error de tipeo", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {           
-            System.out.print("error al guarda");
+            System.out.print("error al guardar");
         } catch (ClassNotFoundException ex) {            
-            System.out.print("error al guardad");        
+            System.out.print("error al guardar");        
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

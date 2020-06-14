@@ -761,7 +761,6 @@ public class FrameInventario extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //leer el xml
         this.arr_productos = productos_excel.obtenerProductos();
-        System.out.println("sadasdasdasdas");
         mostrar_matriz();
         JOptionPane.showMessageDialog(null, "Datos del archivo XML leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
