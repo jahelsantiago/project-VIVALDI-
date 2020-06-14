@@ -8,8 +8,10 @@ package ProMange.UI;
 import ED.ArrayList;
 import ED.Pila;
 import ProMange.Logic.EmpleadoJ;
+import ProMange.Logic.ProductoJ;
 
 import ProMange.Logic.Xml_clases.EmpleadoJ_excel;
+import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
 
 //import ProMange.Logic.GestorFisheros;
 
@@ -37,8 +39,9 @@ public class FrameEmpleados extends javax.swing.JFrame {
     String Nombre = "";
     String apellido ="";
     String maquina ="";
-    String  fecha_nacimiento;
+    String fecha_nacimiento;
     String estado;
+    String disponibilidad;
     Pila<ArrayList<EmpleadoJ>> pila = new Pila<>();
     EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();    
     ED.ArrayList<EmpleadoJ> arr_empleado = new ArrayList<>();
@@ -89,18 +92,33 @@ public class FrameEmpleados extends javax.swing.JFrame {
     
     
     private void mostrar_matriz(){
-        String matris[][] = new String[arr_empleado.size()][5];
+        String matris[][] = new String[arr_empleado.size()][7];
         for(int i = 0; i<arr_empleado.size();i++){
             matris[i][0] = Long.toString(((EmpleadoJ)arr_empleado.get(i)).getId());
             matris[i][1] = ((EmpleadoJ)arr_empleado.get(i)).getNombre();
             matris[i][2] = ((EmpleadoJ)arr_empleado.get(i)).getApellido();
             matris[i][3] = Integer.toString(((EmpleadoJ)arr_empleado.get(i)).getMaquina());
-            matris[i][4] = ((EmpleadoJ)arr_empleado.get(i)).getFecha_nacimiento();                                                              
+            matris[i][4] = ((EmpleadoJ)arr_empleado.get(i)).getFecha_nacimiento();  
+
+            //Estado
+            if (((EmpleadoJ)arr_empleado.get(i)).getEstado() == true) {
+                matris[i][5] = "Activo";
+                //Disponibilidad
+                if (((EmpleadoJ)arr_empleado.get(i)).getDispo() == true) {
+                    matris[i][6] = "Disponible";
+                }else{
+                    matris[i][6] = "No disponible";
+                }
+            }else {
+                matris[i][5] = "Despedido";
+                matris[i][6] = "No disponible";
+            }
+            
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matris,
             new String [] {
-                "ID", "Nombre", "Apellido", "Maquina","Fecha de nacimiento"
+                "ID", "Nombre", "Apellido", "Maquina","Fecha de nacimiento","Estado","Disponibilidad"
             }
         ));
                 
@@ -128,7 +146,11 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 fecha_nacimiento = (jTable1.getValueAt(i, 4)).toString();
                 jTextFieldFechaNacimiento.setText(fecha_nacimiento);
                         
-
+                estado = (jTable1.getValueAt(i, 5)).toString();
+                jEstado.setSelectedItem(estado);
+                
+                disponibilidad = (jTable1.getValueAt(i, 6)).toString();
+                jDispo.setSelectedItem(disponibilidad);
                 
             }
         });
@@ -140,7 +162,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
         this.jTextFieldID.setText("");
         this.jTextFieldApellido.setText("");
         this.jTextFieldMaquina.setText("");
-        
+        this.jEstado.setSelectedItem("Despedido");
+        this.jDispo.setSelectedItem("No disponible");
     }
     
     private void crear_empleado(){
@@ -154,6 +177,22 @@ public class FrameEmpleados extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Porfavor llenar todos los atributos", "Error de tipeo", JOptionPane.DEFAULT_OPTION);
             return;
         }
+        
+        // Estado
+        boolean estado;
+        if (jEstado.getSelectedItem().toString() == "Activo") {
+            estado = true;
+        }else{
+            estado =false;
+        }
+        
+        //Disponibilidad
+        boolean dispo;
+        if (jDispo.getSelectedItem().toString() == "Disponible") {
+            dispo = true;
+        }else{
+            dispo =false;
+        }
 
         EmpleadoJ empleado=new EmpleadoJ(
                 jTextFieldNombre.getText(),
@@ -161,18 +200,37 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldFechaNacimiento.getText(),
                 //jDateChooser1.getDateFormatString(),
                 Long.parseLong(this.jTextFieldID.getText()),
-                true
+                estado,
+                dispo
         );                
         arr_empleado.add(arr_empleado.size(),empleado);                                
     }
     
     private void editar_empleado(){
+        
+        // Estado
+        boolean estado;
+        if (jEstado.getSelectedItem().toString() == "Activo") {
+            estado = true;
+        }else{
+            estado =false;
+        }
+        
+        //Disponibilidad
+        boolean dispo;
+        if (jDispo.getSelectedItem().toString() == "Disponible") {
+            dispo = true;
+        }else{
+            dispo =false;
+        }
+        
         EmpleadoJ empleado=new EmpleadoJ(
                 jTextFieldNombre.getText(),
                 jTextFieldApellido.getText(),
                 jTextFieldFechaNacimiento.getText(),
                 Long.parseLong(this.jTextFieldID.getText()),
-                true
+                estado,
+                dispo
         );                
         arr_empleado.set(i, empleado);                                
     }
@@ -190,6 +248,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
              return false;
         }
    }
+   
+   //Busqueda 1, versatil pero no rapida
 
     private ED.ArrayList buscar_empleados(){
         
@@ -238,11 +298,66 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 
     }
 
-
+//Busqueda 2
     
-
+    private ED.ArbolAVL<EmpleadoJ> arbol_emp(ED.ArrayList a){
+         ED.ArbolAVL<EmpleadoJ> nue = new ED.ArbolAVL<EmpleadoJ>();
+         for (int j = 0; j < a.size(); j++) {
+             nue.insert((EmpleadoJ) a.get(j));
+         }
+         return nue;
+     }
     
-
+    
+    
+    private EmpleadoJ buscar_empleado_2(ED.ArbolAVL a){
+        EmpleadoJ b = new EmpleadoJ();
+        EmpleadoJ c = new EmpleadoJ();
+        b.setId(Long.parseLong(this.jTextFieldID.getText()));
+        if (a.contains(b)) {
+            c = (EmpleadoJ) a.encontrar(b);
+            return c;         
+        }else{
+            c = null;
+            return c;
+        } 
+     }
+    
+    private void matriz_resultado_busqueda2(EmpleadoJ a){
+        if (a != null) {
+            String matris[][] = new String[1][7];
+        
+            matris[0][0] = Long.toString(a.getId());
+            matris[0][1] = a.getNombre();
+            matris[0][2] = a.getApellido();
+            matris[0][3] = Integer.toString(a.getMaquina());
+            matris[0][4] = a.getFecha_nacimiento();
+            
+            //Estado
+            if (a.getEstado() == true) {
+                matris[0][5] = "Activo";
+            }else{
+                matris[0][5] = "Despedido";
+            }
+            
+            //Disponibilidad
+            if (a.getDispo() == true) {
+            matris[0][6] = "Disponible";
+            }else{
+            matris[0][6] = "No disponible";
+            }
+        
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            matris,
+            new String [] {
+                "ID", "Nombre", "Apellido", "Maquina","Fecha de nacimiento","Estado","Disponibilidad"
+            }
+        ));
+        }else{
+            JOptionPane.showMessageDialog(null, "Ningun empleados posee el Id ingresado", "No encontrado", JOptionPane.DEFAULT_OPTION);
+        }
+                
+    }
     
 
     
@@ -289,6 +404,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButtonEliminar1 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jDispo = new javax.swing.JComboBox<>();
+        jEstado = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -432,18 +549,19 @@ public class FrameEmpleados extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextFieldNombre.setBorder(javax.swing.BorderFactory.createTitledBorder("NOMBRE"));
-        jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 290, 60));
+        jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 290, 60));
 
         jTextFieldApellido.setBorder(javax.swing.BorderFactory.createTitledBorder("APELLIDO"));
-        jPanel3.add(jTextFieldApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 290, 60));
+        jPanel3.add(jTextFieldApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 290, 60));
 
-        jTextFieldFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder("FECHA DE NACMIENTO"));
+        jTextFieldFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder("FECHA DE NACIMIENTO"));
         jTextFieldFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldFechaNacimientoActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 290, 60));
+        jPanel3.add(jTextFieldFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 290, 60));
+        jTextFieldFechaNacimiento.getAccessibleContext().setAccessibleName("");
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/create_25px.png"))); // NOI18N
         jButtonEditar.setText("Editar");
@@ -478,7 +596,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldMaquinaActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 290, 60));
+        jPanel3.add(jTextFieldMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 290, 60));
 
         jTextFieldID.setBorder(javax.swing.BorderFactory.createTitledBorder("ID"));
         jTextFieldID.addActionListener(new java.awt.event.ActionListener() {
@@ -486,7 +604,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jTextFieldIDActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 60));
+        jPanel3.add(jTextFieldID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 230, 60));
 
         jLabel3.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel3.setText("DATOS");
@@ -499,7 +617,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 jButtonEliminar1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 40, 50));
+        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 40, 60));
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_stream_32px.png"))); // NOI18N
@@ -510,6 +628,26 @@ public class FrameEmpleados extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 30, 30));
+
+        jDispo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponible", "No disponible" }));
+        jDispo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDispoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jDispo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 290, 60));
+        jDispo.getAccessibleContext().setAccessibleName("DISPONIBILIDAD");
+        jDispo.getAccessibleContext().setAccessibleDescription("");
+
+        jEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Despedido" }));
+        jEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEstadoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 290, 60));
+        jEstado.getAccessibleContext().setAccessibleName("ESTADO");
+        jEstado.getAccessibleContext().setAccessibleDescription("ESTADO");
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, 610));
 
@@ -679,7 +817,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
         //leemos el xml
         this.arr_empleado = empleado_excel.obtenerEmpleados();
         mostrar_matriz();
-        JOptionPane.showMessageDialog(null, "Datos de xml leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println("bien");
+        JOptionPane.showMessageDialog(null, "Datos del archivo XML leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -692,15 +831,19 @@ public class FrameEmpleados extends javax.swing.JFrame {
             mostrar_matriz();
             return;
         }
-        ED.ArrayList resultado = buscar_empleados();
-        matriz_resultado_busqueda(resultado);
+        /*ED.ArrayList resultado = buscar_empleados();
+        matriz_resultado_busqueda(resultado);*/
+        ED.ArrayList emp_actuales = arr_empleado;   
+        ED.ArbolAVL emp = arbol_emp(emp_actuales);
+        matriz_resultado_busqueda2(buscar_empleado_2(emp));
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        crear_xml("Empleados","basedatosEmpleados.xml");
         for (int j = 0; j < arr_empleado.size(); j++) {
-            empleado_excel.agregarEmpleado((EmpleadoJ)arr_empleado.get(i));
-        }
-        JOptionPane.showMessageDialog(null, "Datos guardados en xml correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            empleado_excel.agregarEmpleado((EmpleadoJ)arr_empleado.get(j));
+        } 
+        JOptionPane.showMessageDialog(null, "Datos guardados archivo XML correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -720,6 +863,14 @@ public class FrameEmpleados extends javax.swing.JFrame {
         mostrar_matriz();
         
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jDispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDispoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDispoActionPerformed
+
+    private void jEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jEstadoActionPerformed
 
 
     /**
@@ -778,6 +929,8 @@ public class FrameEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton jButtonInventario1;
     private javax.swing.JButton jButtonPedidos;
     private javax.swing.JButton jButtonProcesos;
+    private javax.swing.JComboBox<String> jDispo;
+    private javax.swing.JComboBox<String> jEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

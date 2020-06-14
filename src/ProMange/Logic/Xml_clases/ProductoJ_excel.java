@@ -48,13 +48,13 @@ public class ProductoJ_excel implements Serializable{
             doc.getDocumentElement().normalize();
             
             //obtiene los nodos con la etiuqeta EmpleadosJ
-            NodeList nodosProdcuto = doc.getElementsByTagName("Producto");  // linea a cambiar
+            NodeList nodosProducto = doc.getElementsByTagName("Producto");  // linea a cambiar
             
             //Por cada nodo que se obtuvo se obtendran los datos
             //y se guardaran en un objeto tipo eompleadosJ
             
-            for (int i = 0; i < nodosProdcuto.getLength(); i++) {
-                Node productoJ = nodosProdcuto.item(i);
+            for (int i = 0; i < nodosProducto.getLength(); i++) {
+                Node productoJ = nodosProducto.item(i);
                 if (productoJ.getNodeType() == Node.ELEMENT_NODE) {
                     Element unElemento = (Element) productoJ ;
                     ProductoJ objProducto = new ProductoJ();

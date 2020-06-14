@@ -202,6 +202,7 @@ public class EmpleadoJ_excel <J> {
             nuevoEmp.appendChild(nuevoApellido);
             nuevoEmp.appendChild(nuevaFecha_nacimiento);
             nuevoEmp.appendChild(nuevoEstado);
+            nuevoEmp.appendChild(nuevoDispo);
             nuevoEmp.appendChild(nuevaMaquina);
             nuevoEmp.appendChild(nuevoId);
             

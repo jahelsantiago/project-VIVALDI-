@@ -78,10 +78,23 @@ public class ProductoJ implements Serializable, Comparable<ProductoJ> {
     
     @Override
     public int compareTo (ProductoJ b){ 
+        
+        char[] bch = b.getReferencia().toCharArray();
+        int bcum = 0;
+        char[] ach = this.getReferencia().toCharArray();
+        int acum = 0;
+        
+        for (int i = 0; i < ach.length; i++) {
+            acum = acum + (int)ach[i];
+        }
+        
+        for (int i = 0; i < bch.length; i++) {
+            bcum = bcum + (int)bch[i];
+        }
 
-        if(Integer.valueOf(this.referencia) > Integer.valueOf(b.referencia)){
+        if(acum > bcum){
             return 1;
-        } else if (Integer.valueOf(this.referencia) < Integer.valueOf(b.referencia)){
+        } else if (acum < bcum){
             return -1;
         }else{
             return 0;

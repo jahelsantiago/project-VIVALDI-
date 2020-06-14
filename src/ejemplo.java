@@ -17,7 +17,7 @@ public class ejemplo {
     static String etiqueta_empleados = "Maquina"; // reemplazar por la variable Etiqueta_objeto_almacenar en la funcion de crear_xlm
 
     public static void main(String[] args) {
-       crear_carpeta();
+       /*crear_carpeta();
        crear_xml("EmpleadoJ","basedatosEmpleados.xml");
        ED.ArrayList arreglo_empleados = new ED.ArrayList();             
        EmpleadoJ_excel a1 = new EmpleadoJ_excel();
@@ -33,7 +33,8 @@ public class ejemplo {
        //eliminar_carpeta("basedatosEmpleados.xml");
 
        //crear_carpeta();
-       crear_xml("Pedido","basedatosPedidos.xml");
+       crear_xml("Pedido","basedatosPedidos.xml");*/
+      
     }
     
 }

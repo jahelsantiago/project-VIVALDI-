@@ -80,6 +80,8 @@ public class ArbolAVL <J extends Comparable<? super J>> {
         return contains(x, raiz);
     }
     
+    
+    
     private boolean contains(J x, NodoAVL<J> nd ){
         
         if (nd == null) {
@@ -98,6 +100,31 @@ public class ArbolAVL <J extends Comparable<? super J>> {
         }
         else {
             return true; 
+        }
+    }
+    
+    public J encontrar(J x){
+        return (J) encontar(x, raiz);
+    }
+    
+    private J encontar(J x, NodoAVL<J> nd ){
+        
+        if (nd == null) {
+            return null;
+        }
+        
+        int comp = x.compareTo(nd.data);
+        
+        //Busca dependiendo si el dato en el nodo es mayor o menor a x
+        
+        if (comp < 0) {
+            return encontar(x, nd.left); 
+        }
+        else if(comp > 0){
+            return encontar(x, nd.right);
+        }
+        else {
+            return nd.data; 
         }
     }
     

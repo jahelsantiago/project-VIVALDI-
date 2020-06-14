@@ -8,6 +8,8 @@ package ProMange.UI;
 import ED.ArrayList;
 import ProMange.Logic.ProductoJ;
 import ProMange.Logic.Xml_clases.ProductoJ_excel;
+import static ProMange.Logic.Xml_clases.archivos_gestor.crear_xml;
+import static ProMange.Logic.Xml_clases.archivos_gestor.eliminar_carpeta;
 //import ProMange.Logic.GestorFisheros;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -176,7 +178,7 @@ public class FrameInventario extends javax.swing.JFrame {
                 jTextFieldReferencia.getText(),
                 jTextFieldNombre.getText(),
                 jTextFieldCategoria.getText(),
-                Integer.parseInt(this.jTextFieldTiempoElaboracion.getText()),
+                Integer.parseInt(jTextFieldTiempoElaboracion.getText()),
                 Integer.parseInt(jTextFieldCantidad.getText()),
                 estado
         );                
@@ -186,6 +188,8 @@ public class FrameInventario extends javax.swing.JFrame {
     private void eliminar_producto(){               
         arr_productos.remove(i);                                
     }
+    
+    //Busqueda 1 mas versatil pero toma mas tiempo
 
      private ED.ArrayList buscar_productos(){
         ED.ArrayList retorno = new ED.ArrayList();
@@ -203,8 +207,6 @@ public class FrameInventario extends javax.swing.JFrame {
         return retorno;
      }
      
- 
-
      private void mostrar_matriz_resultado(ED.ArrayList resultado){
         if (resultado.size() != 0) {
         String matris[][] = new String[resultado.size()][6];
@@ -231,6 +233,59 @@ public class FrameInventario extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(null, "No se encontro la referencia en el catalogo de productos", "No encontrado", JOptionPane.INFORMATION_MESSAGE);
          }        
     }
+     
+     
+     //Crear el arbol e insertar todos los productos
+     // Solamente se realiza 1 vez 
+     
+     private ED.ArbolAVL<ProductoJ> arbol_prod(ED.ArrayList prod_bas){
+         ED.ArbolAVL<ProductoJ> nue = new ED.ArbolAVL<ProductoJ>();
+         for (int j = 0; j < prod_bas.size(); j++) {
+             nue.insert((ProductoJ) prod_bas.get(j));
+         }
+         return nue;
+     }
+     
+     private ProductoJ buscar_productos_2(ED.ArbolAVL produc){
+        ProductoJ a = new ProductoJ();
+        ProductoJ b = new ProductoJ();
+        a.setReferencia(jTextFieldReferencia.getText());
+        if (produc.contains(a)) {
+            b = (ProductoJ) produc.encontrar(a);
+            return b;         
+        }else{
+            b = null;
+            return b;
+        } 
+     }
+     
+     private void mostrar_matriz_resultado2(ProductoJ a){
+        if (a != null) {
+        String matris[][] = new String[1][6];
+        matris[0][0] = a.getReferencia();
+        matris[0][1] = a.getNombre();
+        matris[0][2] = a.getCategoria();
+        matris[0][3] = Integer.toString(a.getTiempo_elaboracion());
+        matris[0][4] = Integer.toString(a.getCantidad_inventario());    
+            
+        if (a.getEstado() == true) {
+            matris[0][5] = "Activo";
+        }else{
+            matris[0][5] = "Descontinuado";
+        }
+        
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            matris,
+            new String [] {
+                "REFERENCIA", "NOMBRE", "CATEGORIA", "TIEMPO ELABORACION","CANTIDAD","ESTADO"
+            }
+        ));
+         }else{
+              JOptionPane.showMessageDialog(null, "No se encontro la referencia en el catalogo de productos", "No encontrado", JOptionPane.INFORMATION_MESSAGE);
+         }        
+    }
+
+     
     
     
     /**
@@ -704,10 +759,11 @@ public class FrameInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //guardad el xml
+        //leer el xml
         this.arr_productos = productos_excel.obtenerProductos();
+        System.out.println("sadasdasdasdas");
         mostrar_matriz();
-        JOptionPane.showMessageDialog(null, "Datos de xml leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Datos del archivo XML leidos con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -724,8 +780,15 @@ public class FrameInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
+        /* busqueda 1.0 versatil pero lenta
         ED.ArrayList resultado = buscar_productos();
-        mostrar_matriz_resultado(resultado);
+        mostrar_matriz_resultado(resultado);*/
+        if( jTextFieldReferencia.getText().equals("")){            
+            mostrar_matriz();
+            return;
+        }
+        ED.ArrayList productos_actuales = arr_productos;   
+        mostrar_matriz_resultado2(buscar_productos_2(arbol_prod(productos_actuales)));
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -734,22 +797,27 @@ public class FrameInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        crear_xml("ProductoJ","basedatosProductos.xml");
         for (int j = 0; j < arr_productos.size(); j++) {
-            productos_excel.agregarProducto((ProductoJ)arr_productos.get(i));
+            productos_excel.agregarProducto((ProductoJ)arr_productos.get(j));
         }
-        //JOptionPane.showMessageDialog(null, "Datos traidos correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Datos guardados en el archivo XML satisfactoriamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-
+        //Leer productos
         try {
             this.arr_productos = leerFichero();
             //JOptionPane.showMessageDialog(null, "Datos guardados con exito en xml", "Informacion", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
         } catch (ClassNotFoundException ex) {
         }
+        
+        
 
         mostrar_matriz();
+        
+        
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
