@@ -62,11 +62,19 @@ public class EmpleadoJ_excel <J> {
                     objEmpleadoJ.setNombre(obtenerNodoValor("Nombre",unElemento));
                     objEmpleadoJ.setApellido(obtenerNodoValor("Apellido",unElemento));
                     objEmpleadoJ.setFecha_nacimiento((J)obtenerNodoValor("Fecha_nacimiento",unElemento));
+                    
                     if (obtenerNodoValor("Estado",unElemento) == "false") {
                         objEmpleadoJ.setEstado(false);
                     }else{
                         objEmpleadoJ.setEstado(true);
                     }
+                    
+                    if (obtenerNodoValor("Disponibilidad",unElemento) == "false") {
+                        objEmpleadoJ.setDispo(false);
+                    }else{
+                        objEmpleadoJ.setDispo(true);
+                    }
+                    
                     objEmpleadoJ.setMaquina(Integer.parseInt(obtenerNodoValor("Maquina",unElemento)));
                     objEmpleadoJ.setId(Long.parseLong(obtenerNodoValor("Id",unElemento)));
                     lista_empleados.push(objEmpleadoJ, i);
@@ -114,6 +122,13 @@ public class EmpleadoJ_excel <J> {
                     }else{
                         objEmpleadoJ.setEstado(true);
                     }
+                    
+                    if (obtenerNodoValor("Disponibilidad",unElemento) == "false") {
+                        objEmpleadoJ.setDispo(false);
+                    }else{
+                        objEmpleadoJ.setDispo(true);
+                    }
+                    
                     objEmpleadoJ.setMaquina(Integer.parseInt(obtenerNodoValor("Maquina",unElemento)));
                     objEmpleadoJ.setId(Long.parseLong(obtenerNodoValor("Id",unElemento)));
                     lista_empleados.add(lista_empleados.size(),objEmpleadoJ);
@@ -165,6 +180,16 @@ public class EmpleadoJ_excel <J> {
                 estado = "false";
             }
             nuevoEstado.setTextContent(estado);
+            
+            //Disponibilidad
+            Element nuevoDispo = doc.createElement("Disponibilidad"); 
+             String dispo = null;
+            if (nuevo.getEstado()==true) {
+                dispo="true";
+            }else{
+                dispo = "false";
+            }
+            nuevoDispo.setTextContent(dispo);
             
             Element nuevaMaquina = doc.createElement("Maquina");
             nuevaMaquina.setTextContent(String.valueOf(nuevo.getMaquina()));

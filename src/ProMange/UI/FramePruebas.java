@@ -1,6 +1,9 @@
+package ProMange.UI;
 
-import ED.HeapSort;
+
+
 import ED.MatrizDinamica;
+import ED.MinHeap;
 import ProMange.Logic.OrdenJ;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,12 +11,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Hashtable;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class FramePruebas extends javax.swing.JFrame {
     ED.ArrayList<OrdenJ> arr_ordenes = new ED.ArrayList<>();  
     MatrizDinamica mat_maquinas;
-
+    Hashtable contenedor;
+    MinHeap minheap;
+    
     public FramePruebas() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -29,7 +36,18 @@ public class FramePruebas extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("eerror en frame pedidos al optener maquinas");
             mat_maquinas =  new MatrizDinamica(this.arr_ordenes.size(), 6);
-        }        
+        }
+
+        crear_hash();
+
+        
+        mat_maquinas.imprimirMatriz();
+        
+        
+        
+                   
+                   
+
     }
     
     private static MatrizDinamica leerFicheroMaquinas() throws IOException, ClassNotFoundException {
@@ -52,58 +70,71 @@ public class FramePruebas extends javax.swing.JFrame {
 
     private OrdenJ buscar(ED.ArrayList arr, String ref){
         for(int i = 0; i<arr.size(); i++){
-            if(((OrdenJ)arr.get(i)).getReferencia_orden().equals(ref)){
+            if((((OrdenJ)arr.get(i)).getReferencia_orden()).equals(ref)){
                 return ((OrdenJ)arr.get(i));
             }
         }
-        return null;
+        return new OrdenJ();
     }
+    
+    private void crear_hash(){
+        contenedor=new Hashtable();
+        for (OrdenJ arr_ordene : arr_ordenes) {
+            contenedor.put(arr_ordene.referencia_orden, arr_ordene);                    
+        }
+    }
+    
+
+            
 
 
     public void paint(Graphics g){
         super.paint(g);
         int px = 50;
         int py = 50;
-        int maquinas = this.mat_maquinas.columnasMax;
         int inicioX = 2*px;
         int inicioY = 3*py;
-        int separacionY = py/2;
-        int separacionX = px/2;
-        int separacion = 230;
-        int x = 1050;
-        int y = 550;
-        int pxHora = 5; 
-        g.drawRect(inicioX,inicioY,x,y);
+        int x_panel = 1150;
+        int y_panle = 700;
+        g.drawRect(inicioX+20,inicioY-10,1000,550);
         int i = 0;
         int px_x = inicioX/2;
         int py_y = inicioY;
-        int factor_normalizacion = 0;
-        
-        int max=1;
-        for (int j = 0; j < this.mat_maquinas.prioridad.length; j++) {
-            if(this.mat_maquinas.prioridad[j]>max){
-                max = this.mat_maquinas.prioridad[j];
-            }
+        for (int j = inicioX+20; j < x_panel; j+=px) {
+            g.drawLine(j, inicioY-10, j, y_panle-10);
         }
         
-        while(i < maquinas){
+        int j = 0;
+        int w;
+        while(i < this.mat_maquinas.profundidad_filas.length){
             px_x = inicioX/2;
-            g.drawRect(px_x, py_y, px, py);
+            g.setColor(Color.GRAY);
+            g.fillRect(px_x, py_y, px, py);
+            g.setColor(Color.white);
+            g.fillRect(px_x+5, py_y+5, px-10, py-10);
+            g.setColor(Color.BLACK);
+            g.drawString("M "+Integer.toString(i), px_x+20, py_y+20);
             px_x = 20+inicioX;
-            int j = 0;
+            
+            j = 0;
+            //System.out.println(this.mat_maquinas.profundidad_filas[i]);            
             while(j<this.mat_maquinas.profundidad_filas[i]){
-//                OrdenJ temp = buscar(arr_ordenes,  mat_maquinas.datos[i][j]);
-//                int w = temp.tiempo_elaboracion/max;
-                g.drawRect(px_x, py_y, px, py);
-                px_x += 75;
-                j+=1;
+                OrdenJ temp = (OrdenJ)(contenedor.get(mat_maquinas.datos[j][i]));
+                w = temp.tiempo_elaboracion/60;
+                g.fillRect(px_x, py_y, w*px, py);
+                g.setColor(Color.WHITE);
+                g.setColor(Color.getHSBColor((int) (Math.random() * 50) + 1, (int) (Math.random() * 50) + 1, (int) (Math.random() * 50) + 1));
+                g.fillRect(px_x+5, py_y+5,(w*px)-10, py-10);
+                g.setColor(Color.BLACK);
+                g.drawString(temp.referencia_orden, px_x+20, py_y+20);
+                px_x += w*px;
+                px_x += 5;
+                j+=1;                    
             }
             py_y += 75;            
-            i+=1;
+            i++;
         }
-        g.setColor(Color.BLUE);
-         
-
+        g.setColor(Color.BLUE);         
     }  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -119,6 +150,7 @@ public class FramePruebas extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 700));
@@ -156,6 +188,14 @@ public class FramePruebas extends javax.swing.JFrame {
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1180, 30));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 380, 20));
 
+        jButton1.setText("Volver A Procesos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 80, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
 
         pack();
@@ -164,6 +204,12 @@ public class FramePruebas extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FrameProcesos c = new FrameProcesos();
+        this.setVisible(false);
+        c.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,6 +247,7 @@ public class FramePruebas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

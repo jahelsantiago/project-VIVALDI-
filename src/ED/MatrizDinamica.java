@@ -20,6 +20,7 @@ public class MatrizDinamica implements Serializable{
     public int columnasMax;    
     public int[] profundidad_filas;
     public int[] prioridad;
+    public MinHeap minheap;
 
     public MatrizDinamica(int filasMax, int columnasMax) {
         this.filasMax = filasMax;        
@@ -140,6 +141,8 @@ public class MatrizDinamica implements Serializable{
             for(int i= 0;i<filasMax;i++){
                 for (int j = 0; j < columnasMax; j++) {
                     System.out.print(this.datos[i][j]);
+                    System.out.print(" ");
+                    
                 }
                 System.out.println("");
                 

@@ -10,8 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import ED.ArrayList;
-import ED.HeapSort;
-import ED.HeapSort1;
 import ED.MatrizDinamica;
 import ED.Pila;
 import java.io.File;
@@ -245,6 +243,8 @@ public class FrameProcesos extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jButtonAutoAsignar = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -373,7 +373,7 @@ public class FrameProcesos extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel3.setText("DATOS ORDENES");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 230, 60));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 230, 60));
 
         jTable2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 102, 255), null, new java.awt.Color(204, 51, 255)));
         jTable2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
@@ -567,6 +567,24 @@ public class FrameProcesos extends javax.swing.JFrame {
         });
         jPanel2.add(jButtonAutoAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, -1, -1));
 
+        jButton7.setText("Visulizar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 170, 30));
+
+        jButton9.setBackground(new java.awt.Color(255, 255, 255));
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_stream_32px.png"))); // NOI18N
+        jButton9.setContentAreaFilled(false);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 140, 30, 30));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 
         pack();
@@ -682,6 +700,16 @@ public class FrameProcesos extends javax.swing.JFrame {
           mostrar_matriz_maquinas();
     }//GEN-LAST:event_jButtonAutoAsignarActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        FramePruebas c = new FramePruebas();
+        c.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        mat_maquinas =  new MatrizDinamica(this.arr_ordenes.size(), maquinas);
+        mostrar_matriz_maquinas();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -727,7 +755,9 @@ public class FrameProcesos extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonAutoAsignar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonCrear2;

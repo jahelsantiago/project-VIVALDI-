@@ -166,7 +166,7 @@ public class FramePedidos extends javax.swing.JFrame {
     }
     private void clean(){
         this.jTextFieldCantidad.setText("");
-        this.jTextFieldFechaEntrega.setText("");
+        //this.jTextFieldFechaEntrega.setText("");
     }
     
     private void crear_Orden(){
@@ -181,7 +181,7 @@ public class FramePedidos extends javax.swing.JFrame {
                 referencia,
                 Integer.parseInt(tiempo_elab)*Integer.parseInt(jTextFieldCantidad.getText()),
                 Integer.parseInt(jTextFieldCantidad.getText()),
-                Integer.toString(arr_ordenes.size()),
+                Integer.toString(arr_ordenes.cont),
                 this.jTextFieldFechaEntrega.getText()
         );        
                
@@ -200,15 +200,6 @@ public class FramePedidos extends javax.swing.JFrame {
 
 
 
-    
-//    public void buscar_inventario(String busc){
-//        ArrayList<String> arr_pord_com = new ArrayList<>();
-//        for (int k = 0; k < 10; k++) {
-//            if(condicion_igualdad(arr_productos.get(i).getNombre(), busc)){
-//                arr_pord_com.add(arr_productos.get(i).getNombre());
-//            }
-//        }        
-//    }
     
     private static ED.ArrayList<ProductoJ> leerFichero() throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/productos");

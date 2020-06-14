@@ -29,7 +29,8 @@ public class FrameInventario extends javax.swing.JFrame {
     String nombre = "";
     String categoria ="";
     String tiempo_elab;
-    String  cantidad;    
+    String cantidad;
+    String Estado;
     
     ProductoJ_excel productos_excel = new ProductoJ_excel();    
     ED.ArrayList<ProductoJ> arr_productos = new ED.ArrayList<>();
@@ -80,18 +81,27 @@ public class FrameInventario extends javax.swing.JFrame {
     
     private void mostrar_matriz(){
 //      arr_productos = productos_excel.obtenerEmpleados();
-        String matris[][] = new String[arr_productos.size()][5];
+        String matris[][] = new String[arr_productos.size()][6];
         for(int i = 0; i<arr_productos.size();i++){
             matris[i][0] = ((ProductoJ)arr_productos.get(i)).getReferencia();
             matris[i][1] = ((ProductoJ)arr_productos.get(i)).getNombre();
             matris[i][2] = ((ProductoJ)arr_productos.get(i)).getCategoria();
             matris[i][3] = Integer.toString(((ProductoJ)arr_productos.get(i)).getTiempo_elaboracion());
-            matris[i][4] = Integer.toString(((ProductoJ)arr_productos.get(i)).getCantidad_inventario());                                                              
+            matris[i][4] = Integer.toString(((ProductoJ)arr_productos.get(i)).getCantidad_inventario()); 
+            
+            //Estado
+            if (((ProductoJ)arr_productos.get(i)).getEstado() == true) {
+                matris[i][5] = "Activo";
+            }else if(((ProductoJ)arr_productos.get(i)).getEstado() == false){
+                matris[i][5] = "Descontinuado";
+            }
+            
+              
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matris,
             new String [] {
-                "REFERENCIA", "NOMBRE", "CATEGORIA", "TIEMPO ELABORACION","CANTIDAD"
+                "REFERENCIA", "NOMBRE", "CATEGORIA", "TIEMPO ELABORACION","CANTIDAD","ESTADO"
             }
         ));
                 
@@ -118,6 +128,9 @@ public class FrameInventario extends javax.swing.JFrame {
                 
                 cantidad = (jTable1.getValueAt(i, 4)).toString();
                 jTextFieldCantidad.setText(cantidad);
+                
+                Estado = (jTable1.getValueAt(i, 5)).toString();
+                jEstado.setSelectedItem(Estado);
                         
 
                 
@@ -131,26 +144,41 @@ public class FrameInventario extends javax.swing.JFrame {
         this.jTextFieldReferencia.setText("");
         this.jTextFieldCategoria.setText("");
         this.jTextFieldTiempoElaboracion.setText("");
+        this.jEstado.setSelectedItem("Descontinuado");
     }
     
     private void crear_producto(){
+        boolean estado;
+        if (jEstado.getSelectedItem().toString() == "Activo") {
+            estado = true;
+        }else{
+            estado =false;
+        }
         ProductoJ producto=new ProductoJ(
                 jTextFieldReferencia.getText(),
                 jTextFieldNombre.getText(),
                 jTextFieldCategoria.getText(),
                 Integer.parseInt(this.jTextFieldTiempoElaboracion.getText()),
-                Integer.parseInt(jTextFieldCantidad.getText())                
+                Integer.parseInt(jTextFieldCantidad.getText()),
+                estado
         );                
         arr_productos.add(arr_productos.size(),producto);                                
     }
     
     private void editar_producto(){
+        boolean estado;
+        if (jEstado.getSelectedItem().toString() == "Activo") {
+            estado = true;
+        }else{
+            estado =false;
+        }
         ProductoJ producto=new ProductoJ(
                 jTextFieldReferencia.getText(),
                 jTextFieldNombre.getText(),
                 jTextFieldCategoria.getText(),
                 Integer.parseInt(this.jTextFieldTiempoElaboracion.getText()),
-                Integer.parseInt(jTextFieldCantidad.getText())                
+                Integer.parseInt(jTextFieldCantidad.getText()),
+                estado
         );                
         arr_productos.set(i, producto);                                
     }
@@ -179,18 +207,24 @@ public class FrameInventario extends javax.swing.JFrame {
 
      private void mostrar_matriz_resultado(ED.ArrayList resultado){
         if (resultado.size() != 0) {
-        String matris[][] = new String[resultado.size()][5];
+        String matris[][] = new String[resultado.size()][6];
         for(int i = 0; i<resultado.size();i++){
             matris[i][0] = ((ProductoJ)resultado.get(i)).getReferencia();
             matris[i][1] = ((ProductoJ)resultado.get(i)).getNombre();
             matris[i][2] = ((ProductoJ)resultado.get(i)).getCategoria();
             matris[i][3] = Integer.toString(((ProductoJ)resultado.get(i)).getTiempo_elaboracion());
-            matris[i][4] = Integer.toString(((ProductoJ)resultado.get(i)).getCantidad_inventario());                                                              
+            matris[i][4] = Integer.toString(((ProductoJ)resultado.get(i)).getCantidad_inventario());    
+            
+            if (((ProductoJ)resultado.get(i)).getEstado() == true) {
+                matris[i][5] = "Activo";
+            }else{
+                matris[i][5] = "Descontinuado";
+            }
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matris,
             new String [] {
-                "REFERENCIA", "NOMBRE", "CATEGORIA", "TIEMPO ELABORACION","CANTIDAD"
+                "REFERENCIA", "NOMBRE", "CATEGORIA", "TIEMPO ELABORACION","CANTIDAD","ESTADO"
             }
         ));
          }else{
@@ -231,7 +265,6 @@ public class FrameInventario extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldCategoria = new javax.swing.JTextField();
-        jTextFieldCantidad = new javax.swing.JTextField();
         jButtonEditar = new javax.swing.JButton();
         jButtonCrear = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
@@ -245,6 +278,9 @@ public class FrameInventario extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jButtonEliminar1 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jTextFieldCantidad = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -458,18 +494,10 @@ public class FrameInventario extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextFieldNombre.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
-        jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 290, 40));
+        jPanel3.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 290, 40));
 
         jTextFieldCategoria.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
-        jPanel3.add(jTextFieldCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 40));
-
-        jTextFieldCantidad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
-        jTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldCantidadActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jTextFieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 290, 50));
+        jPanel3.add(jTextFieldCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 290, 40));
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/create_25px.png"))); // NOI18N
         jButtonEditar.setText("Editar");
@@ -504,7 +532,7 @@ public class FrameInventario extends javax.swing.JFrame {
                 jTextFieldTiempoElaboracionActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldTiempoElaboracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 290, 50));
+        jPanel3.add(jTextFieldTiempoElaboracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 290, 50));
 
         jTextFieldReferencia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(0, 0, 0), new java.awt.Color(51, 51, 51)));
         jTextFieldReferencia.addActionListener(new java.awt.event.ActionListener() {
@@ -512,31 +540,31 @@ public class FrameInventario extends javax.swing.JFrame {
                 jTextFieldReferenciaActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextFieldReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 250, 40));
+        jPanel3.add(jTextFieldReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 250, 40));
 
         jLabel3.setFont(new java.awt.Font("Poor Richard", 0, 24)); // NOI18N
         jLabel3.setText("DATOS INVENTARIO");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 230, 60));
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel4.setText("CANTIDAD");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 440, -1, -1));
+        jLabel4.setText("ESTADO");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel5.setText("REFERENCIA");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel6.setText("NOMBRE");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel7.setText("CATEGORIA");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, -1));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel8.setText("TEIMPO DE ELABORACION");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, -1, -1));
+        jLabel8.setText("TIEMPO DE ELABORACION");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, -1, -1));
 
         jButtonEliminar1.setBackground(new java.awt.Color(255, 255, 255));
         jButtonEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/search1.png"))); // NOI18N
@@ -545,7 +573,7 @@ public class FrameInventario extends javax.swing.JFrame {
                 jButtonEliminar1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 40, 40));
+        jPanel3.add(jButtonEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 40, 40));
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_stream_32px.png"))); // NOI18N
@@ -556,6 +584,26 @@ public class FrameInventario extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 30, 30));
+
+        jTextFieldCantidad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
+        jTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCantidadActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jTextFieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 290, 50));
+
+        jLabel9.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel9.setText("CANTIDAD");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, -1, -1));
+
+        jEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Descontinuado" }));
+        jEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEstadoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 290, 50));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, 610));
 
@@ -587,10 +635,6 @@ public class FrameInventario extends javax.swing.JFrame {
         this.setVisible(false);
         p.setVisible(true);
     }//GEN-LAST:event_jButtonProcesosActionPerformed
-
-    private void jTextFieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldCantidadActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         time_start = System.currentTimeMillis();
@@ -714,6 +758,14 @@ public class FrameInventario extends javax.swing.JFrame {
         clean();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jTextFieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCantidadActionPerformed
+
+    private void jEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEstadoActionPerformed
+        
+    }//GEN-LAST:event_jEstadoActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -775,6 +827,7 @@ public class FrameInventario extends javax.swing.JFrame {
     private javax.swing.JButton jButtonInventario1;
     private javax.swing.JButton jButtonPedidos;
     private javax.swing.JButton jButtonProcesos;
+    private javax.swing.JComboBox<String> jEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -783,6 +836,7 @@ public class FrameInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
