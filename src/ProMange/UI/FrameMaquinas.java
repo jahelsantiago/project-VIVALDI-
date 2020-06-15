@@ -746,13 +746,14 @@ public class FrameMaquinas extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 410, 400));
 
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_sign_out_26px.png"))); // NOI18N
         jButton7.setText("Asignar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, -1, -1));
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 980, 670));
 

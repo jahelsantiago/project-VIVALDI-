@@ -166,7 +166,7 @@ public class FramePedidos extends javax.swing.JFrame {
     }
     private void clean(){
         this.jTextFieldCantidad.setText("");
-        //this.jTextFieldFechaEntrega.setText("");
+        this.jTextFieldFechaEntrega.setText("");
     }
     
     private void crear_Orden(){
