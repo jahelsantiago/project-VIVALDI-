@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import ED.ArrayList;
 import ED.MatrizDinamica;
+import ED.MinHeap;
 import ED.Pila;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,10 +33,13 @@ public class FrameProcesos extends javax.swing.JFrame {
     String estado;
     OrdenJ_excel ordenes_excel = new OrdenJ_excel();
     ED.ArrayList<OrdenJ> arr_ordenes = new ED.ArrayList<>();
+    ED.ArrayList<Maquina> arr_maquinas = new ED.ArrayList<>();
+    
     int j ,row ,column;
     
     //tabla maquinas
     MatrizDinamica mat_maquinas;
+    MinHeap minheap;
     
     long time_start,time_end;
     int maquinas= 7;
@@ -61,6 +65,12 @@ public class FrameProcesos extends javax.swing.JFrame {
             System.err.println("eerror en frame pedidos al optener maquinas");
             mat_maquinas =  new MatrizDinamica(this.arr_ordenes.size(), maquinas);
         }
+                try{
+            arr_maquinas = leerFicheroarrMaquinas();
+        }catch (Exception e) {
+            System.err.println("eerror en frame pedidos al optener arr maquinas");
+            crear_arreglo_matriz();
+        }
 
         
         
@@ -74,7 +84,6 @@ public class FrameProcesos extends javax.swing.JFrame {
     
     
     private void mostrar_matriz_maquinas(){
-
         // inicializamos el titulo
         String[] titulos = new String[maquinas];
         for (int k = 0; k < titulos.length; k++) {
@@ -84,8 +93,7 @@ public class FrameProcesos extends javax.swing.JFrame {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             mat_maquinas.datos,
             titulos
-        ));
-        
+        ));        
         //mat_maquinas.imprimirMatriz();
     }
     
@@ -154,6 +162,15 @@ public class FrameProcesos extends javax.swing.JFrame {
     private boolean condicion_igualdad(String comp, String busc){
        return comp.substring(0, busc.length()).equalsIgnoreCase(busc);
     }
+    
+    private static ArrayList<Maquina> leerFicheroarrMaquinas() throws IOException, ClassNotFoundException {
+        File file=new File("xml_archivos/arr_maquinas_empleados");
+        FileInputStream f = new FileInputStream(file);
+        ObjectInputStream s = new ObjectInputStream(f);
+        ArrayList<Maquina>  usuario = (ArrayList<Maquina> ) s.readObject();
+        s.close();
+        return usuario;        
+    }   
         
     private static MatrizDinamica leerFicheroMaquinas() throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/MAT_maquinas");
@@ -320,8 +337,9 @@ public class FrameProcesos extends javax.swing.JFrame {
 
         jButtonInventario1.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButtonInventario1.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonInventario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/services_25px.png"))); // NOI18N
-        jButtonInventario1.setText("Otros");
+        jButtonInventario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_robot_26px_2.png"))); // NOI18N
+        jButtonInventario1.setText("Maquinas");
+        jButtonInventario1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 0, 204), new java.awt.Color(204, 0, 204), new java.awt.Color(51, 0, 51), new java.awt.Color(51, 0, 51)));
         jButtonInventario1.setBorderPainted(false);
         jButtonInventario1.setContentAreaFilled(false);
         jButtonInventario1.addActionListener(new java.awt.event.ActionListener() {
@@ -614,10 +632,6 @@ public class FrameProcesos extends javax.swing.JFrame {
         p.setVisible(true);
     }//GEN-LAST:event_jButtonProcesosActionPerformed
 
-    private void jButtonInventario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonInventario1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -709,6 +723,12 @@ public class FrameProcesos extends javax.swing.JFrame {
         mat_maquinas =  new MatrizDinamica(this.arr_ordenes.size(), maquinas);
         mostrar_matriz_maquinas();
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButtonInventario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventario1ActionPerformed
+        FrameMaquinas f = new FrameMaquinas();
+        this.setVisible(false);
+        f.setVisible(true);
+    }//GEN-LAST:event_jButtonInventario1ActionPerformed
 
 
     /**

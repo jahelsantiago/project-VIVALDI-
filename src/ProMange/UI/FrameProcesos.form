@@ -222,9 +222,19 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ProMange/Images/services_25px.png"/>
+              <Image iconType="3" name="/ProMange/Images/icons8_robot_26px_2.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Otros"/>
+            <Property name="text" type="java.lang.String" value="Maquinas"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder>
+                  <Color PropertyName="highlightOuter" blue="cc" green="0" red="cc" type="rgb"/>
+                  <Color PropertyName="highlightInner" blue="cc" green="0" red="cc" type="rgb"/>
+                  <Color PropertyName="shadowOuter" blue="33" green="0" red="33" type="rgb"/>
+                  <Color PropertyName="shadowInner" blue="33" green="0" red="33" type="rgb"/>
+                </BevelBorder>
+              </Border>
+            </Property>
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>

@@ -126,15 +126,24 @@ public class MatrizDinamica implements Serializable{
                 }                    
             }
             this.datos = aux;
-        }             
-        
-//        for(int i = 0; i<this.columnasMax;i++){
-//            System.out.print(this.prioridad[i]);
-//            System.out.print(" ");
-//        }
-        
+        }                             
+    }
+    
+    public void insertarColumna(){
+        this.columnasMax += 1;
+        String[][] aux = new String[filasMax][columnasMax];
+        for (int i = 0; i < filasMax; i++) {
+            for (int j = 0; j < columnasMax-1; j++) {
+                aux[i][j] = datos[i][j];
+            }
+        }
+        datos = aux;
+        for (int i = 0; i < filasMax; i++) {
+            datos[i][columnasMax-1] = "";
+        }
     }
 
+    
     
     
     public void imprimirMatriz(){
@@ -148,6 +157,12 @@ public class MatrizDinamica implements Serializable{
                 
             }          
     }
+    
+//    public static void main(String[] args) {
+//        MatrizDinamica m = new MatrizDinamica(4, 2);
+//        m.insertarColumna();
+//        m.imprimirMatriz();
+//    }
 }
     
     

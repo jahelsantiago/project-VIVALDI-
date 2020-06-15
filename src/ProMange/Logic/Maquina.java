@@ -3,17 +3,23 @@ package ProMange.Logic;
 
 import ED.ArrayList;
 import ED.MyArrayList;
+import java.io.Serializable;
 
-public class Maquina implements Comparable<Maquina> {
+public class Maquina implements Comparable<Maquina>, Serializable {
     int serial;
     boolean estado;
     long operario;
+    String nombre;
     ArrayList<OrdenJ> ordenes;
 
     public ArrayList<OrdenJ> getOrdenes() {
         return ordenes;
     }
+    public String getNombre() {
+        return nombre;
+    }
 
+        
     public void setOrdenes(ArrayList<OrdenJ> ordenes) {
         this.ordenes = ordenes;
     }
@@ -22,6 +28,13 @@ public class Maquina implements Comparable<Maquina> {
         this.serial = serial;
         this.estado = estado;
         this.operario = operario;
+    }
+    
+    public Maquina(int serial, String nombre, boolean estado, long operario) {
+        this.serial = serial;
+        this.estado = estado;
+        this.operario = operario;
+        this.nombre = nombre;
     }
 
     public Maquina() {
@@ -53,6 +66,9 @@ public class Maquina implements Comparable<Maquina> {
     public void setSerial(int serial) {
         this.serial = serial;
     }
+    public void setNombre(String serial) {
+        this.nombre = serial;
+    }
 
     public boolean getEstado() {
         return estado;
@@ -68,14 +84,11 @@ public class Maquina implements Comparable<Maquina> {
 
     public void setOperario(long operario) {
         this.operario = operario;
-    }
-    
-    
+    }        
     // implementando arbol AVL
     
     @Override
     public int compareTo (Maquina b){ 
-
         if(this.serial > b.serial){
             return 1;
         } else if (this.serial < b.serial){
@@ -93,6 +106,5 @@ public class Maquina implements Comparable<Maquina> {
         }else{
             return false;
         } 
-    }
-    
+    }    
 }

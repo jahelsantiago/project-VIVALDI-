@@ -35,7 +35,7 @@ public class FramePruebas extends javax.swing.JFrame {
             mat_maquinas = leerFicheroMaquinas();
         } catch (Exception e) {
             System.err.println("eerror en frame pedidos al optener maquinas");
-            mat_maquinas =  new MatrizDinamica(this.arr_ordenes.size(), 6);
+            mat_maquinas =  new MatrizDinamica(this.arr_ordenes.size(), 7);
         }
 
         crear_hash();
@@ -56,9 +56,9 @@ public class FramePruebas extends javax.swing.JFrame {
         ObjectInputStream s = new ObjectInputStream(f);
         MatrizDinamica usuario = (MatrizDinamica) s.readObject();
         s.close();
-        return usuario;
-        
+        return usuario;        
     }        
+    
     private static ED.ArrayList<OrdenJ> leerFicherOrdenes() throws IOException, ClassNotFoundException {
         File file=new File("xml_archivos/ordenes");
         FileInputStream f = new FileInputStream(file);
@@ -154,6 +154,7 @@ public class FramePruebas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 700));
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -188,13 +189,13 @@ public class FramePruebas extends javax.swing.JFrame {
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1180, 30));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 380, 20));
 
-        jButton1.setText("Volver A Procesos");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/factory_25px.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 80, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 80, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
 

@@ -120,8 +120,7 @@ public class FrameEmpleados extends javax.swing.JFrame {
             new String [] {
                 "ID", "Nombre", "Apellido", "Maquina","Fecha de nacimiento","Estado","Disponibilidad"
             }
-        ));
-                
+        ));                
     }
     
     private void mouse_listen(){
@@ -484,8 +483,9 @@ public class FrameEmpleados extends javax.swing.JFrame {
 
         jButtonInventario1.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButtonInventario1.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonInventario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/services_25px.png"))); // NOI18N
-        jButtonInventario1.setText("Otros");
+        jButtonInventario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProMange/Images/icons8_robot_26px_2.png"))); // NOI18N
+        jButtonInventario1.setText("Maquinas");
+        jButtonInventario1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 0, 204), new java.awt.Color(204, 0, 204), new java.awt.Color(51, 0, 51), new java.awt.Color(51, 0, 51)));
         jButtonInventario1.setBorderPainted(false);
         jButtonInventario1.setContentAreaFilled(false);
         jButtonInventario1.addActionListener(new java.awt.event.ActionListener() {
@@ -780,10 +780,6 @@ public class FrameEmpleados extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldIDActionPerformed
 
-    private void jButtonInventario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonInventario1ActionPerformed
-
     private void jTextFieldFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFechaNacimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFechaNacimientoActionPerformed
@@ -871,6 +867,12 @@ public class FrameEmpleados extends javax.swing.JFrame {
     private void jEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jEstadoActionPerformed
+
+    private void jButtonInventario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventario1ActionPerformed
+        FrameMaquinas f = new FrameMaquinas();
+        this.setVisible(false);
+        f.setVisible(true);
+    }//GEN-LAST:event_jButtonInventario1ActionPerformed
 
 
     /**
