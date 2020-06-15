@@ -163,8 +163,25 @@ public class FrameInventario extends javax.swing.JFrame {
                 Integer.parseInt(this.jTextFieldTiempoElaboracion.getText()),
                 Integer.parseInt(jTextFieldCantidad.getText()),
                 estado
-        );                
-        arr_productos.add(arr_productos.size(),producto);                                
+        );              
+        
+        ED.ArrayList pro_actuales = arr_productos;   
+        ED.ArbolAVL pro = arbol_prod(pro_actuales);
+        
+        if (pro.contains(producto)) {
+            ProductoJ a = (ProductoJ )pro.findMax();
+            char[] maxa = a.getReferencia().toCharArray();
+            int max = 0;
+            for (int j = 0; j < maxa.length; j++) {
+                max = max + Integer.valueOf(maxa[j]);
+            }
+            max = max +1;
+            JOptionPane.showMessageDialog(null, "Porfavor ingresar una referencia valida, se recomienda la siquiente " + max , "Error de referencia", JOptionPane.DEFAULT_OPTION);
+        }else{
+            arr_productos.add(arr_productos.size(),producto);   
+        }
+        
+                                       
     }
     
     private void editar_producto(){
@@ -182,7 +199,23 @@ public class FrameInventario extends javax.swing.JFrame {
                 Integer.parseInt(jTextFieldCantidad.getText()),
                 estado
         );                
-        arr_productos.set(i, producto);                                
+        ED.ArrayList pro_actuales = arr_productos;   
+        ED.ArbolAVL pro = arbol_prod(pro_actuales);
+        ProductoJ b = (ProductoJ) arr_productos.get(i);
+        
+        if (pro.contains(producto) && !(jTextFieldReferencia.getText().equals(b.getReferencia()))) {
+            ProductoJ a = (ProductoJ )pro.findMax();
+            char[] maxa = a.getReferencia().toCharArray();
+            int max = 0;
+            for (int j = 0; j < maxa.length; j++) {
+                max = max + Integer.valueOf(maxa[j]);
+            }
+            max = max +1;
+            JOptionPane.showMessageDialog(null, "Porfavor ingresar una referencia valida, se recomienda la siquiente " + max , "Error de referencia", JOptionPane.DEFAULT_OPTION);
+        }else{
+            arr_productos.set(i, producto);    
+        }
+                                      
     }
     
     private void eliminar_producto(){               

@@ -1,6 +1,6 @@
 package ProMange.UI;
 
-
+// procesos
 import ProMange.UI.*;
 import ProMange.Logic.*;
 import ProMange.Logic.ProductoJ;
