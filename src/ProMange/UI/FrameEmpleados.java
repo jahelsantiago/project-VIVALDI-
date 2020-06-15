@@ -201,8 +201,19 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 Long.parseLong(this.jTextFieldID.getText()),
                 estado,
                 dispo
-        );                
-        arr_empleado.add(arr_empleado.size(),empleado);                                
+        );
+        
+        ED.ArrayList emp_actuales = arr_empleado;   
+        ED.ArbolAVL emp = arbol_emp(emp_actuales);
+        
+        if (emp.contains(empleado)) {
+            EmpleadoJ a = (EmpleadoJ)emp.findMax();
+            long max = a.getId() + 1;
+            JOptionPane.showMessageDialog(null, "Porfavor ingresar una ID valida, se recomienda la siquiente " + max , "Error de ID", JOptionPane.DEFAULT_OPTION);
+        }else{
+            arr_empleado.add(arr_empleado.size(),empleado);  
+        }
+                                   
     }
     
     private void editar_empleado(){
@@ -230,8 +241,21 @@ public class FrameEmpleados extends javax.swing.JFrame {
                 Long.parseLong(this.jTextFieldID.getText()),
                 estado,
                 dispo
-        );                
-        arr_empleado.set(i, empleado);                                
+        ); 
+        
+        ED.ArrayList emp_actuales = arr_empleado;   
+        ED.ArbolAVL emp = arbol_emp(emp_actuales);
+        EmpleadoJ b = (EmpleadoJ) arr_empleado.get(i);
+        
+        if (emp.contains(empleado) && !(Long.parseLong(this.jTextFieldID.getText()) == b.getId())) {
+            EmpleadoJ a = (EmpleadoJ)emp.findMax();
+            long max = a.getId() + 1;
+            JOptionPane.showMessageDialog(null, "Porfavor ingresar una ID valida, se recomienda la siquiente " + max , "Error de ID", JOptionPane.DEFAULT_OPTION);
+        }else{
+            arr_empleado.set(i, empleado);
+        }
+        
+                                        
     }
     
     private void eliminar_empleado(){               
