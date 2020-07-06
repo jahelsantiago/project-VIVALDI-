@@ -56,35 +56,6 @@ public class FrameSignup extends javax.swing.JFrame {
         FrameLogin j = new FrameLogin();
         j.setVisible(true);
         this.setVisible(false);
-        
-//        EmpleadoJ_excel empleado_excel = new EmpleadoJ_excel();        
-//        Maquina_excel maquina_excel = new Maquina_excel();
-//        OrdenJ_excel orden_excel = new OrdenJ_excel();
-//        ProductoJ_excel producto_excel = new ProductoJ_excel();
-        
-        
-//        EmpleadoJ nuevo_empleado = new EmpleadoJ();
-//        empleado_excel.agregarEmpleado(nuevo_empleado);
-        
-//        Maquina nueva_maquina = new Maquina();
-//        maquina_excel.agregarMaquina(nueva_maquina);
-//        
-//        OrdenJ nueva_orden = new OrdenJ();
-//        orden_excel.agregarOrden(nueva_orden);
-//        
-//        ProductoJ nuevo_producto = new ProductoJ();
-//        producto_excel.agregarProducto(nuevo_producto);
-//        
-        
-                
-        
-//        Pedido_excel pedido_excel = new Pedido_excel();
-//        PedidoJ nuevo_pedido = new PedidoJ();
-//        pedido_excel.agregarPedido(nuevo_pedido);
-
-//        FrameSignup l = new FrameSignup();
-//        l.setVisible(true); 
-//        this.setVisible(false);
             
     }
 
@@ -94,13 +65,13 @@ public class FrameSignup extends javax.swing.JFrame {
 	
 
         
-        public static void escribirFishero(Supervisor usuario) throws IOException, ClassNotFoundException {
-		File file=new File("xml_archivos/DatosSupervisor");
-		FileOutputStream f =new FileOutputStream(file);
-		ObjectOutputStream s = new ObjectOutputStream(f);
-		s.writeObject(usuario);
-		s.close();
-	}
+    public static void escribirFishero(Supervisor usuario) throws IOException, ClassNotFoundException {
+            File file=new File("xml_archivos/DatosSupervisor");
+            FileOutputStream f =new FileOutputStream(file);
+            ObjectOutputStream s = new ObjectOutputStream(f);
+            s.writeObject(usuario);
+            s.close();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

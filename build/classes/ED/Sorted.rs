@@ -1,0 +1,2 @@
+ED.QuickSort
+ED.Sorted

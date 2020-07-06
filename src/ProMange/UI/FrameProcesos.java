@@ -713,9 +713,16 @@ public class FrameProcesos extends javax.swing.JFrame {
 
     private void jButtonAutoAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutoAsignarActionPerformed
           //this. mat_maquinas = new MatrizDinamica(this.arr_ordenes.size(), maquinas, arr_ordenes);
+          time_start = System.currentTimeMillis();
           this.mat_maquinas.autoAsignar(arr_ordenes);
           mostrar_matriz_ordenes();
           mostrar_matriz_maquinas();
+          time_end = System.currentTimeMillis();
+          System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
+                  //    time_start = System.currentTimeMillis();
+//    //funcion va aca
+//    time_end = System.currentTimeMillis();
+//    System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
     }//GEN-LAST:event_jButtonAutoAsignarActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

@@ -735,7 +735,7 @@ public class FramePedidos extends javax.swing.JFrame {
         //leer el xml
         this.arr_ordenes = ordenes_excel.obtenerOrden();
         mostrar_matriz_ordenes();
-        this.arr_productos = productos_excel.obtenerProductos();
+        //this.arr_productos = productos_excel.obtenerProductos();
         mostrar_matriz();
     }//GEN-LAST:event_jButton4ActionPerformed
 

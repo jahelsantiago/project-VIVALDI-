@@ -195,38 +195,27 @@ public class FrameLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            this.usuario=leerFichero();
-            System.err.println("fishero leido con exito");
-            //JOptionPane.showMessageDialog(null, "leido con exito ", "Bug", JOptionPane.DEFAULT_OPTION);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Bug de inicializar ", "Bug", JOptionPane.DEFAULT_OPTION);                                             
-        } catch (ClassNotFoundException ex) {
-            System.err.println("NO hay archivo");
-            JOptionPane.showMessageDialog(null, "Bug de inicializar ", "Bug", JOptionPane.DEFAULT_OPTION);
-        }
-        
-        
+                
         this.nombre = jTextFieldnombreUs.getText();
         this.contraseña = jPasswordField1.getText();
         
 //        
-//        if(usuario.getPassword().equals(contraseña)){
-//            FrameEmpleados e= new FrameEmpleados();            
-//            e.setVisible(true);
-//            this.setVisible(false);
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Clave equivocada", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-//        }
-        
-        if(contraseña.equals("admin") && nombre.equals("admin")){
+        if(usuario.getPassword().equals(contraseña)){
             FrameEmpleados e= new FrameEmpleados();            
             e.setVisible(true);
             this.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Bienvenido", "Informacion", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(null, "Datos errones consulte con el admin", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Clave equivocada", "Informacion", JOptionPane.INFORMATION_MESSAGE);
         }
+        
+//        if(contraseña.equals("admin") && nombre.equals("admin")){
+//            FrameEmpleados e= new FrameEmpleados();            
+//            e.setVisible(true);
+//            this.setVisible(false);
+//            JOptionPane.showMessageDialog(null, "Bienvenido", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+//        }else{
+//            JOptionPane.showMessageDialog(null, "Datos errones consulte con el admin", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
