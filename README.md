@@ -1,37 +1,33 @@
-## Welcome to GitHub Pages
+## VIVALDI industrial support software
+*Jahel Santiago León, Jordán Mauricio Escarraga Avila *
 
-You can use the [editor on GitHub](https://github.com/jahelsantiago/project-VIVALDI-/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+**Introduction**
+This project is focused on assisting the supervisors of the production and / or manufacturing area, because despite having adequate training, human errors are still present, which generates lower productivity, therefore, the end of this The project aims to help reduce the amount of errors that may be generated due to the human factor.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+**SOFTWARE FUNCTIONAL REQUIREMENTS**
+- Extract Data from an XML file: In order to improve the application's compatibility with large volumes of data, the option of being able to read XML files and be able to incorporate their records in interface tables was created.
+ 
+- Display: The objects will be read from an XML file or from a serial file for quick access and will be displayed in an array located on the interface.
+ 
+- Create object: To create an object, its data will be added in the interface and after clicking the create button, it will be stored in XML memory (respective for each type of object) automatically in the last position, and in addition to this, it will be adds to the ArrayList that contains the other objects belonging to the same class.
+ 
+- Delete and / or modify an object: From the interface we can select records from the tables corresponding to each object, for example, we can select an employee from the employees table and modify it directly, likewise we can do with the other tables corresponding to the inventory and orders.
+Search records: we can search the records within the object arrays, to be able to access the visualization, edition, creation and elimination faster.
+ 
+- Save files in .obj format: we can save the object tables in a serializable file for quick access to them.
+ 
+- Convert the tables to excel format: in order to have better compatibility of the application with the main data visualization platforms, the application has the functionality of saving the data in an XML format to be able to read it from the Excel program and generate the tables automatically.
 
-```markdown
-Syntax highlighted code block
+**USER INTERFACES**
 
-# Header 1
-## Header 2
-### Header 3
+Process screen:
 
-- Bulleted
-- List
+Machine Processes display screen (Tests):
 
-1. Numbered
-2. List
+Inventory screen:
 
-**Bold** and _Italic_ and `Code` text
+Orders screen:
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jahelsantiago/project-VIVALDI-/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Employees screen:
